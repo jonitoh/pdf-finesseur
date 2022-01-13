@@ -1,38 +1,90 @@
-.App {
-  text-align: center;
+/*
+*  CSS TABLE OF CONTENTS
+*   
+*  0.0 - Variables
+*  1.0 - Reset
+*  2.0 - Body
+*  3.0 - App Overall Structure
+*  4.0 - Media Queries
+*/
+
+/*** 0.0 - Variables ***/
+:root {
+  /* Colors */
+  --color-background-light: #ecfcff;
+  --color-primary-light: #b2fcff;
+  --color-primary-hover: #3edbf0;
+  --color-primary-dark: #5edfff;
+  --color-background-dark: #3e64ff;
+  --color-white: #e3e8e8;
+  --color-black: #2e3838;
+
+  /* Border */
+  --radius: 0.5rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/*** 1.0 - Reset ***/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+html,
+body {
+  height:100%;
+  margin: 0;
+  padding: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/*** 2.0 - Body ***/
+body {
+  font-family: Arial, sans-serif;
+  color: var(--color-black);
+  background-color: var(--color-background-light);
+}
+
+/*** 3.0 - App Overall Structure ***/
+.app {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: row;
+  background-color: var(--color-background-light);
+  height: 100%;
+  overflow: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+/*-- navbar area --*/
+.app__nav {
+  flex: 10%;
+  order: -1;
+  display: flex; 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/*-- main area --*/
+.app__main {
+  flex: 90%;
+  display: flex;
+  justify-content: space-around;
+  overflow: auto;
+}
+
+/*** 4.0 - Media Queries ***/
+@media screen and (max-width: 550px) {
+  /*** 3.0 - App Overall Structure ***/
+  .app {
+      flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  /*-- navbar area --*/
+  .app__nav {
+      flex: 0;
+      order: 0;
+  }
+
+  /*-- main area --*/
+  .app__main {
+      flex: 80%;
   }
 }
