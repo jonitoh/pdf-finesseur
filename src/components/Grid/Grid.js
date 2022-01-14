@@ -23,7 +23,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
       {items.map((item, index) => (
         <div className="grid-item-wrapper" key={index} style={customStyle}>
           <div className="grid-item card">
-            <CardComponent {...{ text: item, onClick: () => removeFromGrid(index) }} />
+            <CardComponent {...{ text: `${item}`, onClick: () => removeFromGrid(index) }} />
           </div>
         </div>))}
     </div>
