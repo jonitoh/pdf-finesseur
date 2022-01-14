@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Home.css';
 
 const Home = ({placeholder}) => (
@@ -9,3 +10,7 @@ const Home = ({placeholder}) => (
 )
 
 export default Home;
+
+Home.propTypes = {
+    placeholder: PropTypes.string.isRequired
+}
