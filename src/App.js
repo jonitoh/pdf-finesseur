@@ -1,12 +1,12 @@
 import React from 'react';
+import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
 import Placeholder from './components/Placeholder/Placeholder';
 import SimpleNavbar from './components/Navbar/SimpleNavbar/SimpleNavbar';
 import HomePage from './pages/HomePage/HomePage'
 
-const App = () => {
 
+const App = () => {
 
   return (
     <div className="app">
@@ -30,9 +30,8 @@ const App = () => {
               element={<Placeholder>Here are all the deleted pages!</Placeholder>}
             />
           </Routes>
-
         </main>
-        <div className="app__nav">
+        <div className='app__nav'>
           <SimpleNavbar />
         </div>
       </BrowserRouter>

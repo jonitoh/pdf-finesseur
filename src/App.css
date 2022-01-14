@@ -10,81 +10,87 @@
 
 /*** 0.0 - Variables ***/
 :root {
-  /* Colors */
-  --color-background-light: #ecfcff;
-  --color-primary-light: #b2fcff;
-  --color-primary-hover: #3edbf0;
-  --color-primary-dark: #5edfff;
-  --color-background-dark: #3e64ff;
-  --color-white: #e3e8e8;
-  --color-black: #2e3838;
-
-  /* Border */
-  --radius: 0.5rem;
+    /* Colors */
+    --color-background-light: #ecfcff;
+    --color-primary-light: #b2fcff;
+    --color-primary-hover: #3edbf0;
+    --color-primary-dark: #5edfff;
+    --color-background-dark: #3e64ff;
+    --color-white: #e3e8e8;
+    --color-black: #2e3838;
+  
+    /* Border */
+    --radius: 0.5rem;
 }
+
 
 /*** 1.0 - Reset ***/
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html,
 body {
-  height:100%;
-  margin: 0;
-  padding: 0;
+    height:100%;
+    margin: 0;
+    padding: 0;
 }
 
 /*** 2.0 - Body ***/
 body {
-  font-family: Arial, sans-serif;
-  color: var(--color-black);
-  background-color: var(--color-background-light);
+    font-family: Arial, sans-serif;
+    color: var(--color-black);
+    background-color: var(--color-background-light);
 }
 
 /*** 3.0 - App Overall Structure ***/
 .app {
-  display: flex;
-  flex-direction: row;
-  background-color: var(--color-background-light);
-  height: 100%;
-  overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--color-background-light);
+    height: 100vh;
+    overflow: hidden;
 }
 
 /*-- navbar area --*/
 .app__nav {
-  flex: 10%;
-  order: -1;
-  display: flex; 
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 10%;
+    order: -1;
+    display: flex; 
 }
 
 /*-- main area --*/
 .app__main {
-  flex: 90%;
-  display: flex;
-  justify-content: space-around;
-  overflow: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 90%;
+    display: flex;
+    justify-content: space-around;
+    overflow: auto;
 }
 
 /*** 4.0 - Media Queries ***/
 @media screen and (max-width: 550px) {
-  /*** 3.0 - App Overall Structure ***/
-  .app {
-      flex-direction: column;
-  }
+    /*** 3.0 - App Overall Structure ***/
+    .app {
+        flex-direction: column;
+    }
+    
+    /*-- navbar area --*/
+    .app__nav {
+        flex-basis: 0%;
+        order: 0;
+    }
 
-  /*-- navbar area --*/
-  .app__nav {
-      flex: 0;
-      order: 0;
-  }
+    /*-- main area --*/
+    .app__main {
+        flex-basis: 80%;
+    }
 
-  /*-- main area --*/
-  .app__main {
-      flex: 80%;
-  }
-}
+}  
