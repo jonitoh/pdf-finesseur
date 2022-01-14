@@ -7,9 +7,9 @@ import NavbarItem from '../NavbarItem/NavbarItem';
 const SimpleNavbar = () => {
     // counts to be updated
     const count_add = 2;
-    const count_bin = 0;
+    const count_bin = 10;
     const count_parametre = 0;
-    const count_download = 0;
+    const count_download = 990;
 
     //clicktodownload
     const onClick = () => {
@@ -23,25 +23,25 @@ const SimpleNavbar = () => {
                 <NavbarItem
                     path={"/add"}
                     label={"Ajout fichier"}
-                    icon={"ressources/images/icons/actions-add-file-desktop-jld6gct-svgrepo-com.svg"}
+                    icon={"images/icons/add-file.svg"}
                     count={count_add}
                 />
                 <NavbarItem
                     path={"/bin"}
                     label={"poubelle"}
-                    icon={"ressources/images/icons/trash-bin-svgrepo-com.svg"}
+                    icon={"images/icons/trash-bin.svg"}
                     count={count_bin}
                 />
                 <NavbarItem
                     path={"/settings"}
                     label={"paramètres"}
-                    icon={"ressources/images/icons/settings-svgrepo-com.svg"}
+                    icon={"images/icons/settings.svg"}
                     count={count_parametre}
                 />
                 <NavbarItem
                     path={"/"}
                     label={"télécharger"}
-                    icon={"ressources/images/icons/button-circle-round-arrow-down-svgrepo-com.svg"}
+                    icon={"images/icons/download.svg"}
                     count={count_download}
                     onClick={onClick}
                 />

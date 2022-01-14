@@ -7,23 +7,28 @@ const Label = ({ text }) => (
     <p className="navbar__itemlabel">{text}</p>
 )
 
-const Notification = ({ icon, count = 0 }) => (
-    <div className="notification-wrapper">
-        <img src={icon} />
-        <div className="notification-indicator">
-            <div className="notification-count" role="status">
-                {count}
+const NotificationIcon = ({ icon, count = 0 }) => {
+
+    if (count === 0) {
+        return <img src={icon} />;
+    }
+
+    return (
+        <div className="notification-wrapper">
+            <img src={icon} />
+            <div className="notification-indicator">
+                <div className="notification-count" role="status">
+                    {count > 99 ? '+99' : count}
+                </div>
             </div>
         </div>
-    </div>
-)
+    )
+}
 
 const NavbarItem = ({ path, label, icon, count, onClick = undefined }) => (
     <li className="navbar__item">
         <Link to={path} onClick={onClick}>
-            {count > 0 ?
-                <Notification icon={icon} count={count} /> :
-                null}
+            <NotificationIcon icon={icon} count={count} />
             <Label text={label} />
         </Link>
     </li>
@@ -35,7 +40,7 @@ Label.propTypes = {
     text: PropTypes.string.isRequired
 }
 
-Notification.propTypes = {
+NotificationIcon.propTypes = {
     icon: PropTypes.string.isRequired,
     count: PropTypes.number,
 }
