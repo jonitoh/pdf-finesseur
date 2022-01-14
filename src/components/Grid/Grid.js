@@ -2,23 +2,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Grid.css';
-
-const DummyComponent = ({ text, onClick }) => (
-  <div>
-    <p>{text}</p>
-    <button onClick={onClick}>Press it</button>
-  </div>
-);
+import DummyCard from '../Card/DummyCard/DummyCard';
 
 const _items = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const Grid = ({ CardComponent = DummyComponent, fBasis = '25%' }) => {
+const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   // items to be populated in the grid
   const [items, setItems] = useState(_items);
 
   const removeFromGrid = (index) => {
     console.log(`WE are TRYING TO REMOVE A CARD WITH THE INDEX ${index}`)
-    const filteredItems = items.filter((value, idx) => idx != index)
+    const filteredItems = items.filter((val, idx) => idx != index)
     setItems(filteredItems)
   }
   // in order to customize the number of rows
@@ -35,7 +29,6 @@ const Grid = ({ CardComponent = DummyComponent, fBasis = '25%' }) => {
     </div>
   )
 }
-
 
 export default Grid;
 
