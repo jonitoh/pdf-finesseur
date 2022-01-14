@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Home from './components/Home/Home';
+import Placeholder from './components/Placeholder/Placeholder';
 import SimpleNavbar from './components/Navbar/SimpleNavbar/SimpleNavbar';
+import HomePage from './pages/HomePage/HomePage'
 
 const App = () => {
 
@@ -14,19 +15,19 @@ const App = () => {
           <Routes>
             <Route
               path="/"
-              element={<Home placeholder={"Main space!"} />}
+              element={<HomePage />}
             />
             <Route
               path="/settings"
-              element={<Home placeholder={"Here are your settings!"} />}
+              element={<Placeholder>Here are your settings!</Placeholder>}
             />
             <Route
               path="/add"
-              element={<Home placeholder={"Go upload a file!"} />}
+              element={<Placeholder>Go upload a file!</Placeholder>}
             />
             <Route
               path="/bin"
-              element={<Home placeholder={"Here are all the deleted pages!"} />}
+              element={<Placeholder>Here are all the deleted pages!</Placeholder>}
             />
           </Routes>
 

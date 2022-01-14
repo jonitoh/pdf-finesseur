@@ -1,0 +1,95 @@
+.card {
+    width: 200px;
+    height: 300px;
+    padding: .5rem;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    transition: 0.4s ease-out;
+}
+
+.card:hover:before {
+    opacity: .75;
+}
+
+.card:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.card > img {
+    padding: .5rem;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.card .info-content {
+    z-index: 3;
+    color: white;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 0.5s;
+}
+
+.card:hover .info-content {
+    opacity: .75;
+    transform: translateY(0px);
+}
+
+/* the overall structure of an info section: buttons and text */
+.info-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.top-section {
+    height: 5vh;
+    padding: 1vh 2vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.right-area,
+.left-area {
+    display: inline-flex;
+}
+
+.left-area img,
+.right-area img {
+    display: block;
+}
+
+.left-area img:hover,
+.right-area img:hover {
+    fill: rgb(237, 239, 241);
+}
+
+.bottom-section {
+    height: 5vh;
+    padding: 1vh 2vw;
+    text-align: center;
+}
+
+.bottom-section h3 {
+    margin: 0px;
+    letter-spacing: 1px;
+    font-size: 15px;
+}

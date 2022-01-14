@@ -1,0 +1,28 @@
+.grid-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: .25rem;
+}
+  
+.grid-item-wrapper {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    box-sizing: border-box;
+}
+  
+.grid-item-wrapper:before {
+    content: '';
+    display: table;
+    padding-top: 100%;
+}
+  
+.grid-item {
+    flex-grow: 1;
+    display: flex;
+}
