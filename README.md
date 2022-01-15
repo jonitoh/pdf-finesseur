@@ -9,6 +9,8 @@ https://react-beautiful-dnd.netlify.app/?path=/story/onbeforecapture--adding-thi
 
 https://react-beautiful-dnd.netlify.app/?path=/story/multi-drag--pattern
 
+cf. modal windows https://dev.to/codebucks/how-to-create-an-efficient-modal-component-in-react-using-hooks-and-portals-360p
+
 
 
 # Getting Started with Create React App
