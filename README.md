@@ -11,6 +11,8 @@ https://react-beautiful-dnd.netlify.app/?path=/story/multi-drag--pattern
 
 cf. modal windows https://dev.to/codebucks/how-to-create-an-efficient-modal-component-in-react-using-hooks-and-portals-360p
 
+cf. dnd few chile ... https://thisisvini.com/responsive-mosaic-with-dnd-reactjs
+https://betterprogramming.pub/how-to-build-a-drag-and-drop-grid-in-react-3008c5384b29
 
 
 # Getting Started with Create React App

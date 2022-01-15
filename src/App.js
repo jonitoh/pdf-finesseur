@@ -3,7 +3,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Placeholder from './components/Placeholder/Placeholder';
 import SimpleNavbar from './components/Navbar/SimpleNavbar/SimpleNavbar';
-import HomePage from './pages/HomePage/HomePage'
+import HomePage from './components/HomePage/HomePage'
 
 
 const App = () => {

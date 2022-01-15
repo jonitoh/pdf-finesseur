@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Thumbnail.css';
-import propTypes from 'prop-types';
 
 
 const Thumbnail = ({ src, label, iconLeft, iconRight, onClickLeft = undefined, onClickRight = undefined }) => {
@@ -31,10 +30,10 @@ const Thumbnail = ({ src, label, iconLeft, iconRight, onClickLeft = undefined, o
 export default Thumbnail;
 
 Thumbnail.propTypes = {
-    src: propTypes.string.isRequired,
-    label: propTypes.string.isRequired,
-    iconLeft: propTypes.string.isRequired,
-    iconRight: propTypes.string.isRequired,
-    onClickLeft: propTypes.func,
-    onClickRight: propTypes.func
+    src: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    iconLeft: PropTypes.string.isRequired,
+    iconRight: PropTypes.string.isRequired,
+    onClickLeft: PropTypes.func,
+    onClickRight: PropTypes.func
 }

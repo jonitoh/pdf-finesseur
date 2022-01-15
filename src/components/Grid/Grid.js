@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Grid.css';
+import GridWrapper from './GridWrapper/GridWrapper';
 import DummyCard from '../Card/DummyCard/DummyCard';
 
 const _items = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -19,14 +20,14 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   const customStyle = { flexBasis: fBasis };
 
   return (
-    <div className="grid-container">
+    <GridWrapper>
       {items.map((item, index) => (
         <div className="grid-item-wrapper" key={index} style={customStyle}>
           <div className="grid-item card">
             <CardComponent {...{ text: `${item}`, onClick: () => removeFromGrid(index) }} />
           </div>
         </div>))}
-    </div>
+    </GridWrapper>
   )
 }
 
