@@ -14,6 +14,7 @@ cf. modal windows https://dev.to/codebucks/how-to-create-an-efficient-modal-comp
 cf. dnd few chile ... https://thisisvini.com/responsive-mosaic-with-dnd-reactjs
 https://betterprogramming.pub/how-to-build-a-drag-and-drop-grid-in-react-3008c5384b29
 
+cf. let me die with this https://codesandbox.io/s/github/znwang25/react-dnd-multiple-selection?file=/src/Container.js
 
 # Getting Started with Create React App
 
