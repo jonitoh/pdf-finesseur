@@ -1,53 +1,4 @@
-/*
-*  CSS TABLE OF CONTENTS
-*   
-*  0.0 - Variables
-*  1.0 - Reset
-*  2.0 - Body
-*  3.0 - App Overall Structure
-*  4.0 - Media Queries
-*/
-
-/*** 0.0 - Variables ***/
-:root {
-    /* Colors */
-    --color-background-light: #ecfcff;
-    --color-primary-light: #b2fcff;
-    --color-primary-hover: #3edbf0;
-    --color-primary-dark: #5edfff;
-    --color-background-dark: #3e64ff;
-    --color-white: #e3e8e8;
-    --color-black: #2e3838;
-  
-    /* Border */
-    --radius: 0.5rem;
-}
-
-
-/*** 1.0 - Reset ***/
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    height:100%;
-    margin: 0;
-    padding: 0;
-}
-
-/*** 2.0 - Body ***/
-body {
-    font-family: Arial, sans-serif;
-    color: var(--color-black);
-    background-color: var(--color-background-light);
-}
-
-/*** 3.0 - App Overall Structure ***/
+/*** App Overall Structure ***/
 .app {
     display: flex;
     flex-direction: row;
@@ -75,9 +26,9 @@ body {
     overflow: auto;
 }
 
-/*** 4.0 - Media Queries ***/
+/*** Media Queries ***/
 @media screen and (max-width: 550px) {
-    /*** 3.0 - App Overall Structure ***/
+    /*** App Overall Structure ***/
     .app {
         flex-direction: column;
     }

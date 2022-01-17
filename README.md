@@ -90,3 +90,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 back arrow: cf.https://www.svgrepo.com/svg/324225/navigation-back-arrow 
+
+
+structures
+cf. https://larswaechter.dev/blog/react-project-structure/
+
+cf. https://www.sitepoint.com/organize-large-react-application/
+
+cf. https://www.taniarascia.com/react-architecture-directory-structure/
+
+cf. https://blog.jscrambler.com/easy-custom-webpack-setup-for-react-js-applications/
+
+cf. https://blog.logrocket.com/versatile-webpack-configurations-react-application/
