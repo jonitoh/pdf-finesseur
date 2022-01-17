@@ -1,0 +1,24 @@
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.page-wrapper__inner-nav {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 20%;
+    display: flex;
+    justify-content: flex-start
+}
+
+.page-wrapper__main {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 80%;
+    display: flex;
+    justify-content: center; 
+}
+

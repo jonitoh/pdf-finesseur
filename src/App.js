@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Placeholder from './components/Placeholder/Placeholder';
 import SimpleNavbar from './components/Navbar/SimpleNavbar/SimpleNavbar';
-import HomePage from './components/HomePage/HomePage'
-import UploadPage from './components/UploadPage/UploadPage';
-import BinPage from './components/BinPage/BinPage';
+import HomePage from './pages/HomePage/HomePage';
+import UploadPage from './pages/UploadPage/UploadPage';
+import BinPage from './pages/BinPage/BinPage';
+import SettingPage from './pages/SettingPage/SettingPage';
 
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
             />
             <Route
               path="/settings"
-              element={<Placeholder>Here are your settings!</Placeholder>}
+              element={<SettingPage/>}
             />
             <Route
               path="/add"

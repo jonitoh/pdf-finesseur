@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './BinPage.css';
+import { withInnerNavigation } from '../PageWrapper/PageWrapper';
 import Placeholder from '../../components/Placeholder/Placeholder';
 import { useStore } from '../../store';
 
@@ -28,7 +29,7 @@ const BinPage = () => {
     )
 }
 
-export default BinPage;
+export default withInnerNavigation(BinPage);
 
 BinPage.propTypes = {
 }

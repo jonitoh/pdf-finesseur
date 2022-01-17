@@ -10,7 +10,8 @@
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 20%;
-    display: flex; 
+    display: flex;
+    border: 1px dashed var(--color-primary-hover); 
 }
 
 .upload-section__list {

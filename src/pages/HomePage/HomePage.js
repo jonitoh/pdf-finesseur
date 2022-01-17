@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import './HomePage.css';
 import Placeholder from '../../components/Placeholder/Placeholder';
 import Grid from '../../components/Grid/Grid';
+import { withInnerNavigation } from '../PageWrapper/PageWrapper';
 import { useStore } from '../../store';
 
 const HomePage = () => {
@@ -22,7 +23,7 @@ const HomePage = () => {
     )
 }
 
-export default HomePage;
+export default withInnerNavigation(HomePage, false);
 
 HomePage.propTypes = {
 }

@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './UploadPage.css';
 import Placeholder from '../../components/Placeholder/Placeholder';
+import { withInnerNavigation } from '../PageWrapper/PageWrapper';
 import { useStore } from '../../store';
 
 const UploadPage = () => {
@@ -33,7 +34,7 @@ const UploadPage = () => {
     )
 }
 
-export default UploadPage;
+export default withInnerNavigation(UploadPage);
 
 UploadPage.propTypes = {
 }
