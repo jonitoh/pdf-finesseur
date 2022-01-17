@@ -1,0 +1,23 @@
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-background-light);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.upload-section__dropzone {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 20%;
+    display: flex; 
+}
+
+.upload-section__list {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 80%;
+    display: flex;
+    justify-content: space-around;
+    overflow: auto;
+}

@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import './HomePage.css';
 import Placeholder from '../../components/Placeholder/Placeholder';
 import Grid from '../../components/Grid/Grid';
+import { useStore } from '../../store';
 
 const HomePage = () => {
+ 
+    const { getNumberOfDocuments } = useStore();
 
-    const files = [1, 2];
-
-    if (files.length === 0) {
+    if (getNumberOfDocuments() === 0) {
         return (
             <Placeholder>
                 Go upload some files!

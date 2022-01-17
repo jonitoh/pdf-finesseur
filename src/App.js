@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Placeholder from './components/Placeholder/Placeholder';
 import SimpleNavbar from './components/Navbar/SimpleNavbar/SimpleNavbar';
 import HomePage from './components/HomePage/HomePage'
+import UploadPage from './components/UploadPage/UploadPage';
+import BinPage from './components/BinPage/BinPage';
 
 
 const App = () => {
@@ -23,11 +25,11 @@ const App = () => {
             />
             <Route
               path="/add"
-              element={<Placeholder>Go upload a file!</Placeholder>}
+              element={<UploadPage/>}
             />
             <Route
               path="/bin"
-              element={<Placeholder>Here are all the deleted pages!</Placeholder>}
+              element={<BinPage/>}
             />
           </Routes>
         </main>

@@ -4,27 +4,33 @@ import PropTypes from 'prop-types';
 import './Grid.css';
 import GridWrapper from './GridWrapper/GridWrapper';
 import DummyCard from '../Card/DummyCard/DummyCard';
-
-const _items = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+import { useStore } from '../../store';
 
 const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   // items to be populated in the grid
-  const [items, setItems] = useState(_items);
-
-  const removeFromGrid = (index) => {
-    console.log(`WE are TRYING TO REMOVE A CARD WITH THE INDEX ${index}`)
-    const filteredItems = items.filter((val, idx) => idx != index)
-    setItems(filteredItems)
+  const { 
+    availablePages: items,
+    removePageByIdFromAvailablePages,
+    addDeletedPage,
+  } = useStore();
+  
+  const removeFromGrid = itemId => {
+    console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
+    const removedItems = items.filter(item => item.id === itemId);
+    removePageByIdFromAvailablePages(itemId);
+    if (removedItems.length > 0) {
+      addDeletedPage(removedItems[0]);
+    }  
   }
   // in order to customize the number of rows
   const customStyle = { flexBasis: fBasis };
 
   return (
     <GridWrapper>
-      {items.map((item, index) => (
-        <div className="grid-item-wrapper" key={index} style={customStyle}>
+      {items.map(item => (
+        <div className="grid-item-wrapper" key={item.id} style={customStyle}>
           <div className="grid-item card">
-            <CardComponent {...{ text: `${item}`, onClick: () => removeFromGrid(index) }} />
+            <CardComponent {...{ text: item.name, onClick: () => removeFromGrid(item.id) }} />
           </div>
         </div>))}
     </GridWrapper>

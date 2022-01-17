@@ -3,17 +3,31 @@ import PropTypes from 'prop-types';
 import './SimpleNavbar.css';
 import NavbarList from '../NavbarList/NavbarList';
 import NavbarItem from '../NavbarItem/NavbarItem';
+import { useStore } from '../../../store';
 
 const SimpleNavbar = () => {
-    // counts to be updated
-    const count_add = 2;
-    const count_bin = 10;
-    const count_parametre = 0;
-    const count_download = 990;
+    const {
+        getNumberOfDocuments,
+        getNumberOfDeletedPages,
+        createMergedDocument,
+        getMergedDocument,
+        getAvailablePages,
+        //resetAll,
+    } = useStore();
 
     //clicktodownload
     const onClick = () => {
+        console.log('CLICK---create the merged document');
+        createMergedDocument();
+        const output = getMergedDocument();
+        const order = (
+            getAvailablePages()
+            .map(page => page.id)
+        );
+        console.log('CLICK---here is the merged document', output);
+        console.log('CLICK---order', order);
         console.log('it should download!');
+        //resetAll()
     }
 
 
@@ -24,25 +38,25 @@ const SimpleNavbar = () => {
                     path={"/add"}
                     label={"Ajout fichier"}
                     icon={"images/icons/add-file.svg"}
-                    count={count_add}
+                    count={getNumberOfDocuments()}
                 />
                 <NavbarItem
                     path={"/bin"}
                     label={"poubelle"}
                     icon={"images/icons/trash-bin.svg"}
-                    count={count_bin}
+                    count={getNumberOfDeletedPages()}
                 />
                 <NavbarItem
                     path={"/settings"}
                     label={"paramètres"}
                     icon={"images/icons/settings.svg"}
-                    count={count_parametre}
+                    count={0}
                 />
                 <NavbarItem
                     path={"/"}
                     label={"télécharger"}
                     icon={"images/icons/download.svg"}
-                    count={count_download}
+                    count={0}
                     onClick={onClick}
                 />
 
