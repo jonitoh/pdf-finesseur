@@ -12,6 +12,7 @@ const SimpleNavbar = () => {
         createMergedDocument,
         getMergedDocument,
         getAvailablePages,
+        t,
         //resetAll,
     } = useStore();
 
@@ -36,25 +37,25 @@ const SimpleNavbar = () => {
             <NavbarList>
                 <NavbarItem
                     path={"/add"}
-                    label={"Ajout fichier"}
+                    label={t("add-button-label")}
                     icon={"./assets/icons/add-file.svg"}
                     count={getNumberOfDocuments()}
                 />
                 <NavbarItem
                     path={"/bin"}
-                    label={"poubelle"}
+                    label={t("bin-button-label")}
                     icon={"./assets/icons/trash-bin.svg"}
                     count={getNumberOfDeletedPages()}
                 />
                 <NavbarItem
                     path={"/settings"}
-                    label={"paramètres"}
+                    label={t("settings-button-label")}
                     icon={"./assets/icons/settings.svg"}
                     count={0}
                 />
                 <NavbarItem
                     path={"/"}
-                    label={"télécharger"}
+                    label={t("download-button-label")}
                     icon={"./assets/icons/download.svg"}
                     count={0}
                     onClick={onClick}

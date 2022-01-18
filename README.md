@@ -102,3 +102,7 @@ cf. https://www.taniarascia.com/react-architecture-directory-structure/
 cf. https://blog.jscrambler.com/easy-custom-webpack-setup-for-react-js-applications/
 
 cf. https://blog.logrocket.com/versatile-webpack-configurations-react-application/
+
+i18n
+cf. https://rainbowapps.io/en/posts/how-to-manage-internationalization/#implementations
+cf. https://idkblogs.com/react/5/How-to-implement-Internalization-i18n-in-react-app-

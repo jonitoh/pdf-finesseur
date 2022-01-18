@@ -1,0 +1,13 @@
+{
+    "hello": "Hello",
+    "click": "Click",
+    "choose-lang": "Select language",
+    "en-label": "English",
+    "fr-label": "French",
+    "undefined": "???",
+    "add-button-label": "Add",
+    "bin-button-label": "Bin",
+    "settings-button-label": "Settings",
+    "download-button-label": "Download"
+
+}

@@ -5,7 +5,7 @@ import SimpleNavbar from './components/navbar/simple-navbar/simple-navbar';
 import HomePage from './pages/home-page/home-page';
 import UploadPage from './pages/upload-page/upload-page';
 import BinPage from './pages/bin-page/bin-page';
-import SettingPage from './pages/setting-page/setting-page';
+import SettingsPage from './pages/settings-page/settings-page';
 
 
 const App = () => {
@@ -21,7 +21,7 @@ const App = () => {
             />
             <Route
               path="/settings"
-              element={<SettingPage/>}
+              element={<SettingsPage/>}
             />
             <Route
               path="/add"

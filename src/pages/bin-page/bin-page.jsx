@@ -8,7 +8,10 @@ import { useStore } from '../../store';
 
 const BinPage = () => {
 
-    const { getNumberOfDeletedPages, deletedPages } = useStore();
+    const { 
+        getNumberOfDeletedPages,
+        deletedPages
+    } = useStore();
 
     if (getNumberOfDeletedPages() === 0) {
         return (

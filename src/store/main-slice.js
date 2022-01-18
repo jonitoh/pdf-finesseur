@@ -1,6 +1,4 @@
-//imports
-import create from 'zustand'
-import { v4 as uuidv4 } from "uuid"; //generate random ids
+//import { v4 as uuidv4 } from "uuid"; //generate random ids
 
 const generateDocumentId = () => (`File-${(Math.floor(Math.random() * (10000 - 1) + 1))}`)//(uuidv4());
 
