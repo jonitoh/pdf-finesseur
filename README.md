@@ -106,3 +106,22 @@ cf. https://blog.logrocket.com/versatile-webpack-configurations-react-applicatio
 i18n
 cf. https://rainbowapps.io/en/posts/how-to-manage-internationalization/#implementations
 cf. https://idkblogs.com/react/5/How-to-implement-Internalization-i18n-in-react-app-
+
+
+express in the same folder than the react app
+https://medium.com/swlh/building-a-react-app-with-a-express-back-end-in-the-same-project-with-external-access-to-a-mysql-e06ef83c257d
+
+https://www.tutorialspoint.com/expressjs/index.htm
+
+which npm package to upload file ?
+https://stackoverflow.com/questions/64803772/nodejs-fileupload-multer-vs-express-fileupload-which-to-use
+https://npmcompare.com/compare/express-fileupload,formidable,multer
+https://github.com/expressjs/multer#readme
+https://dev.to/austinbrownopspark/how-to-upload-and-serve-photos-using-react-node-express-36ii
+https://medium.com/quick-code/uploading-files-and-serve-directory-listing-using-nodejs-6f353f65be5
+
+for file guyz upload and show;
+https://dev.to/austinbrownopspark/how-to-upload-and-serve-photos-using-react-node-express-36ii
+
+cron delete file every ????
+cf. https://stackoverflow.com/questions/38312926/how-to-cleanup-temp-files-using-multer

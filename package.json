@@ -6,6 +6,12 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "concurrently": "^7.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.15",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dnd": "^14.0.5",
@@ -22,12 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "webpack": "webpack",
-    "webpack-dev-server": "webpack-dev-server",
-    "dev": "npm run webpack-dev-server -- --env mode=development",
-    "prod": "npm run webpack -- --env mode=production"
+    "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",

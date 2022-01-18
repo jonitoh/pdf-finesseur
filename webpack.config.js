@@ -1,5 +1,21 @@
-const path = require("path");
+const path = require('path');
+
+module.exports = {
+  resolve: {
+    alias: {
+      'components': path.resolve(__dirname, 'src/components'),
+    },
+    extensions: ['.jsx', '.js', '.scss', '.json'],
+  },
+};
+
+/*
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+"webpack": "webpack",
+"webpack-dev-server": "webpack-dev-server",
+"dev": "npm run webpack-dev-server -- --env mode=development",
+"prod": "npm run webpack -- --env mode=production"
 
 module.exports = ({ mode } = { mode: "production" }) => {
     console.log(`mode is: ${mode}`);
@@ -19,3 +35,4 @@ module.exports = ({ mode } = { mode: "production" }) => {
             ]
         }
 };
+*/
