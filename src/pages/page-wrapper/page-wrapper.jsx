@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './page-wrapper.css';
+import Icon from '../../components/icon';
 
 const BackButton = ({ path, icon, onClick = undefined }) => (
     <div>

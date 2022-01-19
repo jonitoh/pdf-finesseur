@@ -1,29 +1,3 @@
-.navbar__item {
-    list-style: none;
-    font-size: 0.7rem;
-    text-align: center;
-    transition: all 200ms ease-in;
-}
-
-.navbar__item svg {
-    /*fill: var(--color-primary-dark);*/
-    width: 2rem;
-    transition: all 200ms ease-in;
-}
-
-.navbar__item svg:hover {
-    /*fill: var(--color-primary-hover);*/
-}
-
-.navbar__item a {
-    color: var(--color-black);
-    text-decoration: none;
-}
-
-.navbar__item a:hover {
-    color: var(--color-primary-hover);
-}
-
 /* notification */
 .notification-wrapper {
     position: relative;

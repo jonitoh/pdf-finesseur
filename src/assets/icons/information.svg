@@ -5,9 +5,9 @@
 <g>
 	<g id="info">
 		<g>
-			<path style="fill:#030104;" d="M10,16c1.105,0,2,0.895,2,2v8c0,1.105-0.895,2-2,2H8v4h16v-4h-1.992c-1.102,0-2-0.895-2-2L20,12H8
+			<path style="fill:currentColor;" d="M10,16c1.105,0,2,0.895,2,2v8c0,1.105-0.895,2-2,2H8v4h16v-4h-1.992c-1.102,0-2-0.895-2-2L20,12H8
 				v4H10z"/>
-			<circle style="fill:#030104;" cx="16" cy="4" r="4"/>
+			<circle style="fill:currentColor;" cx="16" cy="4" r="4"/>
 		</g>
 	</g>
 </g>

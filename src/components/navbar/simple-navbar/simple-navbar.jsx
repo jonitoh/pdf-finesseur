@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './simple-navbar.css';
 import NavbarList from '../navbar-list/navbar-list';
-import NavbarItem from '../navbar-item/navbar-item';
+import NavbarItem, { SVGNavbarItem } from '../navbar-item/navbar-item';
+import Icon from '../../icon';
 import { useStore } from '../../../store';
+
+
 
 const SimpleNavbar = () => {
     const {
@@ -38,26 +41,24 @@ const SimpleNavbar = () => {
                 <NavbarItem
                     path={"/add"}
                     label={t("add-button-label")}
-                    icon={"./assets/icons/add-file.svg"}
+                    Icon={Icon.Add}
                     count={getNumberOfDocuments()}
                 />
                 <NavbarItem
                     path={"/bin"}
                     label={t("bin-button-label")}
-                    icon={"./assets/icons/trash-bin.svg"}
+                    Icon={Icon.Bin}
                     count={getNumberOfDeletedPages()}
                 />
                 <NavbarItem
                     path={"/settings"}
                     label={t("settings-button-label")}
-                    icon={"./assets/icons/settings.svg"}
-                    count={0}
+                    Icon={Icon.Settings}
                 />
                 <NavbarItem
                     path={"/"}
                     label={t("download-button-label")}
-                    icon={"./assets/icons/download.svg"}
-                    count={0}
+                    Icon={Icon.Download}
                     onClick={onClick}
                 />
 

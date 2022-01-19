@@ -133,3 +133,13 @@ cf. https://malcoded.com/posts/react-file-upload/
 
 multer for stream
 cf. https://blog.yogeshchavan.dev/build-an-app-with-file-upload-and-download-functionality-and-image-preview-using-mern-stack
+
+
+
+
+
+
+
+
+icons
+https://wendeehsu.medium.com/styling-svg-icon-in-react-js-bfd3d826901d
