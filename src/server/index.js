@@ -5,7 +5,11 @@ const cors = require('cors');
 const app = express();
 
 // cross-origin resource sharing
-app.use(cors());
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+}
+app.use(cors(corsOptions));
 
 // default port
 const port = process.env.SERVER_PORT || 5000;

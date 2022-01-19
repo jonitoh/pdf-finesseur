@@ -3,12 +3,14 @@ const path = require('path');
 module.exports = {
   resolve: {
     alias: {
-      'components': path.resolve(__dirname, 'src/components'),
+      '@assets': path.resolve(__dirname, 'src/assets'),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@store': path.resolve(__dirname, 'src/store'),
     },
-    extensions: ['.jsx', '.js', '.scss', '.json'],
+    extensions: ['.jsx', '.js', '.css', '.json', 'ts', 'tsx', '...'],
   },
 };
-
 /*
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 

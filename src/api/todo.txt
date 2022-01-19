@@ -1,4 +1,0 @@
-contains all services that take care of the communication between the React application (frontend) and an API (backend).
-In our case, it will be handling connections with the database.
-for us, it will be a simple directory.
-(retrieve data from or post data to an external service using the HTTP protocol).

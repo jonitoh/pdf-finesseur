@@ -91,6 +91,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 back arrow: cf.https://www.svgrepo.com/svg/324225/navigation-back-arrow 
 
+cloud upload: cf. https://www.svgrepo.com/svg/332286/cloud-upload
+
 
 structures
 cf. https://larswaechter.dev/blog/react-project-structure/
@@ -125,3 +127,9 @@ https://dev.to/austinbrownopspark/how-to-upload-and-serve-photos-using-react-nod
 
 cron delete file every ????
 cf. https://stackoverflow.com/questions/38312926/how-to-cleanup-temp-files-using-multer
+
+upload + dropzone
+cf. https://malcoded.com/posts/react-file-upload/
+
+multer for stream
+cf. https://blog.yogeshchavan.dev/build-an-app-with-file-upload-and-download-functionality-and-image-preview-using-mern-stack
