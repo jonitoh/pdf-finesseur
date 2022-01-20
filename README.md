@@ -11,6 +11,9 @@ https://react-beautiful-dnd.netlify.app/?path=/story/multi-drag--pattern
 
 cf. modal windows https://dev.to/codebucks/how-to-create-an-efficient-modal-component-in-react-using-hooks-and-portals-360p
 
+https://dev.to/viclafouch/build-a-complete-modal-component-with-react-hooks-2fk8
+
+
 cf. dnd few chile ... https://thisisvini.com/responsive-mosaic-with-dnd-reactjs
 https://betterprogramming.pub/how-to-build-a-drag-and-drop-grid-in-react-3008c5384b29
 
@@ -143,3 +146,5 @@ https://dev.to/alexeagleson/how-to-create-a-dark-mode-component-in-react-3ibg
 
 icons
 https://wendeehsu.medium.com/styling-svg-icon-in-react-js-bfd3d826901d
+
+ref proptype: https://stackoverflow.com/questions/48007326/what-is-the-correct-proptype-for-a-ref-in-react

@@ -1,39 +1,65 @@
-import ReactDOM from "react-dom";
+import React, { useState, useImperativeHandle, forwardRef, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-import './modal.css';
-import closeIcon from 'images/icons/close-button.svg'
+import Icon from '../icon';
 
-const Modal = ({ show, closeModal, title, children }) => {
-  return ReactDOM.createPortal(
-    <>
-     {
-     show ?
-     
-      <div className="modal-wrapper">
-        <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-          <header className="modal-header">
-            <h2 className="modal-header__title"> {title} </h2>
-            <button className="modal-header__close" onClick={() => closeModal()}>
-              <img src={closeIcon} alt="close" />
+const modalElement = document.getElementById('modal');
+
+const Modal = ({ children, defaultOpened = false, allowHandleEscape = false, title = undefined, fade = false }, ref) => {
+  const [isOpen, setIsOpen] = useState(defaultOpened);
+
+  const close = useCallback(() => setIsOpen(false), []);
+
+  useImperativeHandle(ref, () => ({
+    open: () => setIsOpen(true),
+    close: () => setIsOpen(false)
+  }), [close])
+
+  const handleEscape = useCallback(event => {
+    if (event.keyCode === 27) setIsOpen(false)
+  }, [])
+
+  useEffect(() => {
+    if (allowHandleEscape) {
+      if (isOpen) document.addEventListener('keydown', handleEscape, false)
+      return (() => {
+        document.removeEventListener('keydown', handleEscape, false)
+      })
+    }
+  }, [handleEscape, isOpen])
+
+  return createPortal(
+    isOpen ?
+      (<div
+        className={`modal ${fade ? 'modal-fade' : ''} modalContainer`}
+      >
+        <div className="modal">
+          <header className="modal_header">
+            <h2 className="modal_header-title"> {title} </h2>
+            <button className="close" onClick={() => close()}>
+              <Icon.Close alt="close" />
             </button>
           </header>
-          <main className="modal-content"> {children} </main>
+          <div className="modal_content"> {children} </div>
         </div>
-      </div>
-      : null
-     },
-    document.getElementById("modal")
-    </>
-  );
-};
-
-export default Modal;
-
-Modal.propTypes = {
-    show: PropTypes.bool.isRequired,
-    closeModal: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
-    children: PropTypes.node,
+      </div>) :
+      null,
+    modalElement
+  )
 }
 
+export default forwardRef(Modal);
 
+const refProp = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.shape({ current: PropTypes.any })
+]);
+
+Modal.propTypes = {
+  children: PropTypes.node,
+  defaultOpened: PropTypes.bool,
+  allowHandleEscape: PropTypes.bool,
+  title: PropTypes.string,
+  fade: PropTypes.bool,
+  ref: refProp,
+}
