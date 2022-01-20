@@ -148,3 +148,7 @@ icons
 https://wendeehsu.medium.com/styling-svg-icon-in-react-js-bfd3d826901d
 
 ref proptype: https://stackoverflow.com/questions/48007326/what-is-the-correct-proptype-for-a-ref-in-react
+
+
+upload multiple files at the same time
+https://www.geeksforgeeks.org/how-to-send-one-or-more-files-to-an-api-using-axios-in-reactjs/

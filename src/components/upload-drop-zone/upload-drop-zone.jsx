@@ -2,55 +2,49 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './upload-drop-zone.css';
 import DropZone from '../drop-zone/drop-zone';
+import axios from "axios";
 
+//
+const withOptionalShow = (Component) => (
+    ({ show = true, ...props }) => {
 
-const Progress = ({ progress }) => {
-    const state = {};
+        if (!show) {
+            return null;
+        }
+        return (
+            <Component {...props} />
+        )
+    })
 
-    return (
+// need of a customisation --- just number, circle, bar
+const Progress = ({ progress = 0, showWhenNull = true }) => (
+    <div className="progress">
         <div className='progress-bar'>
             <div
                 className='progress'
-                style={{ width: progress + '%' }}
-            />
+            >
+                {progress}
+            </div>
         </div>
-    )
+    </div>
+)// pour le bar, use style={{ width: progress + '%' }}
+
+Progress.propTypes = {
+    progress: PropTypes.number,
+    showWhenNull: PropTypes.bool,
 }
 
-const UploadDropZone = () => {
-    const [files, setFiles] = useState([]);
+const UploadDropZone = ({ showWhenNull = true }) => {
+    // uploading state with progress part
     const [uploading, setUploading] = useState(false);
-    const [uploadProgress, setUploadProgress] = useState({});
+    const initialUploadProgress = { pourcentage: 0, state: '', fileName: null };
+    const [uploadProgress, setUploadProgress] = useState(initialUploadProgress);
     const [successfullUploaded, setSuccessfullUploaded] = useState(false);
-    // à voir ?
-    const disabled = uploading;
-    const progress = 0;
+    const CustomProgress = withOptionalShow(Progress);
 
-    /*
-    cf. https://stackoverflow.com/questions/44936028/progress-bar-with-axios
-    onUpload = () => {
-    const config = {
-      onUploadProgress: progressEvent => {
-        let { progress } = this.state;
-        progress = (progressEvent.loaded / progressEvent.total) * 100;
-        this.setState({ progress });
-      }
-    }
-
-    let formData = new FormData();
-    formData.append("file", this.state.uploadFile);
-    axios.post('http://your_backend_url/api/v1/upload', formData, config).then(res => {
-      if (res.data.status == 200) {
-        console.log("done: ", res.data.message);
-      }
-    }).catch(err => {
-      console.log("error: ", err.message);
-    })
-  }
-    
-    
-    */
-    const sendRequest = file => {
+    // UPLOAD ONE FILE
+    // --xmlhttp
+    const __sendRequest = file => {
         return new Promise((resolve, reject) => {
             const req = new XMLHttpRequest();
 
@@ -86,11 +80,46 @@ const UploadDropZone = () => {
             req.send(formData);
         });
     }
-    const uploadFiles = async () => {
 
-        setUploadProgress({});
+    // UPLOAD FILES
+    const uploadFiles = files => {
+        // prepare the download process
+        setUploadProgress(initialUploadProgress);
         setUploading(true);
-        const promises = [];
+
+        // initiate formadata
+        let formData = new FormData();
+        formData.append("files", files);http://localhost:5000/express_backend
+
+        //send request
+        axios({
+            url: `${"http://localhost:5000"}/storage`,
+            method: "POST",
+            headers: {'Content-Type': 'multipart/form-data' },
+            //headers: { authorization: process.env.SERVER_TOKEN || "token" }
+            data: formData,
+        })
+            // handle response
+            .then(res => {
+                if (res.status === 200) {
+                    console.log("everything is ok")
+                } else {
+                    console.log("oups something went wrong")
+                }
+                console.log("DROPZONE RES", res)
+                setSuccessfullUploaded(true);
+                setUploading(false); 
+            })
+            // catch errors
+            .catch(err => {
+                console.log("DROPZONE ERR", err)
+                setSuccessfullUploaded(true);
+                setUploading(false);
+                setUploadProgress({ pourcentage: 100, state: 'wrong', fileName: null }) 
+            })
+
+        // promises baby
+        /*const promises = [];
         files.forEach(file => {
             promises.push(sendRequest(file));
         });
@@ -102,10 +131,43 @@ const UploadDropZone = () => {
             // Not Production ready! Do some error handling here instead...
             setSuccessfullUploaded(true);
             setUploading(false);
-        }
+        }*/
     }
 
-    const onFilesAdded = files => (prev => [...prev, ...files]);
+    //UPLOAD DOCUMENTS
+    const uploadDocuments = files => {
+        uploadFiles(files);
+    }
+
+    // ONFILEADDED
+    const onFilesAdded = files => {
+        console.log("files added FROM UPLOAD ZONE", files);
+        uploadDocuments(files);
+    };
+
+    /*
+    cf. https://stackoverflow.com/questions/44936028/progress-bar-with-axios
+    onUpload = () => {
+    const config = {
+      onUploadProgress: progressEvent => {
+        let { progress } = this.state;
+        progress = (progressEvent.loaded / progressEvent.total) * 100;
+        this.setState({ progress });
+      }
+    }
+
+    let formData = new FormData();
+    formData.append("file", this.state.uploadFile);
+    axios.post('http://your_backend_url/api/v1/upload', formData, config).then(res => {
+      if (res.data.status == 200) {
+        console.log("done: ", res.data.message);
+      }
+    }).catch(err => {
+      console.log("error: ", err.message);
+    })
+  }
+
+    /*
     const renderProgress = file => {
         const _uploadProgress = uploadProgress[file.name];
         if (uploading || successfullUploaded) {
@@ -124,36 +186,10 @@ const UploadDropZone = () => {
                 </div>
             );
         }
-    }
-    
-    const renderActions = () => {
-        if (successfullUploaded) {
-            return (
-                <button
-                    className='button'
-                    onClick={() => {
-                        setFiles([]);
-                        setSuccessfullUploaded(false);
-                    }}
-                >
-                    Clear
-                </button>
-            );
-        } else {
-            return (
-                <button
-                    disabled={files.length < 0 || uploading}
-                    onClick={uploadFiles}
-                >
-                    Upload
-                </button>
-            );
-        }
-    }
-
+    }*/
 
     return (
-        <div className="upload-section__dropzone upload">
+        <div className="upload-section__dropzone">
             <span className="title">{uploading ? "Loading..." : "Drop your file here!"}</span>
 
             <div className='content'>
@@ -161,12 +197,11 @@ const UploadDropZone = () => {
                     <DropZone
                         onFilesAdded={onFilesAdded}
                         disabled={uploading || successfullUploaded}
+                        title={"upload here!!"}
                     />
                 </div>
-                <div className='actions'>{renderActions()}</div>
             </div>
-
-            <div className="progress">{progress === 0 ? "" : `Progress: ${progress}`}</div>
+            <CustomProgress progress={uploadProgress.pourcentage} show={showWhenNull} />
         </div>
     )
 }

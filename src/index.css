@@ -28,6 +28,7 @@
   --image-opacity: 100%;
   --bg-color: var(--main-color-white);
   --font-color: var(--main-color-dark);
+  --disabled-color: #bdbdbd;
 }
 
 /* LIGHT COLOR THEME */
@@ -35,7 +36,7 @@
   --main-color-white: #ffffff;
   --main-color-dark: #004058;
   --main-color-primary: #ecfcff;
-  --main-color-secondary: #b2fcff;;
+  --main-color-secondary: #b2fcff;
   --main-color-third: #74bbe4;
   --main-color-hover:#3edbf0;
   --main-radius: 0.5rem;
@@ -47,6 +48,7 @@
   --main-font-color: #004058;
   --image-grayscale: 0;
   --image-opacity: 100%;
+  --disabled-color: #bdbdbd;
   --bg-color: var(--main-color-primary);
   --font-color: var(--main-color-dark);
 }
@@ -68,6 +70,7 @@
   --main-font-color: #ecfcff;
   --image-grayscale: 50%;
   --image-opacity: 90%;
+  --disabled-color: #bdbdbd;
   --bg-color: var(--main-color-dark);
   --font-color: var(--main-color-white);
 }

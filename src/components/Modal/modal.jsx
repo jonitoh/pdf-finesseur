@@ -1,4 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef, useCallback, useEffect } from 'react';
+import "./modal.css";
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import Icon from '../icon';
@@ -31,9 +32,9 @@ const Modal = ({ children, defaultOpened = false, allowHandleEscape = false, tit
   return createPortal(
     isOpen ?
       (<div
-        className={`modal ${fade ? 'modal-fade' : ''} modalContainer`}
+        className={`modal-wrapper ${fade ? 'modal-fade' : ''}`}
       >
-        <div className="modal">
+        <div className="modal-container">
           <header className="modal_header">
             <h2 className="modal_header-title"> {title} </h2>
             <button className="close" onClick={() => close()}>

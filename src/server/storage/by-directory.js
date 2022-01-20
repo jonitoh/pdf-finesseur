@@ -22,7 +22,15 @@ const fileFilter = (req, file, cb) => {
     }
 }
 // our handler tied to our storage
-const uploadOne = multer({ storage: fileStorage, fileFilter: fileFilter }).single('file')
+const uploadOne = multer({
+    storage: fileStorage,
+    //fileFilter: fileFilter
+}).single('file')
+
+const uploadAll = multer({
+    storage: fileStorage,
+    //fileFilter: fileFilter
+}).array('files')
 
 // main router
 const router = express.Router();
@@ -32,11 +40,14 @@ router.use(express.static(storagePath));
 
 // POST ROUTE
 router.post('/', (req, res) => {
-    uploadOne(req, res, (err) => {
+    uploadAll(req, res, (err) => {
         if (err) {
             res.sendStatus(500);
         }
-        res.status(200).send(req.file);
+        console.log("POST DIRECTORY -- it's done")
+        console.log(req.files)
+        console.log(req.body)
+        res.status(200).send(req.files);
     });
 });
 

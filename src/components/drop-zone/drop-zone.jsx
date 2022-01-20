@@ -1,9 +1,9 @@
-
 import React, { useState, createRef } from 'react';
 import PropTypes from 'prop-types';
 import './drop-zone.css';
+import Icon from '../icon';
 
-const DropZone = ({onFilesAdded, disabled = false}) => {
+const DropZone = ({onFilesAdded, disabled = false, title = undefined}) => {
     const ref = createRef();
     const [highlight, setHighlight] = useState(false);
 
@@ -16,13 +16,13 @@ const DropZone = ({onFilesAdded, disabled = false}) => {
 
     const fileListToArray = list => {
         const array = [];
-        for (var i = 0; i < list.length; i++) {
-            array.push(list.item(i));
+        for (var idx = 0; idx < list.length; idx++) {
+            array.push(list.item(idx));
         }
         return array;
     }
 
-    const _onFilesAdded = event => {
+    const addFiles = event => {
         if (disabled) return;
         const files = event.target.files;
         if (onFilesAdded) {
@@ -33,9 +33,7 @@ const DropZone = ({onFilesAdded, disabled = false}) => {
 
     const onDragOver = event => {
         event.preventDefault();
-
         if (disabled) return;
-
         setHighlight(true);
     };
 
@@ -45,9 +43,7 @@ const DropZone = ({onFilesAdded, disabled = false}) => {
 
     const onDrop = event => {
         event.preventDefault();
-
         if (disabled) return;
-
         const files = event.dataTransfer.files;
         if (onFilesAdded) {
             const array = fileListToArray(files);
@@ -58,17 +54,16 @@ const DropZone = ({onFilesAdded, disabled = false}) => {
 
     return (
         <div
-            className={`dropzone ${highlight ? "highlight" : ""}`}
+            className={"dropzone"}
             onDragOver={onDragOver}
             onDragLeave={onDragLeave}
             onDrop={onDrop}
             onClick={openFileDialog}
             style={{ cursor: disabled ? "default" : "pointer" }}
         >
-            <img
+            <Icon.CloudUpload
+                className={`icon ${highlight ? "highlight" : ""}`}
                 alt="upload"
-                className='icon'
-                src={"assets/icons/cloud-upload.svg"}
                 style={{ cursor: disabled ? "default" : "pointer" }}
             />
             <input
@@ -76,9 +71,9 @@ const DropZone = ({onFilesAdded, disabled = false}) => {
                 className="file-input"
                 type="file"
                 multiple
-                onChange={_onFilesAdded}
+                onChange={addFiles}
             />
-            <span>Upload Files</span>
+            {!!title ? <span>{title}</span> : null}
         </div>
     )
 }
@@ -88,4 +83,5 @@ export default DropZone;
 DropZone.propTypes = {
     onFilesAdded: PropTypes.func,
     disabled: PropTypes.bool,
+    title: PropTypes.string
 }
