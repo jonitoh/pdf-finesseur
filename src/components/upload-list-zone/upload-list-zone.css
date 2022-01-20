@@ -1,8 +1,3 @@
 .upload-section__list {
     flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 80%;
-    display: flex;
-    justify-content: space-around;
-    overflow: auto;
 }

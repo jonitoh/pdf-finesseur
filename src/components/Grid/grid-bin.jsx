@@ -2,23 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './grid.css';
 import GridWrapper from './grid-wrapper/grid-wrapper';
-import { SimpleCard as DummyCard } from '../card/dummy-card/dummy-card';
+import { OneClickCard as DummyCard } from '../card/dummy-card/dummy-card';
 import { useStore } from '../../store';
 
 const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   // items to be populated in the grid
   const {
-    availablePages: items,
-    removePageByIdFromAvailablePages,
-    addDeletedPage,
+    deletedPages: items,
+    removePageByIdFromDeletedPages,
+    addAvailablePage
   } = useStore();
 
+  // removeFromGrid aka restaurer aka remove deleted page and add into available pages
   const removeFromGrid = itemId => {
-    console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
+    console.log(`WE are TRYING TO RESTORE A CARD WITH THE ID ${itemId}`)
     const removedItems = items.filter(item => item.id === itemId);
-    removePageByIdFromAvailablePages(itemId);
+    removePageByIdFromDeletedPages(itemId);
     if (removedItems.length > 0) {
-      addDeletedPage(removedItems[0]);
+      addAvailablePage(removedItems[0]);
     }
   }
   // in order to customize the number of rows
@@ -29,7 +30,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
     <CardComponent {...{
       text: item.name,
       onClick: () => removeFromGrid(item.id),
-      modalText: `modal msg for item ${item.name}`
+      clickLabel: "restore"
     }} />
   );
 

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './home-page.css';
 import Placeholder from '../../components/placeholder/placeholder';
-import Grid from '../../components/grid/grid';
+import Grid from '../../components/grid/grid-home';
 import { withInnerNavigation } from '../page-wrapper/page-wrapper';
 import { useStore } from '../../store';
 

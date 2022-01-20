@@ -1,18 +1,6 @@
 .upload-section__dropzone {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 20%;
     display: flex;
-    border: 3px dashed var(--main-color-hover); 
-}
-
-.upload {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    align-items: flex-start;
-    text-align: left;
-    overflow: hidden;
+    border: 3px dashed var(--main-color-hover);
 }
   
 .content {
@@ -20,15 +8,6 @@
     flex-direction: row;
     padding-top: 16px;
     box-sizing: border-box;
-    width: 100%;
-}
-  
-.files {
-    margin-left: 32px;
-    align-items: flex-start;
-    justify-items: flex-start;
-    flex: 1;
-    overflow-y: auto;
 }
   
 .actions {

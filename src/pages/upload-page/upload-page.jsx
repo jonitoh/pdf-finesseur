@@ -10,7 +10,7 @@ import { useStore } from '../../store';
 
 const UploadPage = () => {
 
-    const { getNumberOfDocuments, documents } = useStore();
+    const { getNumberOfDocuments } = useStore();
 
     if (getNumberOfDocuments() === 0) {
         return (
@@ -21,7 +21,7 @@ const UploadPage = () => {
     }
     return (
         <div className="upload-section">
-            <UploadListZone documents={documents} />
+            <UploadListZone/>
             <UploadDropZone/>
         </div>
     )

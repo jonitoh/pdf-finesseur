@@ -1,18 +1,12 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import './upload-list-zone.css';
+import Grid from '../../components/grid/grid-upload';
 
-const UploadListZone = ({documents}) => {
-
+const UploadListZone = () => {
     return (
         <div className="upload-section__list">
-            <ul>
-                {documents
-                    .map(doc => (
-                        <li key={doc.id}>Document {doc.id}</li>
-                    ))}
-            </ul>
+            <Grid/>
         </div>
     )
 }

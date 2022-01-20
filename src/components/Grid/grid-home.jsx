@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './grid.css';
 import GridWrapper from './grid-wrapper/grid-wrapper';
-import { SimpleCard as DummyCard } from '../card/dummy-card/dummy-card';
+import { TwoClickCard as DummyCard } from '../card/dummy-card/dummy-card';
 import { useStore } from '../../store';
 
 const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
@@ -28,8 +28,10 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   const renderCard = item => (
     <CardComponent {...{
       text: item.name,
-      onClick: () => removeFromGrid(item.id),
-      modalText: `modal msg for item ${item.name}`
+      firstOnClick: () => removeFromGrid(item.id),
+      firstLabel: "remove",
+      secondOnClick: () => console.log(`modal msg for item ${item.name}`),
+      secondLabel: 'modal',
     }} />
   );
 

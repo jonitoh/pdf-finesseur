@@ -1,26 +1,44 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import './grid.css';
 import GridWrapper from './grid-wrapper/grid-wrapper';
-import { SimpleCard as DummyCard } from '../card/dummy-card/dummy-card';
+import { TwoClickCard as DummyCard } from '../card/dummy-card/dummy-card';
 import { useStore } from '../../store';
 
 const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   // items to be populated in the grid
   const {
-    availablePages: items,
-    removePageByIdFromAvailablePages,
-    addDeletedPage,
+    documents: items,
+    deletedPages,
+    removePagesByDocumentFromAvailablePages,
+    removePagesByDocumentFromDeletedPages,
+    removeDocument,
+    addAvailablePage,
+    removePageByIdFromDeletedPages,
   } = useStore();
 
+  // remove document forever
   const removeFromGrid = itemId => {
     console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
-    const removedItems = items.filter(item => item.id === itemId);
-    removePageByIdFromAvailablePages(itemId);
-    if (removedItems.length > 0) {
-      addDeletedPage(removedItems[0]);
-    }
+    removeDocument(itemId);
+    removePagesByDocumentFromDeletedPages(itemId);
+    removePagesByDocumentFromAvailablePages(itemId);
   }
+
+  // restaurer à la chaine
+  const restoreAll = itemId => {
+    console.log(`restore all the pages from the item ${itemId}`);
+    [ ...deletedPages]
+    .filter(page => page.parentId === itemId)
+    .forEach(page => {
+      addAvailablePage(page);
+      removePageByIdFromDeletedPages(page.id);
+
+    })
+    
+  }
+
   // in order to customize the number of rows
   const customStyle = { flexBasis: fBasis };
 
@@ -28,8 +46,10 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   const renderCard = item => (
     <CardComponent {...{
       text: item.name,
-      onClick: () => removeFromGrid(item.id),
-      modalText: `modal msg for item ${item.name}`
+      firstLabel: "Remove All",
+      firstOnClick: () => removeFromGrid(item.id),
+      secondLabel: "Restore All",
+      secondOnClick: () => restoreAll(item.id)
     }} />
   );
 

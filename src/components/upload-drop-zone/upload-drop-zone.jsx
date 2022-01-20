@@ -163,9 +163,6 @@ const UploadDropZone = () => {
                         disabled={uploading || successfullUploaded}
                     />
                 </div>
-                <div className='files'>
-                    Nada
-                </div>
                 <div className='actions'>{renderActions()}</div>
             </div>
 

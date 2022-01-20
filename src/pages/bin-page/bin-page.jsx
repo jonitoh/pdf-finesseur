@@ -5,12 +5,12 @@ import './bin-page.css';
 import { withInnerNavigation } from '../page-wrapper/page-wrapper';
 import Placeholder from '../../components/placeholder/placeholder';
 import { useStore } from '../../store';
+import Grid from '../../components/grid/grid-bin';
 
 const BinPage = () => {
 
     const {
         getNumberOfDeletedPages,
-        deletedPages
     } = useStore();
 
     if (getNumberOfDeletedPages() === 0) {
@@ -21,14 +21,7 @@ const BinPage = () => {
         )
     }
     return (
-        <Placeholder>
-            <ul>
-                {deletedPages
-                    .map(page => {
-                        return <li key={page.id}>Deleted page {page.id}</li>
-                    })}
-            </ul>
-        </Placeholder>
+        <Grid/>
     )
 }
 
