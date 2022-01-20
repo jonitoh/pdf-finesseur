@@ -1,29 +1,78 @@
 /*
 *  CSS TABLE OF CONTENTS
 *   
-*  0.0 - Variables
-*  1.0 - Reset
-*  2.0 - Body
+*  Variables
+*  Reset
 *
 */
 
-/*** 0.0 - Variables ***/
+/*** Variables for color theme ***/
+/* DEFAULT COLOR THEME */
 :root {
-  /* Colors */
-  --color-background-light: #ecfcff;
-  --color-primary-light: #b2fcff;
-  --color-primary-hover: #3edbf0;
-  --color-primary-dark: #5edfff;
-  --color-background-dark: #3e64ff;
-  --color-white: #e3e8e8;
-  --color-black: #2e3838;
-
-  /* Border */
-  --radius: 0.5rem;
+  --main-color-white: #ffffff;
+  --main-color-dark: #000000;
+  --main-color-primary: #6a7481;
+  --main-color-secondary: #6a7481;
+  --main-color-third: #6a7481;
+  --main-color-hover:#eeeeee;
+  --main-radius: 0.5rem;
+  --main-border-width: 1px;
+  --main-border-style: solid;
+  --main-border-color: #666d70;
+  --main-border: var(--main-border-width) var(--main-border-style) var(--main-border-color);
+  --main-font-weight: 400;
+  --main-font-color: #000000;
+  --duration: 0.1s;
+  --timing: ease;
+  --image-grayscale: 0;
+  --image-opacity: 100%;
+  --bg-color: var(--main-color-white);
+  --font-color: var(--main-color-dark);
 }
 
+/* LIGHT COLOR THEME */
+[data-theme="light"] {
+  --main-color-white: #ffffff;
+  --main-color-dark: #004058;
+  --main-color-primary: #ecfcff;
+  --main-color-secondary: #b2fcff;;
+  --main-color-third: #74bbe4;
+  --main-color-hover:#3edbf0;
+  --main-radius: 0.5rem;
+  --main-border-width: 1px;
+  --main-border-style: solid;
+  --main-border-color: #66acae;
+  --main-border: var(--main-border-width) var(--main-border-style) var(--main-border-color);
+  --main-font-weight: 400;
+  --main-font-color: #004058;
+  --image-grayscale: 0;
+  --image-opacity: 100%;
+  --bg-color: var(--main-color-white);
+  --font-color: var(--main-color-dark);
+}
 
-/*** 1.0 - Reset ***/
+/* DARK COLOR THEME */
+[data-theme="dark"] {
+  --main-color-white: #ecfcff;
+  --main-color-dark: #004058;
+  --main-color-primary: #abc8e2;
+  --main-color-secondary: #c4d7ed;
+  --main-color-third: #e1e6fa;
+  --main-color-hover: #3edbf0;
+  --main-radius: 0.5rem;
+  --main-border-width: 1px;
+  --main-border-style: solid;
+  --main-border-color: #66acae;
+  --main-border: var(--main-border-width) var(--main-border-style) var(--main-border-color);
+  --main-font-weight: 400;
+  --main-font-color: #ecfcff;
+  --image-grayscale: 50%;
+  --image-opacity: 90%;
+  --bg-color: var(--main-color-dark);
+  --font-color: var(--main-color-white);
+}
+
+/*** Reset ***/
 *,
 *::before,
 *::after {
@@ -39,9 +88,14 @@ body {
   padding: 0;
 }
 
-/*** 2.0 - Body ***/
 body {
   font-family: Arial, sans-serif;
-  color: var(--color-black);
-  background-color: var(--color-background-light);
+  background-color: var(--bg-color);
+  color: var(--font-color);
+  transition: color var(--duration) var(--timing), background-color var(--duration) var(--timing),;
+}
+
+img,
+video {
+  filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }

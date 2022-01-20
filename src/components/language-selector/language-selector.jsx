@@ -1,5 +1,6 @@
 import React from 'react';
 import './language-selector.css';
+import Selector from '../selector/selector';
 import { useStore } from '../../store';
 
 const LanguageSelector = () => {
@@ -16,17 +17,12 @@ const LanguageSelector = () => {
     };
 
     return (
-        <div>
-            <h3>{t("choose-lang")}</h3>
-            <select
-                value={lang}
-                onChange={handleChange}
-            >
-                {getOptions()
-                    .map(opt => (<option key={opt.value} value={opt.value}>{opt.label}</option>))
-                }
-            </select>
-        </div>
+        <Selector
+            label={t("choose-lang")}
+            value={lang}
+            options={getOptions()}
+            onChange={handleChange}
+        />
     )
 };
 

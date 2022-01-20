@@ -11,7 +11,7 @@ const languageSlice = (set, get) => ({
     getLangs: () => (get().langs),
     getLang: () => (get().lang),
     setLang: lang => set({lang: lang}),
-    t: key => (translate(get().lang, key, "undefined")),
+    t: (key, error = 'default') => (translate(get().lang, key, "undefined", error)),
     getOptions: () => (getOptionsFromLanguages(filterLanguages(get().langs))),
 })
 

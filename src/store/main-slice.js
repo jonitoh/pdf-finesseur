@@ -4,12 +4,12 @@ const generateDocumentId = () => (`File-${(Math.floor(Math.random() * (10000 - 1
 
 class Document {
     // initializer
-    constructor(path, id, name, extension, document) {
+    constructor(path, id, name, extension, doc) {
         this.path = path;
         this.id = id;
         this.extension = extension;
         this.name = name;
-        this.document = document;
+        this.doc = doc;
         this.numberOfPages = this.getNumberOfPages()
     }
 
@@ -20,10 +20,10 @@ class Document {
 const createFakeDocument = () => {
     const id = generateDocumentId();
     const extension = '.pdf';
-    const document = {};
+    const doc = {};
     const name = `file_${id}`;
     const path = "/" + name + extension;
-    return new Document(path, id, name, extension, document)
+    return new Document(path, id, name, extension, doc)
 };
 
 const generatePageId = (parentId, index, separator = "__") => (parentId + separator + index);
@@ -48,19 +48,19 @@ const createFakePage = (parentId, pageNumber) => {
 };
 
 // fake way of doing it
-const extractPagesFromDocument = document => {
+const extractPagesFromDocument = doc => {
     let pages = [];
-    for (let pageNumber = 1; pageNumber <= document.numberOfPages; pageNumber++) {
-        pages.push(createFakePage(document.id, pageNumber));
+    for (let pageNumber = 1; pageNumber <= doc.numberOfPages; pageNumber++) {
+        pages.push(createFakePage(doc.id, pageNumber));
     }
     return pages;
 };
 
 // fake way of doing it
 const mergePages = pages => {
-    const document = createFakeDocument();
-    document.numberOfPages = pages.length
-    return document
+    const doc = createFakeDocument();
+    doc.numberOfPages = pages.length
+    return doc
 }
 
 // right way
@@ -79,7 +79,7 @@ const _documents = _generateFakeDocuments(2);
 const _generateFakePages = (documents) => {
     return (
         documents
-        .map(document => extractPagesFromDocument(document))
+        .map(doc => extractPagesFromDocument(doc))
         .reduce((a, b) => (a.concat(b)), [])
     )
 };
@@ -100,9 +100,9 @@ const mainSlice = (set, get) => ({
     getMergedDocument: () => (get().mergedDocument),
     addAvailablePage: page => set(state => ({ availablePages: [...state.availablePages, page] })),
     addDeletedPage: page => set(state => ({ deletedPages: [...state.deletedPages, page] })),
-    addDocument: document => set(state => ({
-        documents: [...state.documents, document],
-        availablePages: [...state.availablePages, ...extractPagesFromDocument(document)],
+    addDocument: doc => set(state => ({
+        documents: [...state.documents, doc],
+        availablePages: [...state.availablePages, ...extractPagesFromDocument(doc)],
     })),
     createMergedDocument: () => set(state => ({ mergedDocument: mergePages(state.availablePages) })),
     removePageByIdFromAvailablePages: id => set(state => ({ availablePages: removePageById(id, state.availablePages) })),

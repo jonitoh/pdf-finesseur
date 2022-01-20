@@ -14,7 +14,22 @@ const createMessagesFromLanguages = languages => (
 
 export const messages = createMessagesFromLanguages(LANGUAGES);
 
-export const translate = (lang, key, defaultKey = "undefined") => (messages[lang][key in messages[lang] ? key : defaultKey]);
+export const translate = (lang, key, defaultKey = "undefined", error = 'default') => {
+    const isValidKey = key in messages[lang];
+    if (isValidKey) {
+        return messages[lang][key]
+    } else {
+        if (error === 'strict') {
+            return undefined;
+        } else if (error === 'soft') {
+            return key;
+        } else if (error === 'default') {
+            return messages[lang][defaultKey]
+        } else {
+            throw `error can only have the values 'strict', 'soft' and default'. Instead, the value is '${error}'.`;
+        }
+    }
+};
 
 export const getOptionsFromLanguages = languages => (
     Object

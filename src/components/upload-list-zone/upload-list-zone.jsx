@@ -9,8 +9,8 @@ const UploadListZone = ({documents}) => {
         <div className="upload-section__list">
             <ul>
                 {documents
-                    .map(document => (
-                        <li key={document.id}>Document {document.id}</li>
+                    .map(doc => (
+                        <li key={doc.id}>Document {doc.id}</li>
                     ))}
             </ul>
         </div>
