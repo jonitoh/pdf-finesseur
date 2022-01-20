@@ -3,34 +3,40 @@
 const fs = require("fs");
 const multer = require('multer');
 const express = require('express');
-const storagePath = 'public/uploads';
+const storagePath = './public/uploads/';
+
 // multer configuration
 const fileStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, storagePath)
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname)// to change into (id + extension)
+        cb(null, file.originalname)
+    },
+    onFileUploadStart: file => {
+        console.log(file.originalname + ' is starting ...');
+    },
+    onFileUploadComplete: file => {
+        console.log(file.fieldname + ' uploaded to  ' + file.path);
     }
 })
-const availableMimetypes = ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'];
+const availableMimetypes = ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'];//TODO constants
 const fileFilter = (req, file, cb) => {
-    if (availableMimetypes.includes(file.mimetype)) {
+    if (availableMimetypes.indexOf(file.mimetype) !== -1) {
         cb(null, true)
     } else {
         cb(null, false)
+        return cb(new Error("INVALID_TYPE"))
     }
 }
 // our handler tied to our storage
-const uploadOne = multer({
-    storage: fileStorage,
-    //fileFilter: fileFilter
-}).single('file')
-
 const uploadAll = multer({
     storage: fileStorage,
-    //fileFilter: fileFilter
-}).array('files')
+    fileFilter: fileFilter,
+    limits: {
+        fileSize: 1024 * 1024,
+    }
+}).array('files');
 
 // main router
 const router = express.Router();
@@ -38,27 +44,49 @@ const router = express.Router();
 // TO serve any file back to the client
 router.use(express.static(storagePath));
 
-// POST ROUTE
-router.post('/', (req, res) => {
-    uploadAll(req, res, (err) => {
-        if (err) {
-            res.sendStatus(500);
+//Express Error Handling
+const availableErrors = [
+    "FILE_MISSING",
+    "INVALID_TYPE",
+    "FORBIDDEN_DOWNLOAD",
+];
+router.use(function (err, req, res, next) {
+    // Check if the error is thrown from multer
+    if (err instanceof multer.MulterError) {
+        res.statusCode = 400
+        res.send({ code: err.code })
+    } else if (err) {
+        // If it is not multer error then check if it is our custom error for FILE_MISSING
+        if (availableErrors.indexOf(err.message) !== -1) {
+            res.statusCode = 400
+            res.send({ code: err.message })
+        } else {
+            //For any other errors set code as GENERIC_ERROR
+            res.statusCode = 500
+            res.send({ code: "GENERIC_ERROR" })
         }
-        console.log("POST DIRECTORY -- it's done")
-        console.log(req.files)
-        console.log(req.body)
-        res.status(200).send(req.files);
-    });
-});
+    }
+})
+
+// POST ROUTE
+router.post("/", uploadAll, (req, res, next) => {
+    if (!req.files) {
+        //If the file is not uploaded, then throw custom error with message: FILE_MISSING
+        throw Error("FILE_MISSING")
+    } else {
+        //If the file is uploaded, then send a success response.
+        res.status(200).send({ message: "File Uploaded", code: 200 });
+    }
+})
 
 // GET ROUTE -- only for PDF files
 router.get('/:path/:name', (req, res) => {
     const { path, name } = req.params;
-    // Check if it's a pdf
-    if (path.endsWith('.pdf')) {
-        res.download(path, name);
+    if (!path.endsWith('.pdf')) {
+        // it should only download PDF files
+        throw Error("FORBIDDEN_DOWNLOAD")
     } else {
-        res.status(500).send(err.message || 'Incomplete Download');
+        res.download(path, name);
     }
 });
 
@@ -69,11 +97,11 @@ router.delete('/:path', (req, res) => {
         // check in the last updated
         console.log(`File at path ${path} created at: ${stats.birthtime}`);
         if (err) {
-            res.status(500).send(err.message || 'Unfound file during the deletion process');
+            res.status(500).send(err.message || "UNFOUND_FILE");
         } else {
             fs.unlink(path, function (err) {
                 if (err) {
-                    res.status(500).send(err.message || 'Unsuccessful deletion');
+                    res.status(500).send(err.message || "CANT_DELETE");
                 } else {
                     res.sendStatus(200)
                 }

@@ -14,20 +14,11 @@ const DropZone = ({onFilesAdded, disabled = false, title = undefined}) => {
         ref.current.click();
     }
 
-    const fileListToArray = list => {
-        const array = [];
-        for (var idx = 0; idx < list.length; idx++) {
-            array.push(list.item(idx));
-        }
-        return array;
-    }
-
     const addFiles = event => {
         if (disabled) return;
         const files = event.target.files;
         if (onFilesAdded) {
-            const array = fileListToArray(files);
-            onFilesAdded(array);
+            onFilesAdded(files);
         }
     }
 
@@ -46,8 +37,7 @@ const DropZone = ({onFilesAdded, disabled = false, title = undefined}) => {
         if (disabled) return;
         const files = event.dataTransfer.files;
         if (onFilesAdded) {
-            const array = fileListToArray(files);
-            onFilesAdded(array);
+            onFilesAdded(files);
         }
         setHighlight(false);
     }
