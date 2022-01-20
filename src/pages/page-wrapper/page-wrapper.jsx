@@ -5,23 +5,23 @@ import PropTypes from 'prop-types';
 import './page-wrapper.css';
 import Icon from '../../components/icon';
 
-const BackButton = ({ path, icon, onClick = undefined }) => (
+const BackButton = ({ path, Icon, onClick = undefined }) => (
     <div>
         <Link to={path} onClick={onClick}>
-            <img src={icon} />
+            <Icon />
         </Link>
     </div>
 )
 
 BackButton.propTypes = {
     path: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
+    Icon: PropTypes.func.isRequired,
     onClick: PropTypes.func,
 }
 
 const PageWrapper = ({ putBackButton = true, children }) => {
     const leftStyle = {};
-    const LeftButton = <BackButton path={"/"} icon={"./assets/icons/navigation-back-arrow.svg"} style={leftStyle} />;
+    const LeftButton = <BackButton path={"/"} Icon={Icon.NavBackArrow} style={leftStyle} />;
     if (putBackButton) {
         return (
             <div className="page-wrapper">

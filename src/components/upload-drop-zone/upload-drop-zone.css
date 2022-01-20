@@ -3,7 +3,7 @@
     flex-shrink: 1;
     flex-basis: 20%;
     display: flex;
-    border: 1px dashed var(--color-primary-hover); 
+    border: 3px dashed var(--main-color-hover); 
 }
 
 .upload {

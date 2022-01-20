@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './simple-navbar.css';
 import NavbarList from '../navbar-list/navbar-list';
-import NavbarItem, { SVGNavbarItem } from '../navbar-item/navbar-item';
+import NavbarItem from '../navbar-item/navbar-item';
 import Icon from '../../icon';
 import { useStore } from '../../../store';
 

@@ -9,8 +9,8 @@
     right: 0%;
     left: 60%;
     bottom: 60%;
-    background-color: var(--color-background-dark);
-    border: 10px solid var(--color-background-dark);
+    background-color: var(--main-color-third);
+    border: 10px solid var(--main-color-third);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -20,6 +20,6 @@
 
 .notification-count {
     font-family: Arial;
-    color: var(--color-white);
+    color: var(--main-color-white);
     font-weight: 700;
 }

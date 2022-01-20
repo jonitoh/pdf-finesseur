@@ -22,3 +22,13 @@
     justify-content: center; 
 }
 
+.page-wrapper__inner-nav svg {
+    width: 2rem;
+    transition: all 200ms ease-in;
+    text-decoration: none;
+    color: var(--font-color);
+}
+
+.page-wrapper__inner-nav svg:hover {
+    color: var(--main-color-hover);
+}

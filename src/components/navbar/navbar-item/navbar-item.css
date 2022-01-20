@@ -5,47 +5,18 @@
     transition: all 200ms ease-in;
 }
 
+.navbar__item a {
+    color: var(--font-color);
+    text-decoration: none;
+}
+
 .navbar__item svg {
-    /*fill: var(--color-primary-dark);*/
     width: 2rem;
     transition: all 200ms ease-in;
 }
 
-.navbar__item svg:hover {
-    /*fill: var(--color-primary-hover);*/
-}
 
-.navbar__item a {
-    color: var(--color-black);
-    text-decoration: none;
-}
 
 .navbar__item a:hover {
-    color: var(--color-primary-hover);
-}
-
-/* notification */
-.notification-wrapper {
-    position: relative;
-}
-
-.notification-indicator {
-    position: absolute;
-    top: 0%;
-    right: 0%;
-    left: 60%;
-    bottom: 60%;
-    background-color: var(--color-background-dark);
-    border: 10px solid var(--color-background-dark);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.notification-count {
-    font-family: Arial;
-    color: var(--color-white);
-    font-weight: 700;
+    color: var(--main-color-hover);
 }
