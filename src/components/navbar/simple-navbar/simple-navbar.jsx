@@ -5,6 +5,40 @@ import NavbarList from '../navbar-list/navbar-list';
 import NavbarItem from '../navbar-item/navbar-item';
 import Icon from '../../icon';
 import { useStore } from '../../../store';
+import axios from "axios";
+
+
+//  simple fake download
+const downloadFile = () => {
+    console.log("start download");
+    const path = "public/uploads/name_key_0.pdf";
+    const name = "result.pdf";
+    //send request
+    axios({
+        url: `${"http://localhost:5000"}/storage/${path}/${name}`,
+        method: "GET",
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            //authorization: process.env.SERVER_TOKEN || "token"
+        },
+        onUploadProgress: data => {
+            const percentage = Math.round((100 * data.loaded) / data.total)
+            console.log("setUploadProgress", percentage)
+        },
+    })
+        // handle response
+        .then(res => {
+            if (res.status === 200) {
+                console.log("everything is ok")
+            } else {
+                console.log("oups something went wrong")
+            }
+        })
+        // catch errors
+        .catch(error => {
+            console.log(error);
+        })
+}
 
 
 
@@ -32,6 +66,7 @@ const SimpleNavbar = () => {
         console.log('CLICK---order', order);
         console.log('it should download!');
         //resetAll()
+        downloadFile();
     }
 
 

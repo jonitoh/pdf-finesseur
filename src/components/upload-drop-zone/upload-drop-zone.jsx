@@ -72,6 +72,11 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         reject(req.response);
     });
     */
+    const createFilename = (file, index) => {
+        const { name, type } = file
+        const extension = ".pdf"
+        return `name_key_${index}${extension}`
+    }
 
     // UPLOAD FILES
     const uploadFiles = files => {
@@ -84,7 +89,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         // initiate formadata
         let formData = new FormData();
         for (const key of Object.keys(files)) {
-            formData.append('files', files[key], `name_key_${key}`)
+            formData.append('files', files[key], createFilename(files[key], key))
         }
         console.log(Array.from(formData));
 
@@ -104,6 +109,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         })
             // handle response
             .then(res => {
+                console.log("@@@@@@@", res)
                 if (res.status === 200) {
                     console.log("everything is ok")
                 } else {
@@ -115,6 +121,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
             })
             // catch errors
             .catch(error => {
+                console.log("&&&&&&&", error);
                 const { code } = error?.response?.data
                 switch (code) {
                     case "FILE_MISSING":

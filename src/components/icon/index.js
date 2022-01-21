@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactComponent as _Add } from '../../assets/icons/add-file.svg';
 import { ReactComponent as _Close } from '../../assets/icons/close-button.svg';
 import { ReactComponent as _CloudUpload } from '../../assets/icons/cloud-upload.svg';

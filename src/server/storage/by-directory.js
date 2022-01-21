@@ -75,7 +75,8 @@ router.post("/", uploadAll, (req, res, next) => {
         throw Error("FILE_MISSING")
     } else {
         //If the file is uploaded, then send a success response.
-        res.status(200).send({ message: "File Uploaded", code: 200 });
+        const output = req.files.map(file => ({ name: file.name, path: file.path }));
+        res.status(200).send({ message: "File Uploaded", code: 200, output: output });
     }
 })
 
