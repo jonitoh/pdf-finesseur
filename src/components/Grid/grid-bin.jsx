@@ -17,9 +17,13 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   const removeFromGrid = itemId => {
     console.log(`WE are TRYING TO RESTORE A CARD WITH THE ID ${itemId}`)
     const removedItems = items.filter(item => item.id === itemId);
+    console.log("@@@removedItems", removedItems);
     removePageByIdFromDeletedPages(itemId);
+    console.log("@@@pages removed")
     if (removedItems.length > 0) {
+      console.log("@@@about to add available page");
       addAvailablePage(removedItems[0]);
+      console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
     }
   }
   // in order to customize the number of rows

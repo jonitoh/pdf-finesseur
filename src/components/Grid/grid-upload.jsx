@@ -23,7 +23,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
     console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
     removeDocument(itemId);
     removePagesByDocumentFromDeletedPages(itemId);
-    removePagesByDocumentFromAvailablePages(itemId);
+    //removePagesByDocumentFromAvailablePages(itemId);
   }
 
   // restaurer à la chaine

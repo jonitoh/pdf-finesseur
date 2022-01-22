@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './dummy-card.css';
 
 export const SimpleCard = ({ text = "fake text"}) => (
-  <div>
+  <div className='border-card'>
     <p>{text}</p>
   </div>
 );
@@ -13,7 +13,7 @@ SimpleCard.propTypes = {
 }
 
 export const OneClickCard = ({ text = "fake text", clickLabel = "Press it", onClick }) => (
-  <div>
+  <div className='border-card'>
     <p>{text}</p>
     <button onClick={onClick}>{clickLabel}</button>
   </div>
@@ -26,7 +26,7 @@ OneClickCard.propTypes = {
 }
 
 export const TwoClickCard = ({ text = "fake text", firstLabel = "first", secondLabel = 'second', firstOnClick, secondOnClick }) => (
-  <div>
+  <div className='border-card'>
     <p>{text}</p>
     <button onClick={firstOnClick}>{firstLabel}</button>
     <button onClick={secondOnClick}>{secondLabel}</button>
