@@ -116,6 +116,7 @@ const generateFakePages = (documents) => {
 
 export {
     Element,
+    Document,
     isInstanceOfElement,
     mergePages,
     removePageById,

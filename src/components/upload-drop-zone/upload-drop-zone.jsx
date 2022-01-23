@@ -5,6 +5,7 @@ import DropZone from '../drop-zone/drop-zone';
 import axios from "axios";
 import { useStore } from '../../store';
 import { API_URL } from '../../utils/constants';
+import { Document } from '../../services/page-and-document';
 
 // TEST PATH
 const _path = "public/uploads/__8497_name_key_0.pdf";
@@ -51,7 +52,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
     const [error, setError] = useState()
 
     // 
-    const { addDocumentFromUploadFile } = useStore();
+    const { addDocumentFromUploadFile, addDocument } = useStore();
     // UPLOAD ONE FILE -- add event listener
     /*
     req.upload.addEventListener("progress", event => {
@@ -79,21 +80,48 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         reject(req.response);
     });
     */
-    const createFilename = (file, index) => {
-        const { name, type } = file
-        const extension = ".pdf"
-        return `__${(Math.floor(Math.random() * (10000 - 1) + 1))}_name_key_${index}${extension}`
+    const createIdFromFile = (file, index) => {
+        return `__${(Math.floor(Math.random() * (10000 - 1) + 1))}_name_key_${index}`
     }
-    // addDocumentFromUploadFile
-    const _addDocumentFromUploadFile = (res) => {
-        console.log("input res", res);
+
+    const createFilename = (id, file, index, defaultExtension = ".pdf") => {
+        const { name, type } = file
+        const extension = defaultExtension
+        return `${id}${extension}`
+    }
+    // addDocumentFromUploadFiles
+    const _addDocumentFromUploadFile = (data) => {
+        console.log("input DATA", data);
+        // TODO fake implementation
+        const doc = new Document(data.id, data.path, data.originalFilename, ".pdf", {})
+        console.log("doc", doc)
+        console.log("numberofPages", doc.numberOfPages)
+        doc.numberOfPages = 4;
+        console.log("NEW numberofPages", doc.numberOfPages)
+        addDocument(doc);
         addDocumentFromUploadFile();
+
+    }
+
+    const _addDocumentFromUploadFiles = (inputs, response) => {
+        const { data : { output }} = response;
+        console.log("input", inputs);
+        console.log("output", output);
+        // align everything
+        const filterByName = (list, name) => (list.filter(l=> l.filename === name)) 
+        const data = (
+            inputs
+            .map(inp => ({ ...inp, ...filterByName(output, inp.filename)[0]}))
+        )
+        console.log("data", data)
+        data.map(f => _addDocumentFromUploadFile(f));
     }
 
     // UPLOAD FILES
     const uploadFiles = files => {
         // prepare the download process
         //Clear the error message
+        const inputs = [];
         setError("")
         setUploadProgress(initialUploadProgress);
         setUploading(true);
@@ -101,7 +129,11 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         // initiate formadata
         let formData = new FormData();
         for (const key of Object.keys(files)) {
-            formData.append('files', files[key], createFilename(files[key], key))
+            const file = files[key]
+            const newId = createIdFromFile(file, key);
+            const filename = createFilename(newId, file, key);
+            formData.append('files', file, filename)
+            inputs.push({ id: newId, file: file, originalFilename: file.name, filename: filename })
         }
         console.log(Array.from(formData));
 
@@ -126,7 +158,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                 } else {
                     console.log("oups something went wrong")
                 }
-                _addDocumentFromUploadFile(res);
+                _addDocumentFromUploadFiles(inputs, res);
                 setSuccessfullUploaded(true);
                 setUploading(false);
                 setUploadProgress({ pourcentage: 100, state: 'wrong', fileName: null })

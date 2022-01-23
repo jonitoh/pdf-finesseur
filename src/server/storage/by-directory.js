@@ -120,5 +120,27 @@ router.delete('/:path', (req, res) => {
     });
 });
 
+// DELETE ALL
+router.delete('/', (req, res) => {
+    console.log("remove erything")
+
+    /*
+    fs.stat(path, function (err, stats) {
+        // check in the last updated
+        console.log(`File at path ${path} created at: ${stats.birthtime}`);
+        if (err) {
+            res.status(500).send(err.message || "UNFOUND_FILE");
+        } else {
+            fs.unlink(path, function (err) {
+                if (err) {
+                    res.status(500).send(err.message || "CANT_DELETE");
+                } else {
+                    res.sendStatus(200)
+                }
+            });
+        }
+    });*/
+});
+
 // exports
 module.exports = router;
