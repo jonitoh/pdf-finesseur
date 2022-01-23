@@ -1,12 +1,14 @@
 import React from "react";
+// creer item et itemdraglayer
 import { Item, ItemDragLayer } from "./dnd-elements";
+
 import { useStore } from './store/index';
 
 const Container = () => {
-  
-  // destructuring after
-  const state = useStore();
 
+  // destructuring a faire
+  const state = useStore();
+  ///////////////////
   const clearItemSelection = () => {
     state.clearSelection();
   };
@@ -93,7 +95,7 @@ const Container = () => {
       insertIndex: newInsertIndex
     }*/
   };
-
+  ////////////////
   return (
     <main>
       <ItemDragLayer />

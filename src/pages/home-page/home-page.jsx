@@ -6,9 +6,11 @@ import Placeholder from '../../components/placeholder/placeholder';
 import Grid from '../../components/grid/grid-dnd-home';
 import { withInnerNavigation } from '../page-wrapper/page-wrapper';
 import { useStore } from '../../store';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const HomePage = () => {
- 
+
     const { getNumberOfDocuments } = useStore();
 
     if (getNumberOfDocuments() === 0) {
@@ -19,7 +21,9 @@ const HomePage = () => {
         )
     }
     return (
-        <Grid/>
+        <DndProvider backend={HTML5Backend}>
+            <Grid />
+        </DndProvider>
     )
 }
 

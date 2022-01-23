@@ -9,6 +9,7 @@ import SettingsPage from './pages/settings-page/settings-page';
 import { useStore } from './store';
 
 
+
 const App = () => {
   const { initiateTheme } = useStore();
   // COLOR THEME -- Force an initial state based on the local storage value

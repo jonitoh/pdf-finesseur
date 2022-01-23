@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { useDrag, useDrop } from "react-dnd";
-import { ItemTypes } from "./ItemTypes";
+import ItemTypes from "../../../utils/constants";
 
 export const withDragAndDropOptions = WrappedComponent => {
   const Wrapper = (props) => {
@@ -10,8 +10,8 @@ export const withDragAndDropOptions = WrappedComponent => {
 
     // drag interaction
     const [{ isDragging }, drag, preview] = useDrag({
-      item: { type: ItemTypes.ITEM },
-      begin: () => {
+      type: ItemTypes.PAGE,
+      item: () => {
         const { id, order, url } = props;
         const draggedItem = { id, order, url };
         let items;
@@ -44,7 +44,7 @@ export const withDragAndDropOptions = WrappedComponent => {
 
     // drop interaction
     const [{ hovered }, drop] = useDrop({
-      accept: ItemTypes.ITEM,
+      accept: ItemTypes.PAGE,
       // drop: () => ({
       //               boxType: "Picture"
       //   }),
