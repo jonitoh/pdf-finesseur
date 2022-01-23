@@ -1,6 +1,7 @@
 // use of multer
 // cf. https://github.com/expressjs/multer#diskstorage
 const fs = require("fs");
+const Path = require("path");
 const multer = require('multer');
 const express = require('express');
 const storagePath = './public/uploads/';
@@ -75,19 +76,27 @@ router.post("/", uploadAll, (req, res, next) => {
         throw Error("FILE_MISSING")
     } else {
         //If the file is uploaded, then send a success response.
-        const output = req.files.map(file => ({ name: file.name, path: file.path }));
-        res.status(200).send({ message: "File Uploaded", code: 200, output: output });
+        res.send({
+            message: "File Uploaded",
+            code: 200,
+            output: req.files.map(file => ({ filename: file.originalname, path: file.path }))
+        });
     }
 })
 
 // GET ROUTE -- only for PDF files
 router.get('/:path/:name', (req, res) => {
     const { path, name } = req.params;
+    res.download("http://localhost:5000/public/uploads/__8497_name_key_0.pdf", name);
+
+    console.log("path", path);
+    const _path = "public/uploads/__8497_name_key_0.pdf";
+    const _path_photo = "public/uploads/test_photo.png";
     if (!path.endsWith('.pdf')) {
         // it should only download PDF files
         throw Error("FORBIDDEN_DOWNLOAD")
     } else {
-        res.download(path, name);
+        res.download("http://localhost:5000/public/uploads/__8497_name_key_0.pdf", name);
     }
 });
 

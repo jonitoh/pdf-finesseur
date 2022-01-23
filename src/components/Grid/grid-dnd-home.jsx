@@ -119,7 +119,7 @@ const Grid = ({ fBasis = '25%' }) => {
   return (
     <GridWrapper>
       <ItemDragLayer />
-      <div className="container">
+      
         {state
           .items
           .map((item, i) => {
@@ -147,7 +147,6 @@ const Grid = ({ fBasis = '25%' }) => {
               />
             );
           })}
-      </div>
       </GridWrapper>
   );
 }

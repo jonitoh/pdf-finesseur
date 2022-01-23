@@ -12,27 +12,37 @@ import axios from "axios";
 const downloadFile = () => {
     console.log("start download");
     const path = "public/uploads/name_key_0.pdf";
+    const _path = "public/uploads/__8497_name_key_0.pdf";
     const name = "result.pdf";
     //send request
     axios({
-        url: `${"http://localhost:5000"}/storage/${path}/${name}`,
+        url: `${"http://localhost:5000"}/${_path}`,
         method: "GET",
         headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/pdf',
             //authorization: process.env.SERVER_TOKEN || "token"
-        },
-        onUploadProgress: data => {
-            const percentage = Math.round((100 * data.loaded) / data.total)
-            console.log("setUploadProgress", percentage)
         },
     })
         // handle response
-        .then(res => {
+        .then(response => {
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(
+                new Blob([response.data], { type: "application/pdf" })
+            );
+            link.download = name;
+
+            document.body.appendChild(link);
+
+            link.click();
+            setTimeout(function () {
+                window.URL.revokeObjectURL(link);
+            }, 200);
+            /*console.log("resùùùù", res)
             if (res.status === 200) {
                 console.log("everything is ok")
             } else {
                 console.log("oups something went wrong")
-            }
+            }*/
         })
         // catch errors
         .catch(error => {
@@ -60,7 +70,7 @@ const SimpleNavbar = () => {
         const output = getMergedDocument();
         const order = (
             getAvailablePages()
-            .map(page => page.id)
+                .map(page => page.id)
         );
         console.log('CLICK---here is the merged document', output);
         console.log('CLICK---order', order);

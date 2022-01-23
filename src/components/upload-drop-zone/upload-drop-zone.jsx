@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import './upload-drop-zone.css';
 import DropZone from '../drop-zone/drop-zone';
 import axios from "axios";
+import { useStore } from '../../store';
+import { API_URL } from '../../utils/constants';
 
+// TEST PATH
+const _path = "public/uploads/__8497_name_key_0.pdf";
+const _path_photo = "public/uploads/test_photo.png";
 //
 const withOptionalShow = (Component) => (
     ({ show = true, ...props }) => {
@@ -45,6 +50,8 @@ const UploadDropZone = ({ showWhenNull = true }) => {
     //
     const [error, setError] = useState()
 
+    // 
+    const { addDocumentFromUploadFile } = useStore();
     // UPLOAD ONE FILE -- add event listener
     /*
     req.upload.addEventListener("progress", event => {
@@ -75,7 +82,12 @@ const UploadDropZone = ({ showWhenNull = true }) => {
     const createFilename = (file, index) => {
         const { name, type } = file
         const extension = ".pdf"
-        return `name_key_${index}${extension}`
+        return `__${(Math.floor(Math.random() * (10000 - 1) + 1))}_name_key_${index}${extension}`
+    }
+    // addDocumentFromUploadFile
+    const _addDocumentFromUploadFile = (res) => {
+        console.log("input res", res);
+        addDocumentFromUploadFile();
     }
 
     // UPLOAD FILES
@@ -95,7 +107,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
 
         //send request
         axios({
-            url: `${"http://localhost:5000"}/storage`,
+            url: `${API_URL}/storage`,
             method: "POST",
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -109,12 +121,12 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         })
             // handle response
             .then(res => {
-                console.log("@@@@@@@", res)
                 if (res.status === 200) {
                     console.log("everything is ok")
                 } else {
                     console.log("oups something went wrong")
                 }
+                _addDocumentFromUploadFile(res);
                 setSuccessfullUploaded(true);
                 setUploading(false);
                 setUploadProgress({ pourcentage: 100, state: 'wrong', fileName: null })
@@ -186,7 +198,6 @@ const UploadDropZone = ({ showWhenNull = true }) => {
     return (
         <div className="upload-section__dropzone">
             <span className="title">{uploading ? "Loading..." : "Drop your file here!"}</span>
-
             <div className='content'>
                 <div>
                     <DropZone

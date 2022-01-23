@@ -3,4 +3,10 @@ const ItemTypes = {
   PAGE: "page",
 };
 
-export default ItemTypes;
+const API_URL = "http://localhost:5000";
+
+
+export {
+  ItemTypes,
+  API_URL,
+};

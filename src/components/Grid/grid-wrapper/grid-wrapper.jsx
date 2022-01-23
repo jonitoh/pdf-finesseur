@@ -5,7 +5,7 @@ import './grid-wrapper.css';
 
 const GridWrapper = ({children}) => (
 
-    <div className="grid-container">
+    <div className="grid-container container">
       {children}
     </div>
 )

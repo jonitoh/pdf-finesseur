@@ -1,5 +1,5 @@
 import { generateDNDItemFromElement } from '../services/item-and-element';
-import { removePageById, removePagesByDocumentId } from "../services/page-and-document";
+import { removePageById, removePagesByDocumentId, mergePages } from "../services/page-and-document";
 import { _availablePages } from "./main.slice" // à enlever lorsque ce sera de vrais elements
 
 
@@ -45,10 +45,6 @@ const dragAndDropSlice = (set, get) => ({
             ...elements.map((e, i) => generateDNDItemFromElement(e, i + state.items.length))
         ]
     })),
-    _removeItemsFromElements: (elements) => set(state => {
-        const removedIds = elements.map(e => e.id);
-        return { items: state.items.filter(item => removedIds.indexOf(item.id) === -1) }
-    }),
     // dnd actions
     rearrangeItems: (items) => set({ items: items }),
     updateDNDState: (state) => set(prevState => ({ dnd: { ...prevState.dnd, ...state } })),
@@ -108,6 +104,10 @@ const dragAndDropSlice = (set, get) => ({
     removeDocument: id => {
         get().removePagesByDocumentFromAvailablePages(id);
         return set(state => ({ documents: state.documents.filter(doc => doc.id !== id) }))
+    },
+    createMergedDocument: () => {
+        get().arrangeElementsFromOrder();
+        return set(state => ({ mergedDocument: mergePages(state.availablePages) }))
     },
     resetAll: () => set({
         ...{

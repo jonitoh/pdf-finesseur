@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { useDrag, useDrop } from "react-dnd";
-import ItemTypes from "../../../utils/constants";
+import { ItemTypes } from "../../../utils/constants";
 
 export const withDragAndDropOptions = WrappedComponent => {
   const Wrapper = (props) => {

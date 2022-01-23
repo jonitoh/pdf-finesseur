@@ -152,3 +152,6 @@ ref proptype: https://stackoverflow.com/questions/48007326/what-is-the-correct-p
 
 upload multiple files at the same time
 https://www.geeksforgeeks.org/how-to-send-one-or-more-files-to-an-api-using-axios-in-reactjs/
+
+download file
+https://www.akashmittal.com/react-download-files-button-click/
