@@ -155,3 +155,6 @@ https://www.geeksforgeeks.org/how-to-send-one-or-more-files-to-an-api-using-axio
 
 download file
 https://www.akashmittal.com/react-download-files-button-click/
+
+disappear
+https://stackoverflow.com/questions/65214950/how-to-disappear-alert-after-5-seconds-in-react-js
