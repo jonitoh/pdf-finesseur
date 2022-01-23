@@ -6,7 +6,7 @@ import Icon from '../icon';
 
 const modalElement = document.getElementById('modal');
 
-const Modal = ({ children, defaultOpened = false, allowHandleEscape = false, title = undefined, fade = false }, ref) => {
+const Modal = ({ children, defaultOpened = false, allowHandleEscape = false, title = undefined, fade = false, disappear = false, timing = 5000 }, ref) => {
   const [isOpen, setIsOpen] = useState(defaultOpened);
 
   const close = useCallback(() => setIsOpen(false), []);
@@ -28,6 +28,21 @@ const Modal = ({ children, defaultOpened = false, allowHandleEscape = false, tit
       })
     }
   }, [handleEscape, isOpen])
+
+
+  // disappearing modal
+  useEffect(() => {
+    if (disappear) {
+      const timeId = setTimeout(() => {
+        // After 3 seconds set the show value to false
+        close()
+      }, timing)
+
+      return () => {
+        clearTimeout(timeId)
+      }
+    }
+  }, [])
 
   return createPortal(
     isOpen ?
