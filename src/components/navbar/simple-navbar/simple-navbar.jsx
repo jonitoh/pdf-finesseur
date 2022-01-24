@@ -11,7 +11,7 @@ import axios from "axios";
 //  simple fake download
 const downloadFile = () => {
     console.log("start download");
-    const path = "public/uploads/name_key_0.pdf";
+    // it should be mergedDocument.path;
     const _path = "public/uploads/__8497_name_key_0.pdf";
     const name = "result.pdf";
     //send request

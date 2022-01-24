@@ -1,7 +1,7 @@
 import React from 'react';
 import './grid.css';
 //import './styles.css';
-import GridWrapper from '../grid/grid-wrapper/grid-wrapper';
+import GridWrapper from './grid-wrapper/grid-wrapper';
 import { useStore } from '../../store';
 import { Item, ItemDragLayer } from "../dnd/dnd-elements/dnd-elements";
 import PropTypes from 'prop-types';

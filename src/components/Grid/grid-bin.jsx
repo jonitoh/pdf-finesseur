@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './grid.css';
-import GridWrapper from '../grid/grid-wrapper/grid-wrapper';
+import GridWrapper from './grid-wrapper/grid-wrapper';
 import { OneClickCard as DummyCard } from '../card/dummy-card/dummy-card';
 import { useStore } from '../../store';
 

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './grid.css';
 import GridWrapper from './grid-wrapper/grid-wrapper';
-import { TwoClickCard as DummyCard } from '../card/dummy-card/dummy-card';
+import { TwoClickImg as DummyCard } from '../card/dummy-card/dummy-card';
 import { useStore } from '../../store';
 
 const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
@@ -17,7 +17,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
     addAvailablePage,
     removePageByIdFromDeletedPages,
   } = useStore();
-
+  //console.log("items", items)
   // remove document forever
   const removeFromGrid = itemId => {
     console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
@@ -43,15 +43,18 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   const customStyle = { flexBasis: fBasis };
 
   //SimpleCard
-  const renderCard = item => (
+  const renderCard = item => {
+    console.log("iteM ??", item)
+    return (
     <CardComponent {...{
       text: item.name,
       firstLabel: "Remove All",
       firstOnClick: () => removeFromGrid(item.id),
       secondLabel: "Restore All",
-      secondOnClick: () => restoreAll(item.id)
+      secondOnClick: () => restoreAll(item.id),
+      imgSrc: item.getUrl(),//!!item.___mapPageToUrl? item.___mapPageToUrl[1]: item.getUrl(),//"public/uploads/test_photo.png",
     }} />
-  );
+  )};
 
   return (
     <GridWrapper>

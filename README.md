@@ -158,3 +158,15 @@ https://www.akashmittal.com/react-download-files-button-click/
 
 disappear
 https://stackoverflow.com/questions/65214950/how-to-disappear-alert-after-5-seconds-in-react-js
+
+
+
+express server structuration
+https://kentcdodds.com/blog/how-i-structure-express-apps
+
+
+datauri to file
+https://stackoverflow.com/questions/6850276/how-to-convert-dataurl-to-file-object-in-javascript
+
+
+// PUTAIN DE PHOTO QUI SE CHARGE QUAND ELLE VEUT

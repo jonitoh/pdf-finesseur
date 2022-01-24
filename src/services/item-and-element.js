@@ -1,4 +1,3 @@
-import { Element, isInstanceOfElement } from "../services/page-and-document";
 // minimum needed
 const generateDNDItemFromElement = (element, order) => ({
     id: element.id,
@@ -9,7 +8,7 @@ const generateDNDItemFromElement = (element, order) => ({
 // TODO fake implementation
 const generateFakeElements = (length) => (
     [...Array(length).keys()]
-        .map((i) => (new Element(i, "https://picsum.photos/80/45?random&" + i)))
+        .map((i) => ({ id: i, url: "https://picsum.photos/80/45?random&" + i}))
 )
 
 const generateFakeDNDItems = (length, returnElements = false) => {

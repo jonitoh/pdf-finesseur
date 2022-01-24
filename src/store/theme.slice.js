@@ -24,7 +24,7 @@ const themeSlice = (set, get) => ({
     },
     initiateTheme: () => {
         if (!localStorage.getItem("data-theme")) {
-            get().updateLocalStorageTheme(get().theme);
+            get().setLocalStorageTheme(get().theme);
         } else {
             get().updateTheme(JSON.parse(localStorage.getItem("data-theme")))
         }

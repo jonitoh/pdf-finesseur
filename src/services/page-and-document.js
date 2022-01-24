@@ -1,30 +1,20 @@
 //import { v4 as uuidv4 } from "uuid"; //generate random ids
-
-
-class Element { // bare minimum so that the dnd interaction can work
+class Page {
     // initializer
-    constructor({ id, url }) {
-        this.url = url;
+    constructor(id, url, name, parentId, index) {
         this.id = id;
-    }
-}
-const isInstanceOfElement = (object) => object instanceof Element;
-
-class Page extends Element {
-    // initializer
-    constructor(id, url, name, parentId, index, page = undefined) {
-        super({ id, url })
+        this.url = url;
         this.parentId = parentId;
         this.name = name;
         this.index = index;
-        this.page = this.getPageLoaded(page);
+        //this.page = this.getPageLoaded(page);
         //this._parentDoc = parentDoc;
     }
 
     // TODO fake implementation
-    getPageLoaded = (page) => {
+    /*getPageLoaded = (page) => {
         return !!page ? page : {}
-    }
+    }*/
 
     // 
 }
@@ -33,25 +23,36 @@ class Page extends Element {
 const generateDocumentId = () => (`File-${(Math.floor(Math.random() * (10000 - 1) + 1))}`)//(uuidv4());
 const generatePageId = (parentId, index, separator = "__") => (parentId + separator + index);
 
-class Document extends Element {
+class Document {
     // initializer
-    constructor(id, url, name, extension, doc = undefined) {
-        super({ id, url })
+    constructor(id, name, extension, doc = undefined, path) {
+        this.id = id;
         this.extension = extension;
         this.name = name;
         this.doc = this.getDocumentLoaded(doc);
-        this.numberOfPages = this.getNumberOfPages()
+        this.numberOfPages = this.getNumberOfPages();
+        this.path = path
+        this.url = this.generatePageUrl(0)
     }
 
+    setMapPageToUrl = (mapPageToUrl) => {
+        const docUrl = !!mapPageToUrl["-1"] ? mapPageToUrl["-1"]: mapPageToUrl["1"];
+        this.___mapPageToUrl = mapPageToUrl;
+        // it will override the property url
+        this.url = docUrl;
+    }
+
+    getUrl = () => {
+        if (!!this.url) return this.url;
+        return this.___mapPageToUrl[1];
+    }
+    setUrl = (url) => { this.url = url }
     // TODO fake implementation
     getDocumentLoaded = (doc) => {
         return !!doc ? doc : {}
     }
     // TODO fake implementation
     getNumberOfPages = () => (Math.floor(Math.random() * (4 - 1) + 1))
-
-    // TODO fake implementation
-    generatePageObj = () => (undefined)
 
     // TODO fake implementation
     generatePageUrl = (index) => (generateFakePageUrl(index))
@@ -61,11 +62,10 @@ class Document extends Element {
     //
     createPage = (index) => {
         const id = generatePageId(this.id, index);
-        const page = this.generatePageObj(index);
         const url = this.generatePageUrl(index);
         const name = this.generatePageName(index);
 
-        return new Page(id, url, name, this.id, index, page)//, this)
+        return new Page(id, url, name, this.id, index)
     }
 
     extractPages = () => {
@@ -96,8 +96,8 @@ const createFakeDocument = (fakeDoc = undefined) => {
     const id = generateDocumentId();
     const extension = '.pdf';
     const name = `file_${id}`;
-    const url = "/" + name + extension;
-    return new Document(id, url, name, extension, fakeDoc)
+    const path = "/" + name + extension;
+    return new Document(id, name, extension, fakeDoc, path)
 };
 const generateFakeDocuments = (number) => {
     let documents = [];
@@ -115,9 +115,7 @@ const generateFakePages = (documents) => {
 };
 
 export {
-    Element,
     Document,
-    isInstanceOfElement,
     mergePages,
     removePageById,
     removePagesByDocumentId,
