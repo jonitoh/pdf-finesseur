@@ -12,7 +12,7 @@ import axios from "axios";
 const downloadFile = () => {
     console.log("start download");
     // it should be mergedDocument.path;
-    const _path = "public/uploads/__8497_name_key_0.pdf";
+    const _path = "public/uploads/test_one_page_for_download.pdf";
     const name = "result.pdf";
     //send request
     axios({

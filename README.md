@@ -178,3 +178,8 @@ https://medium.com/developer-rants/running-promises-in-a-loop-sequentially-one-b
 https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
 
 https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
+
+
+pdf-lib
+https://github.com/Hopding/pdf-lib/issues/506 -- reorder pages from same pdf
+https://pdf-lib.js.org/#examples examples
