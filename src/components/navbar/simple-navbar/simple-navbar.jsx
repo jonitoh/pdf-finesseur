@@ -84,7 +84,7 @@ const SimpleNavbar = () => {
         <div className="navbar-simple">
             <NavbarList>
                 <NavbarItem
-                    path={"/add"}
+                    path={"/upload"}
                     label={t("add-button-label")}
                     Icon={Icon.Add}
                     count={getNumberOfDocuments()}

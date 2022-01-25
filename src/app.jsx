@@ -29,7 +29,7 @@ const App = () => {
               element={<SettingsPage />}
             />
             <Route
-              path="/add"
+              path="/upload"
               element={<UploadPage />}
             />
             <Route

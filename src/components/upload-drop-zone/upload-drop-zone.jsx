@@ -6,6 +6,7 @@ import axios from "axios";
 import { useStore } from '../../store';
 import { API_URL } from '../../utils/constants';
 import { Document } from '../../services/page-and-document';
+import Progress from '../progress/progress';
 ///////// workaround for image extraction
 import { pdfjs } from "../../services/pdfjs";
 ////////
@@ -23,25 +24,9 @@ const withOptionalShow = (Component) => (
         return (
             <Component {...props} />
         )
-    })
+    }
+)
 
-// need of a customisation --- just number, circle, bar
-const Progress = ({ progress = 0 }) => (
-    <div className="progress">
-        <div className='progress-bar'>
-            <div
-                className='progress'
-            >
-                {progress}
-            </div>
-        </div>
-    </div>
-)// pour le bar, use style={{ width: progress + '%' }}
-
-Progress.propTypes = {
-    progress: PropTypes.number,
-    showWhenNull: PropTypes.bool,
-}
 /////////////// TODO helper
 const createIdFromFile = (file, index) => {
     return `__${(Math.floor(Math.random() * (10000 - 1) + 1))}_name_key_${index}`
@@ -84,42 +69,26 @@ const UploadDropZone = ({ showWhenNull = true }) => {
     // uploading state with progress part
     const [uploading, setUploading] = useState(false);
     const initialUploadProgress = { percentage: 0, state: 'initial', filename: null };
+    // state: success, failure, initial, loading
     const [uploadProgress, setUploadProgress] = useState(initialUploadProgress);
     const [successfullUploaded, setSuccessfullUploaded] = useState(false);
     const CustomProgress = withOptionalShow(Progress);
 
     //
-    const [error, setError] = useState()
+    const [errorMsg, setErrorMsg] = useState("")
 
     // 
     const { addDocumentFromUploadFile, addDocument, documents } = useStore();
-    // UPLOAD ONE FILE -- add event listener
-    /*
-    req.upload.addEventListener("progress", event => {
-        if (event.lengthComputable) {
-            const copy = { ...uploadProgress };
-            copy[file.name] = {
-                state: "pending",
-                percentage: (event.loaded / event.total) * 100
-            };
-            setUploadProgress(copy);
-        }
-    });
 
-    req.upload.addEventListener("load", event => {
-        const copy = { ...uploadProgress };
-        copy[file.name] = { state: "done", percentage: 100 };
-        setUploadProgress(copy);
-        resolve(req.response);
-    });
 
-    req.upload.addEventListener("error", event => {
-        const copy = { ...uploadProgress };
-        copy[file.name] = { state: "error", percentage: 0 };
-        this.setUploadProgress(copy);
-        reject(req.response);
-    });
-    */
+    // helper function
+    const initialiseDropZone = () => {
+        setUploading(false);
+        setUploadProgress(initialUploadProgress);
+        setSuccessfullUploaded(false);
+        setErrorMsg("");
+        // resetProgressBar
+    }
 
     // addDocumentFromUploadFiles
     const _addDocumentFromUploadFile = (data) => {
@@ -203,24 +172,24 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                             const { code } = error?.response?.data
                             switch (code) {
                                 case "FILE_MISSING":
-                                    setError("Please select a file before uploading!")
+                                    setErrorMsg("Please select a file before uploading!")
                                     break
                                 case "LIMIT_FILE_SIZE":
-                                    setError("File size is too large. Please upload files below 1MB!")
+                                    setErrorMsg("File size is too large. Please upload files below 1MB!")
                                     break
                                 case "INVALID_TYPE":
-                                    setError(
+                                    setErrorMsg(
                                         "This file type is not supported! Only .png, .jpg and .jpeg files are allowed"
                                     )
                                     break
                                 case "CANT_DELETE":// TODO to remove it is for DELETE
-                                    setError('Unsuccessful deletion')
+                                    setErrorMsg('Unsuccessful deletion')
                                     break
                                 case "UNFOUND_FILE":// TODO to remove it is for DELETE
-                                    setError('Unfound file during the deletion process')
+                                    setErrorMsg('Unfound file during the deletion process')
                                     break
                                 default:
-                                    setError("Sorry! Something went wrong. Please try again later")
+                                    setErrorMsg("Sorry! Something went wrong. Please try again later")
                                     break
                             }
                         })
@@ -367,7 +336,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         // prepare the download process
         //Clear the error message
         const inputs = [];
-        setError("")
+        setErrorMsg("")
         setUploadProgress(initialUploadProgress);
         setUploading(true);
 
@@ -414,24 +383,24 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                 const { code } = error?.response?.data
                 switch (code) {
                     case "FILE_MISSING":
-                        setError("Please select a file before uploading!")
+                        setErrorMsg("Please select a file before uploading!")
                         break
                     case "LIMIT_FILE_SIZE":
-                        setError("File size is too large. Please upload files below 1MB!")
+                        setErrorMsg("File size is too large. Please upload files below 1MB!")
                         break
                     case "INVALID_TYPE":
-                        setError(
+                        setErrorMsg(
                             "This file type is not supported! Only .png, .jpg and .jpeg files are allowed"
                         )
                         break
                     case "CANT_DELETE":// TODO to remove it is for DELETE
-                        setError('Unsuccessful deletion')
+                        setErrorMsg('Unsuccessful deletion')
                         break
                     case "UNFOUND_FILE":// TODO to remove it is for DELETE
-                        setError('Unfound file during the deletion process')
+                        setErrorMsg('Unfound file during the deletion process')
                         break
                     default:
-                        setError("Sorry! Something went wrong. Please try again later")
+                        setErrorMsg("Sorry! Something went wrong. Please try again later")
                         break
                 }
                 setSuccessfullUploaded(true);
@@ -446,7 +415,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         // before -----
         //Clear the error message
         const inputs = [];
-        setError("")
+        setErrorMsg("")
         setUploadProgress(initialUploadProgress);
         setUploading(true);
         // now -----
@@ -497,28 +466,28 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                 const { code } = error?.response?.data
                 switch (code) {
                     case "FILE_MISSING":
-                        setError("Please select a file before uploading!")
+                        setErrorMsg("Please select a file before uploading!")
                         break
                     case "LIMIT_FILE_SIZE":
-                        setError("File size is too large. Please upload files below 1MB!")
+                        setErrorMsg("File size is too large. Please upload files below 1MB!")
                         break
                     case "INVALID_TYPE":
-                        setError(
+                        setErrorMsg(
                             "This file type is not supported! Only .png, .jpg and .jpeg files are allowed"
                         )
                         break
                     case "CANT_DELETE":// TODO to remove it is for DELETE
-                        setError('Unsuccessful deletion')
+                        setErrorMsg('Unsuccessful deletion')
                         break
                     case "UNFOUND_FILE":// TODO to remove it is for DELETE
-                        setError('Unfound file during the deletion process')
+                        setErrorMsg('Unfound file during the deletion process')
                         break
                     default:
-                        setError("Sorry! Something went wrong. Please try again later")
+                        setErrorMsg("Sorry! Something went wrong. Please try again later")
                         break
                 }
                 // -- in case of errors
-                setError(msg)
+                setErrorMsg(msg)
                 setSuccessfullUploaded(true);
                 setUploading(false);
                 setUploadProgress({ pourcentage: 100, state: 'wrong', filename: null })
@@ -527,9 +496,9 @@ const UploadDropZone = ({ showWhenNull = true }) => {
 
     // _asyncUploadDocument ARGS
     const handleBefore = (file, filename) => {
-        //setError("");
         setUploadProgress({ ...initialUploadProgress, ...{ filename: filename } });
         setUploading(true);
+        return [file, filename]
     }
 
     const handleOnUploadProgress = progressEvent => {
@@ -541,7 +510,8 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         //_addDocumentFromUploadFiles(inputs, response);
         setSuccessfullUploaded(true);
         setUploading(false);
-        setUploadProgress({ pourcentage: 100, state: 'success', filename: filename })
+        setUploadProgress({ percentage: 100, state: 'success', filename: filename })
+        return ""
     }
 
     const handleCatcher = (file, filename, error) => {
@@ -551,20 +521,24 @@ const UploadDropZone = ({ showWhenNull = true }) => {
 
     const handleValidation = async (file, filename, data) => {
         const awaitedData = await data;
+        console.log("awaitedData", awaitedData)
         if (awaitedData) {
-            setError(prevState => (prevState + " || " + awaitedData))
-            setSuccessfullUploaded(false);
-            setUploading(false);
-            setUploadProgress({ percentage: 0, state: 'wrong', filename: filename })
+            console.log("in error")
+            setErrorMsg(prevState => (!!prevState ? prevState + " || " + awaitedData : awaitedData))
+            setSuccessfullUploaded(false);// a voir
+            setUploadProgress({ percentage: 100, state: 'fail', filename: filename })
         } else {
-            setError("")
+            console.log("in valid")
+            // do something with the awaitedData
             setSuccessfullUploaded(true);
-            setUploading(false);
             setUploadProgress({ percentage: 100, state: 'success', filename: filename })
         }
+        setUploading(false);
     }
 
-    // generic upload to be in utils/api
+    /////////////////////////////////////////// generic upload to be in utils/api
+    const genericFilename = (file, filename) => (!!filename ? filename : file.name)
+
     const genericSuccess = (file, filename, response) => {
         if (response.status === 200) {
             console.log("everything is ok")
@@ -603,25 +577,30 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         console.log("received data in validation", data);
     }
 
-    const uploadFile = (
+    const uploadFile = async (
         file,
         filename,
-        before = (file, filename) => { },
+        before = (file, filename) => ([file, filename]),
         onUploadProgress = () => { },
         success = (file, filename, response) => { genericSuccess(file, filename, response) },
         catcher = (file, filename, error) => { genericCatcher(file, filename, error) },
-        validator = (file, filename, data) => { genericValidator(file, filename, data) },
+        validator = async (file, filename, data) => { genericValidator(file, filename, data) },
     ) => {
         // before process
-        before(file, filename);
+        [ file, filename ] = before(file, filename);
 
         // initialisation
+        const processedFilename = genericFilename(file, filename);
         let formData = new FormData();
-        formData.append('files', file, filename)
+        formData.append('files', file, processedFilename)
         console.log("check formData", Array.from(formData));
 
         //send request
-        const data = axios({
+        const data = await axios({
+            url: `${API_URL}/hello-world`,
+            method: "GET",
+        })/*
+        const data = await axios({
             url: `${API_URL}/storage`,
             method: "POST",
             headers: {
@@ -629,58 +608,58 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                 //authorization: process.env.SERVER_TOKEN || "token"
             },
             data: formData,
-            onUploadProgress: onUploadProgress,
-        })
-            // handle response
-            .then(response => success(file, filename, response))
-            // catch errors
-            .catch(error => catcher(file, filename, error))
+            //onUploadProgress: onUploadProgress,
+        })*/
+        // handle response
+        .then(response => success(file, filename, response))
+        // catch errors
+        .catch(error => catcher(file, filename, error))
+        // final step
+        //.finally((response) => return response)
         // handle error
-        validator(file, filename, data);
+        console.log("value of axios data", data)
+        const _data = "";//`unknown error---${processedFilename}`
+        await validator(file, filename, _data);
     }
+    /////////////////////////////////////////// 
     /*
     file,
     filename,
-    before = (file, filename) => { },
+    before = (file, filename) => ([file, filename]),
     onUploadProgress = () => { },
     success = (file, filename, response) => { genericSuccess(file, filename, response) },
     catcher = (file, filename, error) => { genericCatcher(file, filename, error) },
     validator = (file, filename, data) => { genericValidator(file, filename, data) },*/
 
-    const _asyncUploadDocument = (file, filename = null) => {
+    const _asyncUploadDocument = async (file, filename = null) => {
         console.log(`--for the mess about file ${file.name} and optional name ${filename}`);
-        /*
-        uploadFile(
+        await uploadFile(
             file,
             filename,
-            (file, filename) => { },//handleBefore,
+            handleBefore,//(file, filename) => ([file, filename]),
             () => { },//handleOnUploadProgress,
             (file, filename, response) => { genericSuccess(file, filename, response) },//handleSuccess,
             (file, filename, error) => { genericCatcher(file, filename, error) },//handleCatcher,
-            (file, filename, data) => { genericValidator(file, filename, data) },//handleValidation,
-        )*/
+            handleValidation,//(file, filename, data) => { genericValidator(file, filename, data) },//
+        );
     }
 
     // ASYNCHRONOUS UPLOADING OF A DOCUMENT
-    const asyncUploadDocument = (file) => {
+    const asyncUploadDocument = async (file) => {
         // Promise there
         console.log("--treatment of the following file", file.name);
         return new Promise((resolve) => {
             // step one -- upload file
             _asyncUploadDocument(file);
-            // it should put back the progressbar to normal
-            setUploadProgress(initialUploadProgress);
             // return what's important
             resolve(file.name)
         });
     }
 
     // UPLOAD DOCUMENTS WITH PROMISES
-    const uploadDocuments = (index, files) => {
-        // start with a fresh new empty error
-        setError("");
+    const uploadDocuments = async (index, files) => {
         // first iteration
-        asyncUploadDocument(files[index])
+        await asyncUploadDocument(files[index])
             .then(response => {
                 console.log(`asyncUploadDocument for file number ${index}:\n${response}\n`);
                 index++;
@@ -690,35 +669,21 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                 } else {
                     // end of the loop
                     console.log("End of the upload ---------------")
+                    // à voir 
+                    setTimeout(() => {
+                        console.log("Back to the beginning ---------------")
+                        initialiseDropZone();
+                    }, 2000);
                 }
             })
     }
 
     // ONFILEADDED
     const onFilesAdded = async files => {
-        uploadDocuments(0, files);
+        // start with a fresh new empty error
+        setErrorMsg("");
+        await uploadDocuments(0, files);
     };
-
-    /*
-    const renderProgress = file => {
-        const _uploadProgress = uploadProgress[file.name];
-        if (uploading || successfullUploaded) {
-            return (
-                <div className="progress-wrapper">
-                    <Progress progress={_uploadProgress ? _uploadProgress.percentage : 0} />
-                    <img
-                        className="check-icon"
-                        alt="done"
-                        src="baseline-check_circle_outline-24px.svg"
-                        style={{
-                            opacity:
-                                _uploadProgress && _uploadProgress.state === "done" ? 0.5 : 0
-                        }}
-                    />
-                </div>
-            );
-        }
-    }*/
 
     return (
         <div className="upload-section__dropzone">
@@ -732,8 +697,8 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                     />
                 </div>
             </div>
-            <CustomProgress progress={uploadProgress.pourcentage} show={showWhenNull} />
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            <CustomProgress progress={uploadProgress.percentage} show={showWhenNull} />
+            {errorMsg && <div style={{ color: 'red' }}>{errorMsg}</div>}
         </div>
     )
 }
