@@ -12,8 +12,8 @@ export const withDragAndDropOptions = WrappedComponent => {
     const [{ isDragging }, drag, preview] = useDrag({
       type: ItemTypes.PAGE,
       item: () => {
-        const { id, order, url } = props;
-        const draggedItem = { id, order, url };
+        const { id, order } = props;
+        const draggedItem = { id, order };
         let items;
         if (props.selectedItems.find(item => item.id === props.id)) {
           items = props.selectedItems;
@@ -94,7 +94,6 @@ export const withDragAndDropOptions = WrappedComponent => {
       // return () => console.log('unmounting...');
     }, []);
 
-    //const { url } = props;
     const opacity = isDragging ? 0.4 : 1;
 
     const styleClasses = [];

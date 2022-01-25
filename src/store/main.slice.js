@@ -30,7 +30,7 @@ const mainSlice = (set, get) => ({
         availablePages: [...state.availablePages, ...doc.extractPages()],
     })),
     addDocumentFromUploadFile: () => (console.log('addDocumentFromUploadFile')),
-    createMergedDocument: () => set(state => ({ mergedDocument: mergePages(state.availablePages) })),
+    createMergedDocument: (setMetadata = true) => set(state => ({ mergedDocument: mergePages(state.documents, state.availablePages, setMetadata) })),
     removePageByIdFromAvailablePages: id => set(state => ({ availablePages: removePageById(id, state.availablePages) })),
     removePagesByDocumentFromAvailablePages: parentId => set(state => ({ availablePages: removePagesByDocumentId(parentId, state.availablePages) })),
     removePageByIdFromDeletedPages: id => set(state => ({ deletedPages: removePageById(id, state.deletedPages) })),

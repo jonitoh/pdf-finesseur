@@ -105,9 +105,9 @@ const dragAndDropSlice = (set, get) => ({
         get().removePagesByDocumentFromAvailablePages(id);
         return set(state => ({ documents: state.documents.filter(doc => doc.id !== id) }))
     },
-    createMergedDocument: () => {
+    createMergedDocument: (setMetadata = true) => {
         get().arrangeElementsFromOrder();
-        return set(state => ({ mergedDocument: mergePages(state.availablePages) }))
+        return set(state => ({ mergedDocument: mergePages(state.documents, state.availablePages, setMetadata) }))
     },
     resetAll: () => set({
         ...{

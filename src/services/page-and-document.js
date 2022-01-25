@@ -80,8 +80,8 @@ class Document {
     };
 }
 
-// TODO fake implementation
-const mergePages = pages => {
+// TODO fake implementation ----> cf. createMergedDocument
+const mergePages = async (documents, pages, setMetadata = true) => {
     const doc = createFakeDocument();
     doc.numberOfPages = pages.length
     return doc
