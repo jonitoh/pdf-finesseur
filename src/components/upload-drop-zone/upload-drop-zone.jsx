@@ -26,7 +26,7 @@ const withOptionalShow = (Component) => (
     })
 
 // need of a customisation --- just number, circle, bar
-const Progress = ({ progress = 0, showWhenNull = true }) => (
+const Progress = ({ progress = 0 }) => (
     <div className="progress">
         <div className='progress-bar'>
             <div
@@ -83,7 +83,7 @@ const retrievePath = (output, filename) => {
 const UploadDropZone = ({ showWhenNull = true }) => {
     // uploading state with progress part
     const [uploading, setUploading] = useState(false);
-    const initialUploadProgress = { pourcentage: 0, state: 'initial' };
+    const initialUploadProgress = { percentage: 0, state: 'initial', filename: null };
     const [uploadProgress, setUploadProgress] = useState(initialUploadProgress);
     const [successfullUploaded, setSuccessfullUploaded] = useState(false);
     const CustomProgress = withOptionalShow(Progress);
@@ -242,22 +242,85 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                 // clear the canvas so that a new image can be put
                 clearCanvas(ctx, canvas);
             })
-
         }
 
         console.log("\n\n\n\n\n\n");
         console.log(">>>>> start")
         const loadingTask = pdfjs.getDocument(data.path);
 
-        loadingTask.promise.then((pdf) => {
+        const __map = loadingTask.promise.then((pdf) => {
             pdfDOC = pdf;
             numPages = pdfDOC.numPages;
             canvas = document.getElementById("pdf-canvas");
             ctx = canvas.getContext("2d");
             extractPageIntoImg(pageNum);
+            return ___mapPageNumberToUrl;
         })
+        /*
+            .finally((response) => {
+                // necessary check
+                console.log(">>>>> response", response);
+                console.log(">>>>> bagOfURLs", ___mapPageNumberToUrl);
+                return ___mapPageNumberToUrl;
+            })*/
+        console.log(">>>>> direct bagOfUrls", ___mapPageNumberToUrl);
+        console.log(">>>>> promised bagOfUrls", __map);
+        const accessMap = async (myMap) => {
+            const mapping = await myMap;
+            console.log(">>>>> bagOfURLs inside accessMap", mapping);
+            return mapping;
+        };
+        const addDocumentFromAsynchronousMap = async (myMap) => {
+            // our freaking mapping
+            const mapping = await myMap;
+            console.log(">>>>> bagOfURLs --- inside async", mapping);
+
+            // create the document
+            const doc = new Document(data.id, data.originalFilename, ".pdf", {}, data.path);
+            console.log(">>>>> doc instance -- raw --- inside async", doc);
+
+            // add url and numberOfPages
+            //mapping[-1] = mapping[1]
+            doc.url = mapping[1];//mapping[-1];
+            doc.numberOfPages = 4;
+            console.log(">>>>> doc instance -- add url --- inside async", doc);
+
+            // add other images
+            doc.setMapPageToUrl(mapping);
+            console.log(">>>>> doc instance -- final touch --- inside async", doc);
+            console.log(">>>>> doc instance -- final final touch --- inside async", doc.getUrl());
+
+            // add the document
+            addDocument(doc);
+            addDocumentFromUploadFile();
+        };
+        addDocumentFromAsynchronousMap(__map);
+        /*
+        // our freaking mapping
+        const mapping = accessMap(__map);
+        console.log(">>>>> mapping", mapping);
+        // create the document
+        const doc = new Document(data.id, data.originalFilename, ".pdf", {}, data.path);
+        console.log(">>>>> doc instance -- raw", doc);
+
+        // add url and numberOfPages
+        mapping[-1] = mapping[1]
+        doc.url = mapping[-1];
+        doc.numberOfPages = 4;
+        console.log(">>>>> doc instance -- add url", doc);
+
+        // add other images
+        doc.setMapPageToUrl(mapping);
+        console.log(">>>>> doc instance -- final touch", doc);
+        console.log(">>>>> doc instance -- final final touch", doc.getUrl());
+
+        // add the document
+        addDocument(doc);
+        addDocumentFromUploadFile();
+        /*
         .then((response) => {
             // necessary check
+            console.log(">>>>> response", response);
             console.log(">>>>> bagOfURLs", ___mapPageNumberToUrl);
             
             // link img to pdf -- by default the first page
@@ -282,7 +345,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
             // add the document
             addDocument(doc);
             addDocumentFromUploadFile();
-        })
+        })*/
     }
 
     const _addDocumentFromUploadFiles = (inputs, response) => {
@@ -343,7 +406,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                 _addDocumentFromUploadFiles(inputs, res);
                 setSuccessfullUploaded(true);
                 setUploading(false);
-                setUploadProgress({ pourcentage: 100, state: 'wrong', fileName: null })
+                setUploadProgress({ pourcentage: 100, state: 'wrong', filename: null })
             })
             // catch errors
             .catch(error => {
@@ -373,19 +436,267 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                 }
                 setSuccessfullUploaded(true);
                 setUploading(false);
-                setUploadProgress({ pourcentage: 100, state: 'wrong', fileName: null })
+                setUploadProgress({ pourcentage: 100, state: 'wrong', filename: null })
+            })
+    }
+    // upload File to make generic --- 
+    const ___uploadFile = files => {
+        const msg = '';
+        // prepare the download process
+        // before -----
+        //Clear the error message
+        const inputs = [];
+        setError("")
+        setUploadProgress(initialUploadProgress);
+        setUploading(true);
+        // now -----
+        // initiate formadata
+        let formData = new FormData();
+        for (const key of Object.keys(files)) {
+            const file = files[key]
+            const newId = createIdFromFile(file, key);
+            const filename = createFilename(newId, file, key);
+            formData.append('files', file, filename)
+            inputs.push({ id: newId, file: file, originalFilename: file.name, filename: filename })
+        }
+        console.log(Array.from(formData));
+
+        //send request
+        axios({
+            url: `${API_URL}/storage`,
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                //authorization: process.env.SERVER_TOKEN || "token"
+            },
+            data: formData,
+            // on uploadprogress ---
+            onUploadProgress: data => {
+                const percentage = Math.round((100 * data.loaded) / data.total)
+                setUploadProgress({ pourcentage: percentage, state: 'loading' })
+            },
+        })
+            // handle response
+            .then(res => {
+                if (res.status === 200) {
+                    console.log("everything is ok")
+                } else {
+                    console.log("oups something went wrong")
+                }
+                // ----in case of success
+                _addDocumentFromUploadFiles(inputs, res);
+                setSuccessfullUploaded(true);
+                setUploading(false);
+                setUploadProgress({ pourcentage: 100, state: 'wrong', filename: null })
+            })
+            // catch errors
+            .catch(error => {
+
+                msg = "babay"
+                console.log("&&&&&&&", error);
+                const { code } = error?.response?.data
+                switch (code) {
+                    case "FILE_MISSING":
+                        setError("Please select a file before uploading!")
+                        break
+                    case "LIMIT_FILE_SIZE":
+                        setError("File size is too large. Please upload files below 1MB!")
+                        break
+                    case "INVALID_TYPE":
+                        setError(
+                            "This file type is not supported! Only .png, .jpg and .jpeg files are allowed"
+                        )
+                        break
+                    case "CANT_DELETE":// TODO to remove it is for DELETE
+                        setError('Unsuccessful deletion')
+                        break
+                    case "UNFOUND_FILE":// TODO to remove it is for DELETE
+                        setError('Unfound file during the deletion process')
+                        break
+                    default:
+                        setError("Sorry! Something went wrong. Please try again later")
+                        break
+                }
+                // -- in case of errors
+                setError(msg)
+                setSuccessfullUploaded(true);
+                setUploading(false);
+                setUploadProgress({ pourcentage: 100, state: 'wrong', filename: null })
             })
     }
 
-    //UPLOAD DOCUMENTS
-    const uploadDocuments = files => {
-        // TODO 
-        uploadFiles(files);
+    // _asyncUploadDocument ARGS
+    const handleBefore = (file, filename) => {
+        //setError("");
+        setUploadProgress({ ...initialUploadProgress, ...{ filename: filename } });
+        setUploading(true);
+    }
+
+    const handleOnUploadProgress = progressEvent => {
+        const percentage = Math.round((100 * progressEvent.loaded) / progressEvent.total)
+        setUploadProgress(prevState => ({ ...prevState, ...{ percentage: percentage, state: 'loading' } }))
+    };
+
+    const handleSuccess = (file, filename, response) => {
+        //_addDocumentFromUploadFiles(inputs, response);
+        setSuccessfullUploaded(true);
+        setUploading(false);
+        setUploadProgress({ pourcentage: 100, state: 'success', filename: filename })
+    }
+
+    const handleCatcher = (file, filename, error) => {
+        const errors = genericCatcher(file, filename, error);
+        return errors
+    }
+
+    const handleValidation = async (file, filename, data) => {
+        const awaitedData = await data;
+        if (awaitedData) {
+            setError(prevState => (prevState + " || " + awaitedData))
+            setSuccessfullUploaded(false);
+            setUploading(false);
+            setUploadProgress({ percentage: 0, state: 'wrong', filename: filename })
+        } else {
+            setError("")
+            setSuccessfullUploaded(true);
+            setUploading(false);
+            setUploadProgress({ percentage: 100, state: 'success', filename: filename })
+        }
+    }
+
+    // generic upload to be in utils/api
+    const genericSuccess = (file, filename, response) => {
+        if (response.status === 200) {
+            console.log("everything is ok")
+        } else {
+            console.log("oups something went wrong")
+        }
+        return ""
+    }
+
+    const genericCatcher = (file, filename, error) => {
+        console.log("catched error", error);
+        const { code } = error?.response?.data
+        switch (code) {
+            case "FILE_MISSING":
+                return "Please select a file before uploading!"
+                break
+            case "LIMIT_FILE_SIZE":
+                return "File size is too large. Please upload files below 1MB!"
+                break
+            case "INVALID_TYPE":
+                return "This file type is not supported! Only .png, .jpg and .jpeg files are allowed"
+                break
+            case "CANT_DELETE":// TODO to remove it is for DELETE
+                return 'Unsuccessful deletion'
+                break
+            case "UNFOUND_FILE":// TODO to remove it is for DELETE
+                return 'Unfound file during the deletion process'
+                break
+            default:
+                return "Sorry! Something went wrong. Please try again later"
+                break
+        }
+    }
+
+    const genericValidator = (file, filename, data) => {
+        console.log("received data in validation", data);
+    }
+
+    const uploadFile = (
+        file,
+        filename,
+        before = (file, filename) => { },
+        onUploadProgress = () => { },
+        success = (file, filename, response) => { genericSuccess(file, filename, response) },
+        catcher = (file, filename, error) => { genericCatcher(file, filename, error) },
+        validator = (file, filename, data) => { genericValidator(file, filename, data) },
+    ) => {
+        // before process
+        before(file, filename);
+
+        // initialisation
+        let formData = new FormData();
+        formData.append('files', file, filename)
+        console.log("check formData", Array.from(formData));
+
+        //send request
+        const data = axios({
+            url: `${API_URL}/storage`,
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                //authorization: process.env.SERVER_TOKEN || "token"
+            },
+            data: formData,
+            onUploadProgress: onUploadProgress,
+        })
+            // handle response
+            .then(response => success(file, filename, response))
+            // catch errors
+            .catch(error => catcher(file, filename, error))
+        // handle error
+        validator(file, filename, data);
+    }
+    /*
+    file,
+    filename,
+    before = (file, filename) => { },
+    onUploadProgress = () => { },
+    success = (file, filename, response) => { genericSuccess(file, filename, response) },
+    catcher = (file, filename, error) => { genericCatcher(file, filename, error) },
+    validator = (file, filename, data) => { genericValidator(file, filename, data) },*/
+
+    const _asyncUploadDocument = (file, filename = null) => {
+        console.log(`--for the mess about file ${file.name} and optional name ${filename}`);
+        /*
+        uploadFile(
+            file,
+            filename,
+            (file, filename) => { },//handleBefore,
+            () => { },//handleOnUploadProgress,
+            (file, filename, response) => { genericSuccess(file, filename, response) },//handleSuccess,
+            (file, filename, error) => { genericCatcher(file, filename, error) },//handleCatcher,
+            (file, filename, data) => { genericValidator(file, filename, data) },//handleValidation,
+        )*/
+    }
+
+    // ASYNCHRONOUS UPLOADING OF A DOCUMENT
+    const asyncUploadDocument = (file) => {
+        // Promise there
+        console.log("--treatment of the following file", file.name);
+        return new Promise((resolve) => {
+            // step one -- upload file
+            _asyncUploadDocument(file);
+            // it should put back the progressbar to normal
+            setUploadProgress(initialUploadProgress);
+            // return what's important
+            resolve(file.name)
+        });
+    }
+
+    // UPLOAD DOCUMENTS WITH PROMISES
+    const uploadDocuments = (index, files) => {
+        // start with a fresh new empty error
+        setError("");
+        // first iteration
+        asyncUploadDocument(files[index])
+            .then(response => {
+                console.log(`asyncUploadDocument for file number ${index}:\n${response}\n`);
+                index++;
+                if (index < files.length) {
+                    // second iteration
+                    uploadDocuments(index, files)
+                } else {
+                    // end of the loop
+                    console.log("End of the upload ---------------")
+                }
+            })
     }
 
     // ONFILEADDED
-    const onFilesAdded = files => {
-        uploadDocuments(files);
+    const onFilesAdded = async files => {
+        uploadDocuments(0, files);
     };
 
     /*

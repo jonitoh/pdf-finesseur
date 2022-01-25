@@ -44,7 +44,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 
   //SimpleCard
   const renderCard = item => {
-    console.log("iteM ??", item)
+    console.log("iteM ??", item.url)
     return (
     <CardComponent {...{
       text: item.name,

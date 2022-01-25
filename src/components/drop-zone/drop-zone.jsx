@@ -14,40 +14,40 @@ const DropZone = ({onFilesAdded, disabled = false, title = undefined}) => {
         ref.current.click();
     }
 
-    const addFiles = event => {
+    const addFiles = async event => {
         if (disabled) return;
         const files = event.target.files;
         if (onFilesAdded) {
-            onFilesAdded(files);
+            await onFilesAdded(files);
         }
     }
 
-    const onDragOver = event => {
+    const handleDragOver = event => {
         event.preventDefault();
         if (disabled) return;
         setHighlight(true);
     };
 
-    const onDragLeave = event => {
+    const handleDragLeave = event => {
         setHighlight(false);
     };
 
-    const onDrop = event => {
+    const handleDrop = async event => {
         event.preventDefault();
         if (disabled) return;
         const files = event.dataTransfer.files;
         if (onFilesAdded) {
-            onFilesAdded(files);
+            await onFilesAdded(files);
         }
         setHighlight(false);
     }
 
     return (
         <div
-            className={"dropzone"}
-            onDragOver={onDragOver}
-            onDragLeave={onDragLeave}
-            onDrop={onDrop}
+            className="dropzone"
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
             onClick={openFileDialog}
             style={{ cursor: disabled ? "default" : "pointer" }}
         >

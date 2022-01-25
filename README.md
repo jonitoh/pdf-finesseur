@@ -169,4 +169,12 @@ datauri to file
 https://stackoverflow.com/questions/6850276/how-to-convert-dataurl-to-file-object-in-javascript
 
 
-// PUTAIN DE PHOTO QUI SE CHARGE QUAND ELLE VEUT
+// PUTAIN DE PHOTO QUI SE CHARGE QUAND ELLE VEUT -- promises, promises kelly
+
+https://www.pdftron.com/blog/typescript/how-to-build-pdf-viewer-typescript-pdf-js/
+
+https://medium.com/developer-rants/running-promises-in-a-loop-sequentially-one-by-one-bd803181b283
+
+https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
+
+https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
