@@ -183,3 +183,7 @@ https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-ob
 pdf-lib
 https://github.com/Hopding/pdf-lib/issues/506 -- reorder pages from same pdf
 https://pdf-lib.js.org/#examples examples
+
+
+
+https://stackoverflow.com/questions/46876570/create-react-app-exclude-folder-from-triggering-reload

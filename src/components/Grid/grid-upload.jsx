@@ -44,7 +44,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 
   //SimpleCard
   const renderCard = item => {
-    console.log("iteM ??", item.url)
+    console.log("iteM ??", item.mapUrl)
     return (
     <CardComponent {...{
       text: item.name,
@@ -52,7 +52,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
       firstOnClick: () => removeFromGrid(item.id),
       secondLabel: "Restore All",
       secondOnClick: () => restoreAll(item.id),
-      imgSrc: item.getUrl(),//!!item.___mapPageToUrl? item.___mapPageToUrl[1]: item.getUrl(),//"public/uploads/test_photo.png",
+      imgSrc: item.url,
     }} />
   )};
 

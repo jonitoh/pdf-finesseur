@@ -28,16 +28,35 @@ const generatePageId = (parentId, index, separator = "__") => (parentId + separa
 
 class Document {
     // initializer
-    constructor(id, name, extension, doc = undefined, path) {
+    constructor(id, name, extension, doc = undefined, path, url = undefined, urlMap = undefined) {
         this.id = id;
         this.extension = extension;
         this.name = name;
         this.doc = this.getDocumentLoaded(doc);
         this.numberOfPages = this.getNumberOfPages();
         this.path = path
-        this.url = this.generatePageUrl(0)
+        this.urlMap = urlMap
+        this.url = url || this.force() || this.generatePageUrl(0)
+        
     }
 
+    force = () => {
+        if (this.urlMap) {
+            const [ { url: z}, ..._ ] = [ ...this.urlMap ]//.find(({numPage}) => numPage == 1)
+
+            console.log("biih", this.urlMap)
+            console.log("hiiii z is found?", z)
+            if (!!z) {
+                
+                return z
+            } else {
+                return "WHAT 2"
+            }
+        } else {
+            return "WHAT 1"
+        }
+    }
+        
     setMapPageToUrl = (mapPageToUrl) => {
         const docUrl = !!mapPageToUrl["-1"] ? mapPageToUrl["-1"]: mapPageToUrl["1"];
         this.___mapPageToUrl = mapPageToUrl;
