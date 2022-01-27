@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import './grid.css';
@@ -9,14 +8,14 @@ import { useStore } from '../../store';
 const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   // items to be populated in the grid
   const {
-    documents: items,
+    documents: gridItems,
     deletedPages,
     removePagesByDocumentFromDeletedPages,
     removeDocument,
     addAvailablePage,
     removePageByIdFromDeletedPages,
   } = useStore();
-  //console.log("items", items)
+
   // remove document forever
   const removeFromGrid = itemId => {
     console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
@@ -28,7 +27,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   const restoreAll = itemId => {
     console.log(`restore all the pages from the item ${itemId}`);
     [ ...deletedPages]
-    .filter(page => page.parentId === itemId)
+    .filter(page => page.docId === itemId)
     .forEach(page => {
       addAvailablePage(page);
       removePageByIdFromDeletedPages(page.id);
@@ -52,10 +51,10 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
       imgSrc: item.url,
     }} />
   )};
-  console.log("all the items", items);
+
   return (
     <GridWrapper>
-      {items.map(item => (
+      {gridItems.map(item => (
         <div className="grid-item-wrapper" key={item.id} style={customStyle}>
           <div className="grid-item card">
             {renderCard(item)}
@@ -68,7 +67,6 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 export default Grid;
 
 Grid.propTypes = {
-  items: PropTypes.array,
   CardComponent: PropTypes.elementType,
   fBasis: PropTypes.string
 }

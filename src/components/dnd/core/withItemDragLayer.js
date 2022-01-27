@@ -1,6 +1,6 @@
 import React from "react";
 import { useDragLayer } from "react-dnd";
-import { ItemTypes } from "../../../utils/constants";
+import { DNDItemTypes } from "../../../utils/constants";
 
 const defaultLayerStyles = {
   position: "fixed",
@@ -38,7 +38,7 @@ export const withItemDragLayer = (ItemsDragPreviewComponent, layerStyles = defau
 
     const renderItem = (type, item) => {
       switch (type) {
-        case ItemTypes.ITEM:
+        case DNDItemTypes.PAGE:
           return <ItemsDragPreviewComponent items={item.itemsDragStack} />;
         default:
           return null;

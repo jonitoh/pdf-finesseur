@@ -1,3 +1,6 @@
+/*
+State management for translation in the application.
+*/
 import { translate, getValues, getOptionsFromLanguages, filterLanguages } from '../i18n'
 
 

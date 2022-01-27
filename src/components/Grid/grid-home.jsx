@@ -12,17 +12,17 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 
   // items to be populated in the grid
   const {
-    availablePages: items,
+    availablePages: gridItems,
     removePageByIdFromAvailablePages,
     addDeletedPage,
   } = useStore();
 
   const removeFromGrid = itemId => {
     console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
-    const removedItems = items.filter(item => item.id === itemId);
+    const removedItem = gridItems.find(item => item.id === itemId);
     removePageByIdFromAvailablePages(itemId);
-    if (removedItems.length > 0) {
-      addDeletedPage(removedItems[0]);
+    if (removedItem) {
+      addDeletedPage(removedItem);
     }
   }
 
@@ -60,7 +60,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 
   return (
     <GridWrapper>
-      {items.map(item => (
+      {gridItems.map(item => (
         <div className="grid-item-wrapper" key={item.id} style={customStyle}>
           <div className="grid-item card">
             <BigCard item={item}/>
@@ -73,7 +73,6 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 export default Grid;
 
 Grid.propTypes = {
-  items: PropTypes.array,
   CardComponent: PropTypes.elementType,
   fBasis: PropTypes.string
 }

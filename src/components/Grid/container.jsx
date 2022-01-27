@@ -1,14 +1,13 @@
+// à jeter ?
 import React from "react";
-// creer item et itemdraglayer
 import { Item, ItemDragLayer } from "./dnd-elements";
 
 import { useStore } from './store/index';
 
 const Container = () => {
 
-  // destructuring a faire
   const state = useStore();
-  ///////////////////
+
   const clearItemSelection = () => {
     state.clearSelection();
   };

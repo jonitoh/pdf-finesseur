@@ -1,4 +1,13 @@
-const ItemTypes = {
+/*
+Utilities -- constants.
+*/
+const THEME = {
+  LIGHT: 'light',
+  DARK: 'dark',
+  SUNNY: 'sunny',
+};
+
+const DNDItemTypes = {
   DOCUMENT: "document",
   PAGE: "page",
 };
@@ -7,6 +16,7 @@ const API_URL = "http://localhost:5000";
 
 
 export {
-  ItemTypes,
+  DNDItemTypes,
   API_URL,
+  THEME,
 };

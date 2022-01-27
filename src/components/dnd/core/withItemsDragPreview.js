@@ -14,7 +14,7 @@ export const withItemsDragPreview = WrappedComponent => {
               transform: `rotateZ(${-i * 2.5}deg)`
             }}
           >
-            <WrappedComponent {...item} />
+            <WrappedComponent item={item} />
           </div>
         ))}
       </div>

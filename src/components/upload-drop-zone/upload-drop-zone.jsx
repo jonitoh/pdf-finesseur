@@ -6,33 +6,19 @@ import Progress from '../progress/progress';
 import { withOptionalShow } from "../common/options"
 import { useStore } from '../../store';
 import { pdfjs } from "../../services/pdfjs"; // workaround for PDF-based image extraction 
-import { Document, __Document } from '../../services/page-and-document';
 import { manageErrorMessageFromCode, uploadFile } from "../../services/api";
+import { dataURLtoFile } from '../../utils/functions';
 
-const dataURLtoFile = (dataURL, filename) => {
-    // mime extension extraction
-    const mimeExtension = dataURL.split(',')[0].split(':')[1].split(';')[0];
-
-    // Extract remaining part of URL and convert it to binary value
-    const byteString = window.atob(dataURL.split(',')[1]);
-
-    const blobArray = new Uint8Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++) {
-        blobArray[i] = byteString.charCodeAt(i);
-    }
-
-    return new File([blobArray], filename, { type: mimeExtension, lastModified: new Date() });
-}
 
 const UploadDropZone = ({ showProgressWhenNull = true }) => {
     // uploading state with progress part
     const [uploading, setUploading] = useState(false);
-    const initialUploadProgress = { percentage: 0, state: 'initial', filename: "" };// state: success, failure, initial, loading
+    const initialUploadProgress = { percentage: 0, state: 'initial', filename: "" };
     const [uploadProgress, setUploadProgress] = useState(initialUploadProgress);
     const [successfullUploaded, setSuccessfullUploaded] = useState(false);
     const [errorMsg, setErrorMsg] = useState("")
 
-    const { addDocument } = useStore(); // addNewDocument
+    const { addDocument } = useStore();
 
     const CustomProgress = withOptionalShow(Progress);
 
@@ -153,29 +139,22 @@ const UploadDropZone = ({ showProgressWhenNull = true }) => {
     const addDocumentFromFile = async (docId, docPath, docName) => {
         const [urlMap, numPages] = await extractImagesFromPDF(docPath, docId);
 
+        console.log("urlMap length ?", urlMap.length)
 
-
-        // addNewDocument
-        console.log("========= urlMap", urlMap)
-        console.log("========= length urlMap", urlMap.length)
-        console.log("========= numPages", numPages)
-
-        //const mainPage = urlMap.find(({numPage}) => numPage === 1)
-        //console.log("========= mainPage", urlMap.find(({numPage}) => numPage === 1))
-        // create the document
-        const doc = new __Document(docId, docName, docPath, numPages, urlMap, "");
-
-        //const z = doc.urlMap.filter(u => u.numPage == 1);
-        //console.log("z", z);//[0].url;
-        
-        doc.numberOfPages = 4;
-        //console.log(">>>>> doc instance -- add url --- inside async", doc);
+        const documentArgs = {
+            id: docId,
+            name: docName,
+            path: docPath,
+            numPages: numPages,//4,
+            urlMap: urlMap,
+            url: "",
+            extension: ".pdf"
+        };
+        console.log("documentArgs", documentArgs);
 
         // add the document
-        addDocument(doc);
+        addDocument(documentArgs);
     }
-
-    ///////////////////////////////////////////
 
     const _asyncUploadDocument = async (file, filename = null) => {
         console.log(`--for the mess about file ${file.name} and optional name ${filename}`);

@@ -1,8 +1,7 @@
-const THEME = {
-    LIGHT: 'light',
-    DARK: 'dark',
-    SUNNY: 'sunny',
-}
+/*
+State management for theming in the application.
+*/
+import { THEME } from "../utils/constants";
 
 const themeSlice = (set, get) => ({
     //states

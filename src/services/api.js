@@ -1,3 +1,6 @@
+/*
+Service for the server in the application.
+*/
 import axios from "axios";
 import { API_URL } from "../utils/constants";
 

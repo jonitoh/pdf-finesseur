@@ -186,4 +186,10 @@ https://pdf-lib.js.org/#examples examples
 
 
 
+fake data
+https://picsum.photos/
+
+
+
+
 https://stackoverflow.com/questions/46876570/create-react-app-exclude-folder-from-triggering-reload

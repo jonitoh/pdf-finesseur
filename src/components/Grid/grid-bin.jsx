@@ -8,7 +8,7 @@ import { useStore } from '../../store';
 const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   // items to be populated in the grid
   const {
-    deletedPages: items,
+    deletedPages: gridItems,
     removePageByIdFromDeletedPages,
     addAvailablePage
   } = useStore();
@@ -16,14 +16,10 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   // removeFromGrid aka restaurer aka remove deleted page and add into available pages
   const removeFromGrid = itemId => {
     console.log(`WE are TRYING TO RESTORE A CARD WITH THE ID ${itemId}`)
-    const removedItems = items.filter(item => item.id === itemId);
-    console.log("@@@removedItems", removedItems);
+    const removedItem = gridItems.find(item => item.id === itemId);
     removePageByIdFromDeletedPages(itemId);
-    console.log("@@@pages removed")
-    if (removedItems.length > 0) {
-      console.log("@@@about to add available page");
-      addAvailablePage(removedItems[0]);
-      console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+    if (removedItem) {
+      addAvailablePage(removedItem);
     }
   }
   // in order to customize the number of rows
@@ -40,7 +36,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 
   return (
     <GridWrapper>
-      {items.map(item => (
+      {gridItems.map(item => (
         <div className="grid-item-wrapper" key={item.id} style={customStyle}>
           <div className="grid-item card">
             {renderCard(item)}
@@ -53,7 +49,6 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 export default Grid;
 
 Grid.propTypes = {
-  items: PropTypes.array,
   CardComponent: PropTypes.elementType,
   fBasis: PropTypes.string
 }

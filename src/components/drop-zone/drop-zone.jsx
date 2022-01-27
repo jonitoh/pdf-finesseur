@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './drop-zone.css';
 import Icon from '../icon';
 
-const DropZone = ({onFilesAdded, disabled = false, title = undefined}) => {
+const DropZone = ({onFilesAdded, disabled = false, title = ""}) => {
     const ref = createRef();
     const [highlight, setHighlight] = useState(false);
 

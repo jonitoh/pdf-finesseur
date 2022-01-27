@@ -7,15 +7,14 @@ import { withItemDragLayer } from '../core/withItemDragLayer';
 import { useStore } from "../../../store";
 import PropTypes from 'prop-types';
 
-////////////// ITEM IMPLEMENTATION
-// CARD -- item aka page + add removeFromGrid
+
 const HomeCardWithModal = ({ item, ...gridProps }) => {
   const modal = useRef(null);
   const { removeItemSelection } = gridProps
+  
   // mapping orderedItem and item
   const { getElementFromItem } = useStore(); // placement à optimiser
-  const mapOrderedItemToItem = (orderedItem) => getElementFromItem(orderedItem.id);
-  const _item = mapOrderedItemToItem(item);
+  const element = getElementFromItem(item.id);
   return (
     <Fragment>
       <Modal
@@ -25,11 +24,11 @@ const HomeCardWithModal = ({ item, ...gridProps }) => {
         fade={false}
         ref={modal}
       >
-        {`modal msg for item ${_item.name}`}
+        {`modal msg for item ${element.name}`}
       </Modal>
       <TwoClickCard {...{
-        text: _item.name,
-        firstOnClick: () => removeItemSelection(_item.id),
+        text: element.name,
+        firstOnClick: () => removeItemSelection(element.id),
         firstLabel: "remove",
         secondOnClick: () => modal.current.open(),
         secondLabel: 'modal',
@@ -38,6 +37,7 @@ const HomeCardWithModal = ({ item, ...gridProps }) => {
     </Fragment>
   )
 }
+
 const DNDItem = withDragAndDropOptions(HomeCardWithModal);
 
 DNDItem.propTypes = {
@@ -68,26 +68,23 @@ const withGridFlexboxOptions = (WrappedComponent) => {
 
 const Item = withGridFlexboxOptions(DNDItem);
 
-////////////// ITEM DRAG PREVIEW IMPLEMENTATION
-// CARD -- item aka page + add removeFromGrid
 const PreviewCard = ({ item, ...gridProps }) => {
   // mapping orderedItem and item
-  const { getElementFromItem } = useStore(); // placement à optimiser
-  const mapOrderedItemToItem = (orderedItem) => getElementFromItem(orderedItem.id);
-  const _item = mapOrderedItemToItem(item);
+  const { getElementFromItem } = useStore();
+  const element = getElementFromItem(item.id);
   return (
     <SimpleCard {...{
-      text: _item.name,
+      text: element.name,
     }} />
   )
 }
+
 const ItemsDragPreview = withItemsDragPreview(PreviewCard);
 
 ItemsDragPreview.propTypes = {
   items: PropTypes.array
 };
 
-////////////// ITEM DRAG LAYER IMPLEMENTATION
 const ItemDragLayer = withItemDragLayer(ItemsDragPreview);
 
 export {

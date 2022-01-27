@@ -7,20 +7,31 @@ import Icon from '../../icon';
 import { useStore } from '../../../store';
 import axios from "axios";
 
-
-//  simple fake download
-const downloadFile = () => {
+const downloadFile = (mergedDocument) => {
     console.log("start download");
-    // it should be mergedDocument.path;
-    const _path = "public/uploads/test_one_page_for_download.pdf";
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(
+        new Blob([mergedDocument.getData()], { type: "application/pdf" })
+    );
+    link.download = mergedDocument.name;
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(function () {
+        window.URL.revokeObjectURL(link);
+    }, 200);
+}
+
+const fakeDownloadFile = () => {
+    console.log("start download");
+    const path = "public/uploads/test_one_page_for_download.pdf";
     const name = "result.pdf";
+
     //send request
     axios({
-        url: `${"http://localhost:5000"}/${_path}`,
+        url: `${"http://localhost:5000"}/${path}`,
         method: "GET",
         headers: {
             'Content-Type': 'application/pdf',
-            //authorization: process.env.SERVER_TOKEN || "token"
         },
     })
         // handle response
@@ -30,27 +41,17 @@ const downloadFile = () => {
                 new Blob([response.data], { type: "application/pdf" })
             );
             link.download = name;
-
             document.body.appendChild(link);
-
             link.click();
             setTimeout(function () {
                 window.URL.revokeObjectURL(link);
             }, 200);
-            /*console.log("resùùùù", res)
-            if (res.status === 200) {
-                console.log("everything is ok")
-            } else {
-                console.log("oups something went wrong")
-            }*/
         })
         // catch errors
         .catch(error => {
             console.log(error);
         })
 }
-
-
 
 const SimpleNavbar = () => {
     const {
@@ -63,22 +64,29 @@ const SimpleNavbar = () => {
         //resetAll,
     } = useStore();
 
-    //clicktodownload
     const onClick = () => {
         console.log('CLICK---create the merged document');
         createMergedDocument();
-        const output = getMergedDocument();
+        const mergedDocument = getMergedDocument();
+        console.log('it should download!');
+        downloadFile(mergedDocument);
+        //resetAll();
+    }
+
+    const fakeOnClick = () => {
+        console.log('CLICK---create the merged document');
+        createMergedDocument();
+        const mergedDocument = getMergedDocument();
         const order = (
             getAvailablePages()
                 .map(page => page.id)
         );
-        console.log('CLICK---here is the merged document', output);
+        console.log('CLICK---here is the merged document', mergedDocument);
         console.log('CLICK---order', order);
         console.log('it should download!');
-        //resetAll()
-        downloadFile();
+        fakeDownloadFile();
+        //resetAll();
     }
-
 
     return (
         <div className="navbar-simple">
@@ -104,7 +112,7 @@ const SimpleNavbar = () => {
                     path={"/"}
                     label={t("download-button-label")}
                     Icon={Icon.Download}
-                    onClick={onClick}
+                    onClick={fakeOnClick}
                 />
 
             </NavbarList>

@@ -1,4 +1,6 @@
-
+/*
+Utilities -- array helper.
+*/
 /*
     Object
     .values(languages)

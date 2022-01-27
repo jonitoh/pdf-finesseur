@@ -12,7 +12,6 @@ const Grid = ({ fBasis = '25%' }) => {
 
   // items to be populated in the grid
   const {
-    availablePages: __items,
     removePageByIdFromAvailablePages,
     addDeletedPage,
     ...state
@@ -21,11 +20,11 @@ const Grid = ({ fBasis = '25%' }) => {
   // all the main functionalities a grid need to handle a card
   const removeItemSelection = itemId => {
     console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
-    const removedItems = state.items.filter(item => item.id === itemId);
+    const removedItem = state.items.find(item => item.id === itemId);
     // it's easier to do it through pages
     removePageByIdFromAvailablePages(itemId);
-    if (removedItems.length > 0) {
-      addDeletedPage(removedItems[0]);
+    if (removedItem) {
+      addDeletedPage(removedItem);
     }
   }
 
@@ -69,10 +68,6 @@ const Grid = ({ fBasis = '25%' }) => {
       ? items.filter((f) => newselectedItems.find((a) => a === f))
       : [];
     state.updateSelection(finalList, newLastSelectedIndex)
-    /*{
-      newselectedItems: finalList,
-      newLastSelectedIndex: newLastSelectedIndex
-    }*/
   };
 
   const rearrangeItems = (dragItem) => {
@@ -97,7 +92,7 @@ const Grid = ({ fBasis = '25%' }) => {
       ...draggedItems,
       ...lowerHalfRemainingItems
     ];
-    state.rearrangeItems(newItems);//{ items: newItems }
+    state.rearrangeItems(newItems);
   };
 
   const setInsertIndex = (dragIndex, hoverIndex, newInsertIndex) => {
@@ -109,17 +104,11 @@ const Grid = ({ fBasis = '25%' }) => {
       return;
     }
     state.setInsertIndex(dragIndex, hoverIndex, newInsertIndex);
-    /*{
-      dragIndex: dragIndex,
-      hoverIndex: hoverIndex,
-      insertIndex: newInsertIndex
-    }*/
   };
 
   return (
     <GridWrapper>
       <ItemDragLayer />
-      
         {state
           .items
           .map((item, i) => {

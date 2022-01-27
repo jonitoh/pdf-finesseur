@@ -1,3 +1,6 @@
+/*
+Global state management in the application.
+*/
 import create from 'zustand'
 import mainSlice from './main.slice'
 import languageSlice from './language.slice'

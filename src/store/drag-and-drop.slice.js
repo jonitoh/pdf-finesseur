@@ -1,13 +1,17 @@
+/*
+State management for Drag And Drop interaction in the application.
+*/
 import { generateDNDItemFromElement } from '../services/item-and-element';
-import { removePageById, removePagesByDocumentId, mergePages } from "../services/page-and-document";
+import { removePageById, removePagesByDocumentId, createFakeMergedDocument, safelyCreateDocument } from "../services/page-and-document";
 import { _availablePages } from "./main.slice" // à enlever lorsque ce sera de vrais elements
 
-
+/* A ENLEVER */
 const getItemsFromElements = (elements) => (
     elements
         .map((e, i) => generateDNDItemFromElement(e, i))
 );
 const _items = getItemsFromElements(_availablePages);
+/* A ENLEVER */
 
 const listName = "availablePages";
 const dragAndDropSlice = (set, get) => ({
@@ -38,7 +42,7 @@ const dragAndDropSlice = (set, get) => ({
     setItemsFromElements: (elements = false) => set({
         items: get().getItemsFromElements(elements)
     }),
-    getElementFromItem: (itemId) => (get().getElements().filter(e => e.id === itemId)[0]),
+    getElementFromItem: (itemId) => (get().getElements().find(e => e.id === itemId)),
     addItemsFromElements: (elements) => set(state => ({
         items: [
             ...state.items,
@@ -63,20 +67,15 @@ const dragAndDropSlice = (set, get) => ({
     }),
     // rewriting actions from mainSlices
     addAvailablePage: page => {
-        console.log("---------page", page)
-        console.log("---------elements", get().getElements())
-        console.log("---------items", get().items)
         get().arrangeElementsFromOrder();
-        console.log("---------ARRANGED elements", get().getElements())
         get().setItemsFromElements();
-        console.log("---------new items", get().items)
         // add the item
         get().addItemsFromElements([page]);
-        console.log("---------new new items", get().items)
         // add the available page
         return set(state => ({ availablePages: [...state.availablePages, page] }))
     },
     addDocument: doc => {
+        doc = safelyCreateDocument(doc);
         doc
             .extractPages()
             .forEach(page => get().addAvailablePage(page));
@@ -84,8 +83,6 @@ const dragAndDropSlice = (set, get) => ({
         return set(state => ({ documents: [...state.documents, doc] }))
     },
     removePageByIdFromAvailablePages: id => {
-        console.log("@@@elements", get().getElements());
-        console.log("@@@order", get().items);
         get().arrangeElementsFromOrder();
         // remove the page
         const newAvailablePages = removePageById(id, get().availablePages);
@@ -93,10 +90,10 @@ const dragAndDropSlice = (set, get) => ({
         // set the new available pages
         return set({ availablePages: newAvailablePages });
     },
-    removePagesByDocumentFromAvailablePages: parentId => {
+    removePagesByDocumentFromAvailablePages: docId => {
         get().arrangeElementsFromOrder();
         // remove the pages
-        const newAvailablePages = removePagesByDocumentId(parentId, get().availablePages);
+        const newAvailablePages = removePagesByDocumentId(docId, get().availablePages);
         get().setItemsFromElements(newAvailablePages);
         // set the new available pages
         return set({ availablePages: newAvailablePages });
@@ -107,7 +104,7 @@ const dragAndDropSlice = (set, get) => ({
     },
     createMergedDocument: (setMetadata = true) => {
         get().arrangeElementsFromOrder();
-        return set(state => ({ mergedDocument: mergePages(state.documents, state.availablePages, setMetadata) }))
+        return set(state => ({ mergedDocument: createFakeMergedDocument(state.documents, state.availablePages, setMetadata) }))
     },
     resetAll: () => set({
         ...{
