@@ -75,9 +75,7 @@ const uploadFile = async ({
     catcher = (file, filename, error) => genericCatcher(file, filename, error),
 }) => {
     // before process
-    console.log("filename BEFORE", filename);
     [file, filename] = before(file, filename);
-    console.log("filename AFTER", filename);
 
     // initialisation
     let formData = new FormData();

@@ -25,10 +25,100 @@ class Page {
 // TODO fake implementation
 const generateDocumentId = () => (`File-${(Math.floor(Math.random() * (10000 - 1) + 1))}`)//(uuidv4());
 const generatePageId = (parentId, index, separator = "__") => (parentId + separator + index);
+/*
+    const addDocumentFromFile = async (docId, docPath, docName) => {
+        const [urlMap, numPages] = await extractImagesFromPDF(docPath, docId);
+        // addNewDocument
+        console.log("========= urlMap", urlMap)
+        console.log("========= length urlMap", urlMap.length)
+        console.log("========= numPages", numPages)
 
+        const mainPage = urlMap.find(({numPage}) => numPage === 1)
+        console.log("========= mainPage", urlMap.find(({numPage}) => numPage === 1))
+        // create the document
+        const doc = new Document(docId, docName, ".pdf", {}, docPath, "", urlMap);
+
+        const z = doc.urlMap.filter(u => u.numPage == 1);
+        console.log("z", z);//[0].url;
+        
+        doc.numberOfPages = 4;
+        console.log(">>>>> doc instance -- add url --- inside async", doc);
+
+        // add the document
+        addDocument(doc);
+    }
+    */
+class __Document {
+    // initializer (docId, docName, docPath, numPages, urlMap, "");
+    constructor(id, name, path, numPages, urlMap, url = "") {
+        this.id = id;
+        this.name = name;
+        this.path = path
+        this.numberOfPages = numPages || this.getNumberOfPages();
+        this.urlMap = urlMap
+        //this.url = url//this.force() || this.generatePageUrl(0)
+        this.normalizeUrls(url, urlMap)
+        this.url = this.url || this.generatePageUrl(0)
+
+    }
+    normalizeUrls = (url, urlMap) => {
+        const isValidUrl = !!url;
+        const mainUrl = urlMap.find(u => u.numPage === 1)
+        if (!isValidUrl & mainUrl) {
+            console.log("in there")
+            this.url = mainUrl.url
+        }
+        else {
+            this.url = "why"
+        }
+    }
+
+
+
+    setMapPageToUrl = (mapPageToUrl) => {
+        const docUrl = !!mapPageToUrl["-1"] ? mapPageToUrl["-1"] : mapPageToUrl["1"];
+        this.___mapPageToUrl = mapPageToUrl;
+        // it will override the property url
+        this.url = docUrl;
+    }
+
+    getUrl = () => {
+        if (!!this.url) return this.url;
+        return this.___mapPageToUrl[1];
+    }
+    setUrl = (url) => { this.url = url }
+    // TODO fake implementation
+    getDocumentLoaded = (doc) => {
+        return !!doc ? doc : {}
+    }
+    // TODO fake implementation
+    getNumberOfPages = () => (Math.floor(Math.random() * (4 - 1) + 1))
+
+    // TODO fake implementation
+    generatePageUrl = (index) => (generateFakePageUrl(index))
+
+    generatePageName = (index) => (`${this.name} - page ${index}`)
+
+    //
+    createPage = (index) => {
+        const id = generatePageId(this.id, index);
+        const url = this.generatePageUrl(index);
+        const name = this.generatePageName(index);
+
+        return new Page(id, url, name, this.id, index)
+    }
+
+    extractPages = () => {
+        let pages = [];
+        for (let pageNumber = 1; pageNumber <= this.numberOfPages; pageNumber++) {
+            pages.push(this.createPage(pageNumber));
+        }
+        return pages;
+    };
+}
 class Document {
     // initializer
-    constructor(id, name, extension, doc = undefined, path, url = undefined, urlMap = undefined) {
+    constructor(id, name, extension, doc = undefined, path, url = undefined, urlMap = []) {
         this.id = id;
         this.extension = extension;
         this.name = name;
@@ -36,18 +126,19 @@ class Document {
         this.numberOfPages = this.getNumberOfPages();
         this.path = path
         this.urlMap = urlMap
-        this.url = url || this.force() || this.generatePageUrl(0)
-        
+        this.url = url || this.generatePageUrl(0)
+
     }
 
     force = () => {
-        if (this.urlMap) {
-            const [ { url: z}, ..._ ] = [ ...this.urlMap ]//.find(({numPage}) => numPage == 1)
-
+        if (this.urlMap.length > 0) {
+            const m = this.urlMap[0];
+            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ m", m)//const [ { url: z}, ..._ ] = [ ...this.urlMap ]//.find(({numPage}) => numPage == 1)
             console.log("biih", this.urlMap)
             console.log("hiiii z is found?", z)
+            const { url: z } = m
             if (!!z) {
-                
+
                 return z
             } else {
                 return "WHAT 2"
@@ -56,9 +147,9 @@ class Document {
             return "WHAT 1"
         }
     }
-        
+
     setMapPageToUrl = (mapPageToUrl) => {
-        const docUrl = !!mapPageToUrl["-1"] ? mapPageToUrl["-1"]: mapPageToUrl["1"];
+        const docUrl = !!mapPageToUrl["-1"] ? mapPageToUrl["-1"] : mapPageToUrl["1"];
         this.___mapPageToUrl = mapPageToUrl;
         // it will override the property url
         this.url = docUrl;
@@ -150,13 +241,13 @@ const Retrieve = (array, filterFunction = (value, index, array) => (true), error
     }
 }
 
-const loadPDF = async url => {  
+const loadPDF = async url => {
     const PdfBytes = await fetch(url).then(res => res.arrayBuffer())
     const PdfDoc = await PDFDocument.load(PdfBytes)
     return PdfDoc;
 }
 
-const loadDocuments = async documents => (documents.map(doc => ({ [doc.id]: loadPDF(doc.url)})).reduce((prev, cur) => ({ ...prev, ...cur }), {}) )
+const loadDocuments = async documents => (documents.map(doc => ({ [doc.id]: loadPDF(doc.url) })).reduce((prev, cur) => ({ ...prev, ...cur }), {}))
 
 const extractWantedPage = async (pdfDoc, pdfDocuments, pageArgs) => {
     const wantedPdfDocument = pdfDocuments[pageArgs.parentId];
@@ -164,7 +255,7 @@ const extractWantedPage = async (pdfDoc, pdfDocuments, pageArgs) => {
     return wantedPage
 }
 
-const setDocumentMetadata = (pdfDoc) => {  
+const setDocumentMetadata = (pdfDoc) => {
     // Note that these fields are visible in the "Document Properties" section of 
     // most PDF readers.
     pdfDoc.setTitle('Merged document from PDF Finesseur')
@@ -175,11 +266,11 @@ const setDocumentMetadata = (pdfDoc) => {
     pdfDoc.setCreator('pdf-finesseur (https://github.com/jonitoh/pdf-finesseur)')
     pdfDoc.setCreationDate(new Date())
     pdfDoc.setModificationDate(new Date())
-  
+
     return pdfDoc;
 }
 
-const createMergedDocument = async (documents, pages, setMetadata = true) => {    
+const createMergedDocument = async (documents, pages, setMetadata = true) => {
     // create the merged document
     const mergedPdfDoc = await PDFDocument.create();
 
@@ -197,7 +288,7 @@ const createMergedDocument = async (documents, pages, setMetadata = true) => {
     if (setMetadata) {
         mergedPdfDoc = setDocumentMetadata(mergedPdfDoc)
     }
-    
+
     // save the merged document
     const pdfBytes = await mergedPdfDoc.save()
 
@@ -206,6 +297,7 @@ const createMergedDocument = async (documents, pages, setMetadata = true) => {
 
 ///////////////////
 export {
+    __Document,
     Document,
     mergePages,
     removePageById,

@@ -3,29 +3,11 @@ import PropTypes from 'prop-types';
 import './upload-drop-zone.css';
 import DropZone from '../drop-zone/drop-zone';
 import Progress from '../progress/progress';
+import { withOptionalShow } from "../common/options"
 import { useStore } from '../../store';
-import { Document } from '../../services/page-and-document';
+import { pdfjs } from "../../services/pdfjs"; // workaround for PDF-based image extraction 
+import { Document, __Document } from '../../services/page-and-document';
 import { manageErrorMessageFromCode, uploadFile } from "../../services/api";
-
-///////// workaround for image extraction
-import { pdfjs } from "../../services/pdfjs";
-////////
-
-// TEST PATH
-const _path = "public/uploads/__8497_name_key_0.pdf";
-const _path_photo = "public/uploads/test_photo.png";
-//
-const withOptionalShow = (Component) => (
-    ({ show = true, ...props }) => {
-
-        if (!show) {
-            return null;
-        }
-        return (
-            <Component {...props} />
-        )
-    }
-)
 
 const dataURLtoFile = (dataURL, filename) => {
     // mime extension extraction
@@ -42,8 +24,7 @@ const dataURLtoFile = (dataURL, filename) => {
     return new File([blobArray], filename, { type: mimeExtension, lastModified: new Date() });
 }
 
-//////////////
-const UploadDropZone = ({ showWhenNull = true }) => {
+const UploadDropZone = ({ showProgressWhenNull = true }) => {
     // uploading state with progress part
     const [uploading, setUploading] = useState(false);
     const initialUploadProgress = { percentage: 0, state: 'initial', filename: "" };// state: success, failure, initial, loading
@@ -65,18 +46,24 @@ const UploadDropZone = ({ showWhenNull = true }) => {
     }
 
     const clearCanvas = (ctx, canvas) => ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const extractMainImageFromPDF = (urlMap) => {
-        console.log("$$$$$$$$$$$  array", urlMap)
-        console.log("$$$$$$$$$$$  keys", urlMap.map(u=>u.numPage))
-        const firstPage = urlMap.filter(u => u.numPage == 1)
-        console.log("firstpage ----", firstPage)
-        urlMap.push({ numPage: -1, url: (firstPage.length > 0 ? firstPage[0].url : "TEST")});
+    
+    const extractMainImageFromPDF = (mapping, withReturn = false) => {
+        const mainUrl = mapping.find(({numPage}) => numPage === 1)
+        const url = mainUrl? mainUrl.url : "" 
+        if (url) {
+            mapping.push({ numPage: -1, url: url});
+        } else {
+            console.log("We couldn't find an image for our PDF")
+        }
+        if (withReturn) {
+            return mapping
+        }
+        return; 
     }
     //
-    const extractImagesFromPDF = (docPath, docId, mimeExtension = "image/jpeg", extension = ".jpg", scale = 0.25, onlyPageNumber = null) => {
+    const extractImagesFromPDF = async (docPath, docId, mimeExtension = "image/jpeg", extension = ".jpg", scale = 0.25, onlyPageNumber = null) => {
         // initiate our return
-        const urlMap = [];// list of { numPage: numPage or -1 for the pdf , url: url }
+        let urlMap = [];// list of { numPage: numPage or -1 for the pdf , url: url }
 
         // Initiate our main canvas
         let canvas;
@@ -110,11 +97,9 @@ const UploadDropZone = ({ showWhenNull = true }) => {
 
                     // args to upload the extracted image
                     const dataUrl = canvas.toDataURL(mimeExtension);
-                    console.log(">>>>> valid dataURL? ", !!dataUrl)
                     const imageId = `${docId}-${num}`;
                     const imageFilename = `${imageId}${extension}`;
                     const imageFile = dataURLtoFile(dataUrl, imageFilename)
-                    console.log(">>>>> new File", imageFile);
 
                     // upload the extracted image
                     const uploadImage = async (file, filename) => {
@@ -143,40 +128,48 @@ const UploadDropZone = ({ showWhenNull = true }) => {
 
                 // clear the canvas so that a new image can be put
                 clearCanvas(ctx, canvas);
+
             })
         }
+
         const loadingTask = pdfjs.getDocument(docPath);
-        loadingTask.promise.then((pdf) => {
+
+        [urlMap, numPages] = await loadingTask.promise.then((pdf) => {
             pdfDOC = pdf;
             numPages = pdfDOC.numPages;
-            console.log("ssssssssssss", numPages)
             canvas = document.getElementById("pdf-canvas");
             ctx = canvas.getContext("2d");
             extractImageFromPage(pageNum, stopExtracting);
+            //extractMainImageFromPDF(urlMap, false);
+            return [urlMap, numPages]
         })
-
         // link an image to the PDF as a whole
-        //extractMainImageFromPDF(urlMap);
         console.log(">>>>> urlMap", urlMap);
+        console.log(">>>>> numPages", numPages);
 
-        return urlMap
+        return [urlMap, numPages]
     }
 
-    const addDocumentFromFile = (docId, docPath, docName) => {
-        console.log("addDocumentFromFile init at path", docPath);
-        const urlMap = extractImagesFromPDF(docPath, docId);
-        // addNewDocument
-        const mainPage = urlMap.filter(u => u.numPage === 1)
-        // create the document
-        const doc = new Document(docId, docName, ".pdf", {}, docPath, mainPage.length > 0 ? mainPage[0].url : "", urlMap);
-        console.log(">>>>> doc instance -- raw --- inside async", doc.urlMap);
-        console.log(">>>>>>>>> urlMap please", urlMap)
+    const addDocumentFromFile = async (docId, docPath, docName) => {
+        const [urlMap, numPages] = await extractImagesFromPDF(docPath, docId);
 
-        const z = doc.urlMap.filter(u => u.numPage == 1);
-        console.log("z", z);//[0].url;
+
+
+        // addNewDocument
+        console.log("========= urlMap", urlMap)
+        console.log("========= length urlMap", urlMap.length)
+        console.log("========= numPages", numPages)
+
+        //const mainPage = urlMap.find(({numPage}) => numPage === 1)
+        //console.log("========= mainPage", urlMap.find(({numPage}) => numPage === 1))
+        // create the document
+        const doc = new __Document(docId, docName, docPath, numPages, urlMap, "");
+
+        //const z = doc.urlMap.filter(u => u.numPage == 1);
+        //console.log("z", z);//[0].url;
         
         doc.numberOfPages = 4;
-        console.log(">>>>> doc instance -- add url --- inside async", doc);
+        //console.log(">>>>> doc instance -- add url --- inside async", doc);
 
         // add the document
         addDocument(doc);
@@ -233,8 +226,6 @@ const UploadDropZone = ({ showWhenNull = true }) => {
 
     // ASYNCHRONOUS UPLOADING OF A DOCUMENT
     const asyncUploadDocument = async (file) => {
-        // Promise there
-        console.log("--treatment of the following file", file.name);
         return new Promise((resolve) => {
             // step one -- upload file
             _asyncUploadDocument(file);
@@ -248,17 +239,13 @@ const UploadDropZone = ({ showWhenNull = true }) => {
         // first iteration
         await asyncUploadDocument(files[index])
             .then(response => {
-                console.log(`asyncUploadDocument for file number ${index}:\n${response}\n`);
                 index++;
                 if (index < files.length) {
                     // second iteration
                     uploadDocuments(index, files)
-                } else {
-                    // end of the loop
-                    console.log("End of the upload ---------------")
-                    // à voir 
+                } else { 
                     setTimeout(() => {
-                        console.log("Back to the beginning ---------------")
+                        console.log("BACK TO THE BEGINNING")
                         initialiseDropZone();
                     }, 1500);
                 }
@@ -284,7 +271,7 @@ const UploadDropZone = ({ showWhenNull = true }) => {
                     />
                 </div>
             </div>
-            <CustomProgress progress={uploadProgress.percentage} show={showWhenNull} />
+            <CustomProgress progress={uploadProgress.percentage} show={showProgressWhenNull} />
             {errorMsg && <div style={{ color: 'red' }}>{errorMsg}</div>}
         </div>
     )

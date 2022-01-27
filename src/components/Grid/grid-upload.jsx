@@ -11,7 +11,6 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
   const {
     documents: items,
     deletedPages,
-    removePagesByDocumentFromAvailablePages,
     removePagesByDocumentFromDeletedPages,
     removeDocument,
     addAvailablePage,
@@ -23,7 +22,6 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
     console.log(`WE are TRYING TO REMOVE A CARD WITH THE ID ${itemId}`)
     removeDocument(itemId);
     removePagesByDocumentFromDeletedPages(itemId);
-    //removePagesByDocumentFromAvailablePages(itemId);
   }
 
   // restaurer à la chaine
@@ -44,7 +42,6 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
 
   //SimpleCard
   const renderCard = item => {
-    console.log("iteM ??", item.mapUrl)
     return (
     <CardComponent {...{
       text: item.name,
@@ -55,7 +52,7 @@ const Grid = ({ CardComponent = DummyCard, fBasis = '25%' }) => {
       imgSrc: item.url,
     }} />
   )};
-
+  console.log("all the items", items);
   return (
     <GridWrapper>
       {items.map(item => (
