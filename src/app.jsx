@@ -14,6 +14,8 @@ const App = () => {
   const { initiateTheme } = useStore();
   // COLOR THEME -- Force an initial state based on the local storage value
   useEffect(() => initiateTheme(), []);
+  
+  // CRON JOB TO ERASE ALL
 
   return (
     <div className="app">

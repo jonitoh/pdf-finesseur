@@ -193,3 +193,6 @@ https://picsum.photos/
 
 
 https://stackoverflow.com/questions/46876570/create-react-app-exclude-folder-from-triggering-reload
+
+scope css
+https://css-tricks.com/easy-dark-mode-and-multiple-color-themes-in-react/
