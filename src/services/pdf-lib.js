@@ -9,7 +9,12 @@ const loadPDF = async url => {
     return PdfDoc;
 }
 
-const loadDocuments = async documents => (documents.map(doc => ({ [doc.id]: loadPDF(doc.url) })).reduce((prev, cur) => ({ ...prev, ...cur }), {}))
+const loadDocuments = async documents => (
+    Object.fromEntries(
+        documents
+            .map(doc => ([doc.id, loadPDF(doc.url)]))
+    )
+)
 
 const extractWantedPage = async (pdfDoc, pdfDocuments, pageArgs) => {
     const wantedPdfDocument = pdfDocuments[pageArgs.parentId];

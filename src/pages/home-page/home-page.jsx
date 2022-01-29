@@ -1,33 +1,44 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import './home-page.css';
-import Placeholder from '../../components/placeholder/placeholder';
-import Grid from '../../components/grid/grid-dnd-home';
-import { withInnerNavigation } from '../page-wrapper/page-wrapper';
-import { useStore } from '../../store';
+import './home-page.scoped.css';
+import { withInnerNavigation } from '@pages/page-wrapper/page-wrapper';
+import Placeholder from '@common/placeholder/placeholder';
+import GridDND from '@components/grid/grid-dnd/grid-dnd';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useStore } from '@store';
 
-const HomePage = () => {
+const HomePage = ({ flexBasis = '25%' }) => {
+    const {
+        availablePages
+    } = useStore();
 
-    const { getNumberOfDocuments } = useStore();
-
-    if (getNumberOfDocuments() === 0) {
-        return (
-            <Placeholder>
-                Go upload some files!
-            </Placeholder>
-        )
+    // GridWrapper props
+    const gridWrapperProps = {
+        backgroundImg: "",
+        isEmpty: availablePages.length === 0,
+        emptyChildren: (<Placeholder>Go upload some files!!</Placeholder>)
     }
+
+    // GridItemWrapper custom style
+    const gridItemWrapperStyle = {};
+
+
+
     return (
         <DndProvider backend={HTML5Backend}>
-            <Grid />
+            <GridDND
+                gridWrapperProps={gridWrapperProps}
+                gridItemWrapperStyle={gridItemWrapperStyle}
+                flexBasis={flexBasis}
+            />
         </DndProvider>
     )
 }
 
-export default withInnerNavigation(HomePage, false);
+
+export default withInnerNavigation(HomePage, { putLeftButton: false, putRightButton: false, containerStyle: {} });
 
 HomePage.propTypes = {
+    flexBasis: PropTypes.string,
 }

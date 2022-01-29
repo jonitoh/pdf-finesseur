@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { useDrag, useDrop } from "react-dnd";
-import { DNDItemTypes } from "../../../utils/constants";
+import { DNDItemTypes } from "@utils/constants";
+import "./styles.scoped.css";
 
 export const withDragAndDropOptions = WrappedComponent => {
   const Wrapper = (props) => {
@@ -45,9 +46,6 @@ export const withDragAndDropOptions = WrappedComponent => {
     // drop interaction
     const [{ hovered }, drop] = useDrop({
       accept: DNDItemTypes.PAGE,
-      // drop: () => ({
-      //               boxType: "Picture"
-      //   }),
       hover: (item, monitor) => {
         const dragIndex = item.draggedItem.index;
         const hoverIndex = props.index;

@@ -1,0 +1,26 @@
+ul {
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 0rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+    height: 100vh;
+    width: auto;
+    min-width: 5rem;
+    border: 2px var(--border-style) var(--border-color);
+    background-color: var(--color-primary);
+}
+
+/* Small phones: from 0px to 480px */
+@media screen and (max-width: 480px) {
+    ul {
+        border-radius: var(--radius) var(--radius) 0 0;
+        flex-direction: row;
+        width: 100vw;
+        min-height: 5rem;
+        height: auto;
+        padding: 1rem;
+    }
+}

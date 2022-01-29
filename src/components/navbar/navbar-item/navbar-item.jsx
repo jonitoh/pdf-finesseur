@@ -1,18 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import NavigationButton from '@common/navigation-button/navigation-button';
 import PropTypes from 'prop-types';
-import './navbar-item.css';
+import './navbar-item.scoped.css';
 
 const Label = ({ text }) => (
-    <p className="navbar__itemlabel">{text}</p>
+    <p className="label">{text}</p>
 )
 
 const NavbarItem = ({ path, label, Icon, count, onClick = undefined }) => (
-    <li className="navbar__item">
-        <Link to={path} onClick={onClick} >
-            <Icon notificationCount={count} />
+    <li>
+        <NavigationButton
+            path={path}
+            Icon={Icon}
+            onClick={onClick}
+            iconProps={{ notificationCount: count }}
+        >
             <Label text={label} />
-        </Link>
+        </NavigationButton>
     </li>
 )
 

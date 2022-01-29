@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "./styles.scoped.css";
 
 export const withItemsDragPreview = WrappedComponent => {
   const Wrapper = ({ items }) => {

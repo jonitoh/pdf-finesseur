@@ -1,0 +1,13 @@
+a {
+    color: var(--font-color);
+    text-decoration: none;
+}
+
+svg {
+    width: 2rem;
+    transition: all 200ms ease-in;
+}
+
+a:hover {
+    color: var(--color-hover);
+}

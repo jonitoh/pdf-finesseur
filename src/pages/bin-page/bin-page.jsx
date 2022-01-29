@@ -1,31 +1,62 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import './bin-page.css';
-import { withInnerNavigation } from '../page-wrapper/page-wrapper';
-import Placeholder from '../../components/placeholder/placeholder';
-import { useStore } from '../../store';
-import Grid from '../../components/grid/grid-bin';
+import './bin-page.scoped.css';
+import { withInnerNavigation } from '@pages/page-wrapper/page-wrapper';
+import Placeholder from '@common/placeholder/placeholder';
+import GridCore from '@components/grid/grid-core/grid-core';
+import { OneClickCard } from '@components/card/dummy-card/dummy-card';
+import { useStore } from '@store';
 
-const BinPage = () => {
 
+const BinPage = ({ flexBasis = '25%' }) => {
     const {
-        getNumberOfDeletedPages,
+        deletedPages: gridItems,
+        removePageByIdFromDeletedPages,
+        addAvailablePage
     } = useStore();
 
-    if (getNumberOfDeletedPages() === 0) {
-        return (
-            <Placeholder>
-                Nothing here!
-            </Placeholder>
-        )
+    // GridWrapper props
+    const gridWrapperProps = {
+        backgroundImg: "",
+        isEmpty: gridItems.length === 0,
+        emptyChildren: (<Placeholder>Nothing here!</Placeholder>)
     }
+
+    // GridItemWrapper props
+    const gridItemWrapperProps = {};
+
+    // removeFromGrid aka restaurer aka remove deleted page and add into available pages
+    const removeFromGrid = itemId => {
+        console.log(`WE are TRYING TO RESTORE A CARD WITH THE ID ${itemId}`)
+        const removedItem = gridItems.find(item => item.id === itemId);
+        removePageByIdFromDeletedPages(itemId);
+        if (removedItem) {
+            addAvailablePage(removedItem);
+        }
+    }
+
+    const renderItem = item => (
+        <OneClickCard
+            text={item.name}
+            onClick={() => removeFromGrid(item.id)}
+            clickLabel={"restore"}
+        />
+    );
+
+
     return (
-        <Grid/>
+        <GridCore
+            gridItems={gridItems}
+            gridWrapperProps={gridWrapperProps}
+            gridItemWrapperProps={gridItemWrapperProps}
+            renderItem={renderItem}
+            flexBasis={flexBasis}
+        />
     )
 }
 
 export default withInnerNavigation(BinPage);
 
 BinPage.propTypes = {
+    flexBasis: PropTypes.string,
 }

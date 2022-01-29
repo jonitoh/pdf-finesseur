@@ -1,6 +1,6 @@
 import React from "react";
 import { useDragLayer } from "react-dnd";
-import { DNDItemTypes } from "../../../utils/constants";
+import { DNDItemTypes } from "@utils/constants";
 
 const defaultLayerStyles = {
   position: "fixed",

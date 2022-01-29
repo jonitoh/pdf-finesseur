@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import './upload-drop-zone.css';
-import DropZone from '../drop-zone/drop-zone';
-import Progress from '../progress/progress';
-import { withOptionalShow } from "../common/options"
-import { useStore } from '../../store';
-import { pdfjs } from "../../services/pdfjs"; // workaround for PDF-based image extraction 
-import { manageErrorMessageFromCode, uploadFile } from "../../services/api";
-import { dataURLtoFile } from '../../utils/functions';
+import './upload-drop-zone.scoped.css';
+import DropZone from '@common/drop-zone/drop-zone';
+import Progress from '@components/progress/progress';
+import { withOptionalShow } from "@common/options"
+import { useStore } from '@store';
+import { pdfjs } from "@services/pdfjs"; // workaround for PDF-based image extraction 
+import { manageErrorMessageFromCode, uploadFile } from "@services/api";
+import { dataURLtoFile } from '@utils/functions';
 
 
-const UploadDropZone = ({ showProgressWhenNull = true }) => {
+const UploadDropZone = ({ showProgressWhenNull = false }) => {
     // uploading state with progress part
     const [uploading, setUploading] = useState(false);
     const initialUploadProgress = { percentage: 0, state: 'initial', filename: "" };
@@ -32,19 +32,19 @@ const UploadDropZone = ({ showProgressWhenNull = true }) => {
     }
 
     const clearCanvas = (ctx, canvas) => ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     const extractMainImageFromPDF = (mapping, withReturn = false) => {
-        const mainUrl = mapping.find(({numPage}) => numPage === 1)
-        const url = mainUrl? mainUrl.url : "" 
+        const mainUrl = mapping.find(({ numPage }) => numPage === 1)
+        const url = mainUrl ? mainUrl.url : ""
         if (url) {
-            mapping.push({ numPage: -1, url: url});
+            mapping.push({ numPage: -1, url: url });
         } else {
             console.log("We couldn't find an image for our PDF")
         }
         if (withReturn) {
             return mapping
         }
-        return; 
+        return;
     }
     //
     const extractImagesFromPDF = async (docPath, docId, mimeExtension = "image/jpeg", extension = ".jpg", scale = 0.25, onlyPageNumber = null) => {
@@ -93,7 +93,7 @@ const UploadDropZone = ({ showProgressWhenNull = true }) => {
                         const imageHandleSuccess = (file, filename, response) => {
                             const { data: { output } } = response;
                             const { path: imgUrl } = output[0];
-                            urlMap.push({ numPage: num, url: imgUrl});
+                            urlMap.push({ numPage: num, url: imgUrl });
                         }
 
                         await uploadFile({
@@ -169,7 +169,7 @@ const UploadDropZone = ({ showProgressWhenNull = true }) => {
             return [file, `${docId}.pdf`]
         }
 
-        const handleOnUploadProgress = (file, filename) => ( (progressEvent) => {
+        const handleOnUploadProgress = (file, filename) => ((progressEvent) => {
             const percentage = Math.round((100 * progressEvent.loaded) / progressEvent.total)
             setUploadProgress({ percentage: percentage, state: 'loading', filename: file.name })
         });
@@ -222,7 +222,7 @@ const UploadDropZone = ({ showProgressWhenNull = true }) => {
                 if (index < files.length) {
                     // second iteration
                     uploadDocuments(index, files)
-                } else { 
+                } else {
                     setTimeout(() => {
                         console.log("BACK TO THE BEGINNING")
                         initialiseDropZone();
@@ -239,19 +239,20 @@ const UploadDropZone = ({ showProgressWhenNull = true }) => {
     };
 
     return (
-        <div className="upload-section__dropzone">
-            <span className="title">{uploading ? "Loading..." : "Drop your file here!"}</span>
-            <div className='content'>
-                <div>
+        <div className="container">
+            <div className="main-content">
+                <div className="drop-zone">
                     <DropZone
                         onFilesAdded={onFilesAdded}
                         disabled={uploading || successfullUploaded}
-                        title={"upload here!!"}
+                        title={uploading ? "Loading..." : "Drop your file here!"}
                     />
                 </div>
+                <div className="progress-zone">
+                    <CustomProgress progress={uploadProgress.percentage} show={showProgressWhenNull} />
+                </div>
             </div>
-            <CustomProgress progress={uploadProgress.percentage} show={showProgressWhenNull} />
-            {errorMsg && <div style={{ color: 'red' }}>{errorMsg}</div>}
+            {errorMsg && <div className="error-zone">{errorMsg}</div>}
         </div>
     )
 }

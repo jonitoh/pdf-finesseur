@@ -1,7 +1,7 @@
 import React from 'react';
-import './theme-selector.css';
+//import './theme-selector.scoped.css';
 import { useStore } from '../../store';
-import Selector from '../selector/selector';
+import Selector from '@common/selector/selector';
 
 const ThemeSelector = () => {
   const {

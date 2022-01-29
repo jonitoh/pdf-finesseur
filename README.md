@@ -196,3 +196,16 @@ https://stackoverflow.com/questions/46876570/create-react-app-exclude-folder-fro
 
 scope css
 https://css-tricks.com/easy-dark-mode-and-multiple-color-themes-in-react/
+
+craco
+
+
+responsive in js
+https://stackoverflow.com/questions/31162606/how-to-detect-screen-size-for-responsive-web-design
+
+https://www.willmaster.com/library/tutorials/divs-with-background-images.php
+
+cards to do
+i18n complex to build
+fuckin' tests
+

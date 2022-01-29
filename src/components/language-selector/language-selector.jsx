@@ -1,6 +1,6 @@
 import React from 'react';
-import './language-selector.css';
-import Selector from '../selector/selector';
+//import './language-selector.scoped.css';
+import Selector from '@common/selector/selector';
 import { useStore } from '../../store';
 
 const LanguageSelector = () => {
@@ -8,7 +8,7 @@ const LanguageSelector = () => {
     const {
         lang,
         setLang,
-        getOptions,
+        getAllLanguagesAsOptions,
         t,
     } = useStore();
 
@@ -20,7 +20,7 @@ const LanguageSelector = () => {
         <Selector
             label={t("choose-lang")}
             value={lang}
-            options={getOptions()}
+            options={getAllLanguagesAsOptions()}
             onChange={handleChange}
         />
     )

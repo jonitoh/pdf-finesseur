@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './progress.css';
-
+import './progress.scoped.css';
 // state: success, failure, initial, loading
 const initialUploadProgress = { percentage: 0, state: 'initial', filename: null };
 // need of a customisation --- just number, circle, bar

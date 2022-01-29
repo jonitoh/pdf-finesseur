@@ -1,55 +1,51 @@
-
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
-import './page-wrapper.css';
-import Icon from '../../components/icon';
+import './page-wrapper.scoped.css';
+import Icon from '@common/icon';
+import NavigationButton from '@common/navigation-button/navigation-button';
 
-const BackButton = ({ path, Icon, onClick = undefined }) => (
-    <div>
-        <Link to={path} onClick={onClick}>
-            <Icon />
-        </Link>
-    </div>
-)
+const leftStyle = {};
+//const rightStyle = {};
 
-BackButton.propTypes = {
-    path: PropTypes.string.isRequired,
-    Icon: PropTypes.func.isRequired,
-    onClick: PropTypes.func,
-}
-
-const PageWrapper = ({ putBackButton = true, children }) => {
-    const leftStyle = {};
-    const LeftButton = <BackButton path={"/"} Icon={Icon.NavBackArrow} style={leftStyle} />;
-    if (putBackButton) {
+const PageWrapper = ({ putLeftButton = true, putRightButton = true, containerStyle = {}, children }) => {
+    const LeftButton = <NavigationButton path={"/"} Icon={Icon.NavBackArrow} style={leftStyle} />;
+    const RightButton = null;
+    if (putLeftButton || putRightButton) {
         return (
-            <div className="page-wrapper">
-                <div className="page-wrapper__inner-nav">
-                    {putBackButton ? LeftButton : null}
+            <div className="page">
+                <div className="navbar">
+                    {putLeftButton ? LeftButton : null}
+                    {putRightButton ? RightButton : null}
                 </div>
-                <div className="page-wrapper__main">
+                <div className="main" style={containerStyle}>
                     {children}
                 </div>
             </div>
         )
     }
     return (
-        <Fragment>
+        <React.Fragment>
             {children}
-        </Fragment>
+        </React.Fragment>
     )
 }
 
 export default PageWrapper;
 
 PageWrapper.propTypes = {
-    putBackButton: PropTypes.bool,
+    putLeftButton: PropTypes.bool,
+    putRightButton: PropTypes.bool,
     children: PropTypes.node
 }
 
-export const withInnerNavigation = (Component, putBackButton) => (props => (
-    <PageWrapper putBackButton={putBackButton}>
+export const withInnerNavigation = (Component, rest = { putLeftButton: true, putRightButton: false, containerStyle: {} }) => (props => {
+    const { putLeftButton, putRightButton, containerStyle } = rest;
+    return (
+    <PageWrapper
+        putLeftButton={putLeftButton}
+        putRightButton={putRightButton}
+        containerStyle={containerStyle}
+    >
         <Component {...props} />
     </PageWrapper>
-));
+)});

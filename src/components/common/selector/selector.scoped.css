@@ -1,0 +1,15 @@
+.wrapper {
+    margin: 0.5rem;
+}
+
+.wrapper * {
+    margin: 0.25rem;
+}
+
+.label {
+    font-weight: lighter;
+}
+
+select:focus-visible {
+    outline-color: var(--main-color-hover);
+}

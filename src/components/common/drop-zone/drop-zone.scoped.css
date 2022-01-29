@@ -1,0 +1,26 @@
+.dropzone {
+    height: 30vh;
+    width: 60vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.icon {
+    opacity: 0.3;
+    height: 60px;
+    width: 60px;
+}
+
+.file-input {
+    display: none;
+}
+
+.highlight {
+    color: var(--color-secondary);
+}
+
+h3 {
+    font-weight: lighter;
+}

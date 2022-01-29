@@ -1,26 +1,28 @@
 import React, { useEffect } from 'react';
-import './app.css'
+import './app.scoped.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SimpleNavbar from './components/navbar/simple-navbar/simple-navbar';
-import HomePage from './pages/home-page/home-page';
-import UploadPage from './pages/upload-page/upload-page';
-import BinPage from './pages/bin-page/bin-page';
-import SettingsPage from './pages/settings-page/settings-page';
-import { useStore } from './store';
+import HomePage from '@pages/home-page/home-page';
+import UploadPage from '@pages/upload-page/upload-page';
+import BinPage from '@pages/bin-page/bin-page';
+import SettingsPage from '@pages/settings-page/settings-page';
+import SimpleNavbar from '@components/navbar/simple-navbar/simple-navbar';
+import { useStore } from '@store';
 
 
 
 const App = () => {
-  const { initiateTheme } = useStore();
+
+  const { initiateTheme, initiateLang } = useStore();
   // COLOR THEME -- Force an initial state based on the local storage value
   useEffect(() => initiateTheme(), []);
-  
+  // LANG THEME -- Force an initial state based on the local storage value
+  useEffect(() => initiateLang(), []);
   // CRON JOB TO ERASE ALL
 
   return (
     <div className="app">
       <BrowserRouter>
-        <main className="app__main">
+        <main className="main">
           <Routes>
             <Route
               path="/"
@@ -40,7 +42,7 @@ const App = () => {
             />
           </Routes>
         </main>
-        <div className='app__nav'>
+        <div className='navbar'>
           <SimpleNavbar />
         </div>
       </BrowserRouter>

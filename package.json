@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.0.0-alpha.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -10,6 +11,7 @@
     "body-parser": "^1.19.1",
     "concurrently": "^7.0.0",
     "cors": "^2.8.5",
+    "craco-plugin-scoped-css": "^1.1.1",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "multer": "^1.4.4",
@@ -42,10 +44,10 @@
   },
   "scripts": {
     "copy-assets": "cp ./node_modules/pdfjs-dist/build/pdf.worker.min.js ./public/",
-    "start": "npm run copy-assets && react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "npm run copy-assets && craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "start-app": "yarn build && (cd server && yarn start)"
   },
   "proxy": "http://localhost:5000",

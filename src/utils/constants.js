@@ -12,6 +12,11 @@ const DNDItemTypes = {
   PAGE: "page",
 };
 
+const LANGUAGES = {
+  ENGLISH: 'en',
+  FRENCH: 'fr'
+};
+
 const API_URL = "http://localhost:5000";
 
 
@@ -19,4 +24,5 @@ export {
   DNDItemTypes,
   API_URL,
   THEME,
+  LANGUAGES,
 };

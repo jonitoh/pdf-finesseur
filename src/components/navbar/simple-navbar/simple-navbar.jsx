@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import './simple-navbar.css';
+import './simple-navbar.scoped.css';
 import NavbarList from '../navbar-list/navbar-list';
 import NavbarItem from '../navbar-item/navbar-item';
-import Icon from '../../icon';
-import { useStore } from '../../../store';
+import Icon from '@common/icon';
+import Modal from '@common/modal/modal';
+import { useStore } from '@store';
 import axios from "axios";
+
 
 const downloadFile = (mergedDocument) => {
     console.log("start download");
@@ -54,17 +56,25 @@ const fakeDownloadFile = () => {
 }
 
 const SimpleNavbar = () => {
+    const modal = useRef(null);
+
     const {
-        getNumberOfDocuments,
-        getNumberOfDeletedPages,
         createMergedDocument,
         getMergedDocument,
         getAvailablePages,
+        documents,
+        deletedPages,
         t,
         //resetAll,
     } = useStore();
 
+
+
     const onClick = () => {
+        if (documents.length === 0) {
+            modal.current.open()
+            return;
+        }
         console.log('CLICK---create the merged document');
         createMergedDocument();
         const mergedDocument = getMergedDocument();
@@ -74,6 +84,10 @@ const SimpleNavbar = () => {
     }
 
     const fakeOnClick = () => {
+        if (documents.length === 0) {
+            modal.current.open()
+            return;
+        }
         console.log('CLICK---create the merged document');
         createMergedDocument();
         const mergedDocument = getMergedDocument();
@@ -89,34 +103,45 @@ const SimpleNavbar = () => {
     }
 
     return (
-        <div className="navbar-simple">
-            <NavbarList>
-                <NavbarItem
-                    path={"/upload"}
-                    label={t("add-button-label")}
-                    Icon={Icon.Add}
-                    count={getNumberOfDocuments()}
-                />
-                <NavbarItem
-                    path={"/bin"}
-                    label={t("bin-button-label")}
-                    Icon={Icon.Bin}
-                    count={getNumberOfDeletedPages()}
-                />
-                <NavbarItem
-                    path={"/settings"}
-                    label={t("settings-button-label")}
-                    Icon={Icon.Settings}
-                />
-                <NavbarItem
-                    path={"/"}
-                    label={t("download-button-label")}
-                    Icon={Icon.Download}
-                    onClick={fakeOnClick}
-                />
+        <React.Fragment>
+            <div className="navbar-simple">
+                <NavbarList>
+                    <NavbarItem
+                        path={"/upload"}
+                        label={t("add-button-label")}
+                        Icon={Icon.Add}
+                        count={documents.length}
+                    />
+                    <NavbarItem
+                        path={"/bin"}
+                        label={t("bin-button-label")}
+                        Icon={Icon.Bin}
+                        count={deletedPages.length}
+                    />
+                    <NavbarItem
+                        path={"/settings"}
+                        label={t("settings-button-label")}
+                        Icon={Icon.Settings}
+                    />
+                    <NavbarItem
+                        path={"/"}
+                        label={t("download-button-label")}
+                        Icon={Icon.Download}
+                        onClick={fakeOnClick}
+                    />
 
-            </NavbarList>
-        </div>
+                </NavbarList>
+            </div>
+            <Modal
+                defaultOpened={false}
+                allowHandleEscape={false}
+                title={""}
+                fade={false}
+                ref={modal}
+            >
+                {"You need to upload document first"}
+            </Modal>
+        </React.Fragment>
     )
 }
 

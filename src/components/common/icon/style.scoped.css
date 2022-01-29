@@ -1,0 +1,25 @@
+/* notification */
+.notification-wrapper {
+    position: relative;
+}
+
+.notification-indicator {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    left: 60%;
+    bottom: 60%;
+    background-color: var(--color-secondary);
+    border: 10px solid var(--color-secondary);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.notification-count {
+    font-family: Arial;
+    color: var(--color-white);
+    font-weight: bold;
+}
