@@ -22,7 +22,7 @@
     flex-basis: 90%;
     display: flex;
     justify-content: space-around;
-    overflow: auto;
+    overflow: scroll;
 }
 
 /*** Media Queries ***/

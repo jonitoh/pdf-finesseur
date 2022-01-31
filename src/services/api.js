@@ -76,6 +76,7 @@ const uploadFile = async ({
     onUploadProgress = genericUploadProgress(file, filename),
     success = (file, filename, response) => genericSuccess(file, filename, response),
     catcher = (file, filename, error) => genericCatcher(file, filename, error),
+    returnResult = false
 }) => {
     // before process
     [file, filename] = before(file, filename);
@@ -85,7 +86,7 @@ const uploadFile = async ({
     formData.append('files', file, filename)
 
     //send request
-    await storageInstance.request({
+    const request = async () => await storageInstance.request({
         url: "/",
         method: "POST",
         data: formData,
@@ -95,6 +96,14 @@ const uploadFile = async ({
         .then(response => success(file, filename, response))
         // catch errors
         .catch(error => catcher(file, filename, error))
+
+    if (returnResult) {
+        return request()
+    } else {
+        request()
+        return;
+    }
+
 }
 
 export {

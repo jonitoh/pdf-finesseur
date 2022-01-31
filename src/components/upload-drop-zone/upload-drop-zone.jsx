@@ -9,6 +9,8 @@ import { pdfjs } from "@services/pdfjs"; // workaround for PDF-based image extra
 import { manageErrorMessageFromCode, uploadFile } from "@services/api";
 import { dataURLtoFile } from '@utils/functions';
 
+const range = (start, end, length = end - start + 1) =>
+    Array.from({ length }, (_, i) => start + i)
 
 const UploadDropZone = ({ showProgressWhenNull = false }) => {
     // uploading state with progress part
@@ -31,113 +33,132 @@ const UploadDropZone = ({ showProgressWhenNull = false }) => {
         // resetProgressBar
     }
 
-    const clearCanvas = (ctx, canvas) => ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const extractMainImageFromPDF = (mapping, withReturn = false) => {
-        const mainUrl = mapping.find(({ numPage }) => numPage === 1)
-        const url = mainUrl ? mainUrl.url : ""
-        if (url) {
-            mapping.push({ numPage: -1, url: url });
-        } else {
-            console.log("We couldn't find an image for our PDF")
-        }
-        if (withReturn) {
-            return mapping
-        }
-        return;
+    const clearCanvas = (ctx, canvas) => {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
     }
+
     //
     const extractImagesFromPDF = async (docPath, docId, mimeExtension = "image/jpeg", extension = ".jpg", scale = 0.25, onlyPageNumber = null) => {
-        // initiate our return
-        let urlMap = [];// list of { numPage: numPage or -1 for the pdf , url: url }
-
         // Initiate our main canvas
-        let canvas;
-        let ctx;
+        const canvas = document.getElementById("pdf-canvas");
+        const ctx = canvas.getContext("2d");
         let pdfDOC = null;
-        let numPages;
-        const stopExtracting = !!onlyPageNumber;
-        let pageNum = !!onlyPageNumber ? onlyPageNumber : 1;
-        let pageRendering = false;
+        let numPages = null;
+        let isRendering = false;
 
-        // 
-        const extractImageFromPage = (num, stopExtracting = false) => {
-            console.log(">>>>> start extractImageFromPage for page", num)
-            pageRendering = true;
-            // retrieve the wanted page
-            pdfDOC.getPage(num).then((page) => {
+        const extractImageFromPDF = (num) => {
+            console.log(">>>>> start extractImageFromPage for page", num);
+            if (isRendering) {
+                console.log("we need to delay")
+                // we manually wait for the canvas to finish rendering 
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(extractImageFromPDF(num))
+                    }, 5000);
+                });
+            }
+            isRendering = true;
+            return pdfDOC.getPage(num).then((page) => {
+
                 const viewport = page.getViewport({ scale: scale });
                 // Prepare canvas using page dimensions                
                 canvas.width = viewport.width ? viewport.width : 100;
                 canvas.height = viewport.height ? viewport.height : 200;
 
-                // renderTask
+                // Render PDF page into canvas context
                 const renderTask = page.render({
                     canvasContext: ctx,
                     viewport: viewport,
                 })
 
-                // the extraction happens here
-                renderTask.promise.then(() => {
-                    pageRendering = false;
+                // the extraction happens here and output an object with the numPage and the newly created url
+                const result = renderTask.promise
+                    .then(() => {
+                        // args to upload the extracted image
+                        const dataUrl = canvas.toDataURL(mimeExtension);
+                        const imageId = `${docId}-${num}`;
+                        const imageFilename = `${imageId}${extension}`;
+                        const imageFile = dataURLtoFile(dataUrl, imageFilename)
 
-                    // args to upload the extracted image
-                    const dataUrl = canvas.toDataURL(mimeExtension);
-                    const imageId = `${docId}-${num}`;
-                    const imageFilename = `${imageId}${extension}`;
-                    const imageFile = dataURLtoFile(dataUrl, imageFilename)
+                        // upload the extracted image
+                        const uploadImage = async (file, filename) => {
+                            // store the url
+                            const imageHandleSuccess = (file, filename, response) => {
+                                const { data: { output } } = response;
+                                const { path: imgUrl } = output[0];
+                                const result = { numPage: num, url: imgUrl };
+                                return result
+                            }
 
-                    // upload the extracted image
-                    const uploadImage = async (file, filename) => {
-                        // store the url
-                        const imageHandleSuccess = (file, filename, response) => {
-                            const { data: { output } } = response;
-                            const { path: imgUrl } = output[0];
-                            urlMap.push({ numPage: num, url: imgUrl });
+                            return await uploadFile({
+                                file: imageFile,
+                                filename: imageFilename,
+                                success: imageHandleSuccess,
+                                returnResult: true,
+                            });
                         }
 
-                        await uploadFile({
-                            file: imageFile,
-                            filename: imageFilename,
-                            success: imageHandleSuccess,
-                        });
-                    }
-                    uploadImage(imageFile, imageFilename);
+                        return uploadImage(imageFile, imageFilename);
 
-                    // extract the next image if possible
-                    if ((pageNum < numPages) & !stopExtracting) {
+                    })
+                    // clear the canvas so that a new image can be put
+                    .finally(() => {
                         clearCanvas(ctx, canvas);
-                        pageNum++;
-                        extractImageFromPage(pageNum)
-                    }
-                })
-
-                // clear the canvas so that a new image can be put
-                clearCanvas(ctx, canvas);
-
+                        isRendering = false;
+                    })
+                return result
             })
         }
 
         const loadingTask = pdfjs.getDocument(docPath);
 
-        [urlMap, numPages] = await loadingTask.promise.then((pdf) => {
+        //list of { numPage: numPage or -1 for the pdf , url: url }
+        const urlMap = await loadingTask.promise.then((pdf) => {
             pdfDOC = pdf;
             numPages = pdfDOC.numPages;
-            canvas = document.getElementById("pdf-canvas");
-            ctx = canvas.getContext("2d");
-            extractImageFromPage(pageNum, stopExtracting);
-            //extractMainImageFromPDF(urlMap, false);
-            return [urlMap, numPages]
+
+            let pageNumList = [];
+            if (onlyPageNumber) {
+                if (onlyPageNumber <= numPages) {
+                    pageNumList = [onlyPageNumber]
+                } else {
+                    throw new Error(`onlyPageNumber ${onlyPageNumber} out of range 1 to ${numPages}`)
+                }
+            } else {
+                pageNumList = range(1, numPages);
+            }
+            console.log("<<<<< pageNumList", pageNumList);
+            return (
+                pageNumList
+                    .map(num => () => extractImageFromPDF(num))// output a promise to be called
+                    .reduce(
+                        (prevPromise, promise) => (prevPromise.then(result => promise().then(Array.prototype.concat.bind(result)))),
+                        Promise.resolve([]))
+            );
         })
-        // link an image to the PDF as a whole
         console.log(">>>>> urlMap", urlMap);
         console.log(">>>>> numPages", numPages);
 
         return [urlMap, numPages]
     }
 
+    const extractMainImageFromPDF = async (docPath, urlMap, numPages) => {
+        const mainUrl = urlMap.find(({ numPage }) => numPage === 1)
+        const url = mainUrl ? mainUrl.url : ""
+        if (url) {
+            urlMap.push({ numPage: -1, url: url });
+        } else {
+            console.log("We couldn't find an image for our PDF")
+        }
+        return urlMap;
+    }
+
     const addDocumentFromFile = async (docId, docPath, docName) => {
-        const [urlMap, numPages] = await extractImagesFromPDF(docPath, docId);
+        console.log("<<<<< init addDocumentFromFile");
+        let [urlMap, numPages] = await extractImagesFromPDF(docPath, docId);
+        //urlMap = await extractMainImageFromPDF(docPath, urlMap, numPages)
 
         console.log("urlMap length ?", urlMap.length)
 
@@ -145,7 +166,7 @@ const UploadDropZone = ({ showProgressWhenNull = false }) => {
             id: docId,
             name: docName,
             path: docPath,
-            numPages: numPages,//4,
+            numPages: numPages,
             urlMap: urlMap,
             url: "",
             extension: ".pdf"
@@ -156,8 +177,8 @@ const UploadDropZone = ({ showProgressWhenNull = false }) => {
         addDocument(documentArgs);
     }
 
-    const _asyncUploadDocument = async (file, filename = null) => {
-        console.log(`--for the mess about file ${file.name} and optional name ${filename}`);
+    const asyncUploadDocument = async (file, filename = null) => {
+        console.log(`<<<<< init _asyncUploadDocument about file ${file.name} and optional name ${filename}`);
 
         // --- pseudo-global values
         const docId = Math.floor(Math.random() * (10000 - 1) + 1);
@@ -175,7 +196,7 @@ const UploadDropZone = ({ showProgressWhenNull = false }) => {
         });
 
         const handleCatcher = (file, filename, error) => {
-            console.log("catched error", error);
+            console.log("<<<<< catched _asyncUploadDocument error", error);
             const { code } = error?.response?.data;
             const msg = manageErrorMessageFromCode(code);
             setErrorMsg(prevState => (!!prevState ? prevState + " || " + msg : msg))
@@ -200,42 +221,73 @@ const UploadDropZone = ({ showProgressWhenNull = false }) => {
             onUploadProgress: handleOnUploadProgress,
             success: handleSuccess,
             catcher: handleCatcher,
+        }).then(() => {
+            console.log("<<<<< end _asyncUploadDocument")
         });
     }
 
     // ASYNCHRONOUS UPLOADING OF A DOCUMENT
-    const asyncUploadDocument = async (file) => {
+    const asyncUploadDocumentWithPromise = async (file) => {
         return new Promise((resolve) => {
+            console.log("<<<<< async upload");
             // step one -- upload file
-            _asyncUploadDocument(file);
+            asyncUploadDocument(file);
             // return what's important
             resolve()
         });
     }
 
-    // UPLOAD DOCUMENTS WITH PROMISES
-    const uploadDocuments = async (index, files) => {
-        // first iteration
-        await asyncUploadDocument(files[index])
-            .then(response => {
-                index++;
-                if (index < files.length) {
-                    // second iteration
-                    uploadDocuments(index, files)
-                } else {
-                    setTimeout(() => {
-                        console.log("BACK TO THE BEGINNING")
-                        initialiseDropZone();
-                    }, 1500);
-                }
-            })
+    const initialiseDropZoneWithPromise = async (timing = 1500) => {
+        return new Promise((resolve) => {
+            console.log("<<<<< finish upload all docs");
+            setTimeout(() => {
+                console.log("BACK TO THE BEGINNING")
+                initialiseDropZone();
+            }, timing);
+            // return what's important
+            resolve()
+        });
+    }
+
+    const delayWithPromise = async (timing = 1000) => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log("delay between files")
+            }, timing);
+            // return what's important
+            resolve()
+        });
+    }
+
+    // UPLOAD DOCUMENTS WITH SEQUENTIAL PROMISES
+    const uploadDocuments = async (files, initialiseTiming = 2000, delayTiming = 5000) => {
+        // files is a FileList type
+        console.log("<<<<< how many files to upload ?", files.length);
+        // between each file, we'll wait a few seconds
+        const filesPromises = (
+            Array.from(files)
+                .map(file => [() => asyncUploadDocumentWithPromise(file), () => delayWithPromise(delayTiming)])
+                .reduce((a, b) => (a.concat(b)), [])
+        )
+
+        const sequentialPromises = [
+            ...filesPromises,
+            () => initialiseDropZoneWithPromise(initialiseTiming)
+        ]
+        console.log("<<<<< how many promises ? ", sequentialPromises.length);
+        (
+            sequentialPromises
+                .reduce(
+                    (prevPromise, promise) => (prevPromise.then(result => promise().then(Array.prototype.concat.bind(result)))),
+                    Promise.resolve([]))
+        );
     }
 
     // ONFILEADDED
     const onFilesAdded = async files => {
         // start with a fresh new empty error
         setErrorMsg("");
-        await uploadDocuments(0, files);
+        await uploadDocuments(files);
     };
 
     return (

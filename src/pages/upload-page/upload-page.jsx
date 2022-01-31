@@ -16,7 +16,7 @@ const UploadPage = () => {
     )
 }
 
-export default withInnerNavigation(UploadPage,{ containerStyle: { flexDirection: "column", overflow: "scroll"}});
+export default withInnerNavigation(UploadPage,{ containerStyle: { flexDirection: "column"}});//, overflow: "scroll"
 
 UploadPage.propTypes = {
 }

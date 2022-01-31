@@ -205,7 +205,24 @@ https://stackoverflow.com/questions/31162606/how-to-detect-screen-size-for-respo
 
 https://www.willmaster.com/library/tutorials/divs-with-background-images.php
 
+////////
+est-ce que je peux sauvegarder les fichiers dans un dossier temporaire?
+combien de pdf je peux prendre en meme temps ?
+combien de page je peux prendre en meme temps ?
+errormulter à bien gérer 
 cards to do
 i18n complex to build
 fuckin' tests
 
+auth page to add
+
+convert img into pdf
+
+react seo ?? https://github.com/americanexpress/react-seo
+///////
+
+promises 
+https://hackernoon.com/functional-javascript-resolving-promises-sequentially-7aac18c4431e
+
+range
+https://dev.to/ycmjason/how-to-create-range-in-javascript-539i
