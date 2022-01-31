@@ -3,6 +3,7 @@ import "./modal.scoped.css";
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import Icon from '@common/icon';
+import Button from '@common/button/button';
 
 const modalElement = document.getElementById('modal');
 
@@ -47,9 +48,9 @@ const Modal = ({ children, defaultOpened = false, allowHandleEscape = false, tit
   return createPortal(
     isOpen ?
       (<div
-        className={`modal${fade ? ' fade' : ''}`}
+        className={`container${fade ? ' fade' : ''}`}
       >
-        <div className="container">
+        <div className="modal">
           <header className="header">
             <h2 className="title"> {title} </h2>
             <button className="close" onClick={() => close()}>

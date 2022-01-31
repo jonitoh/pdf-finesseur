@@ -10,7 +10,8 @@ const getRouter = () => {
     router.use(middleware.errorMiddleware);
 
     // POST ROUTE
-    router.post('/', middleware.upload, controller.uploadFiles);
+    const upload = middleware.getHandlerMiddleware()
+    router.post('/', upload, controller.uploadFiles);
 
     // DELETE ROUTE -- any files
     router.delete('/:path', controller.deleteFile);

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import './upload-grid.scoped.css';
 import Placeholder from '@common/placeholder/placeholder';
 import GridCore from '@components/grid/grid-core/grid-core';
-import { TwoClickImg } from '@components/card/dummy-card/dummy-card';
 import { useStore } from '@store';
+import OneClickCloseableCard from "@components/card/one-click-closeable-card/one-click-closeable-card";
 
 const UploadGrid = ({ flexBasis = '25%' }) => {
     const {
@@ -15,7 +15,7 @@ const UploadGrid = ({ flexBasis = '25%' }) => {
         addAvailablePage,
         removePageByIdFromDeletedPages,
     } = useStore();
-
+    console.log("upload grid items", gridItems);
     // GridWrapper props
     const gridWrapperProps = {
         backgroundImg: "",
@@ -46,16 +46,14 @@ const UploadGrid = ({ flexBasis = '25%' }) => {
     }
 
     const renderItem = item => (
-        <TwoClickImg
-            text={item.name}
-            firstLabel="Remove All"
-            firstOnClick={() => removeFromGrid(item.id)}
-            secondLabel="Restore All"
-            secondOnClick={() => restoreAll(item.id)}
+        <OneClickCloseableCard
+            label={item.name}
+            buttonLabel="Restore All"
+            onClick={() => restoreAll(item.id)}
+            onClose={() => removeFromGrid(item.id)}
             imgSrc={item.url}
         />
     );
-
 
     return (
         <GridCore

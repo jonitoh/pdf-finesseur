@@ -2,24 +2,6 @@
 // cf. https://github.com/expressjs/multer#diskstorage
 const multer = require('multer');
 
-const storagePath = './public/uploads/';
-
-// multer configuration
-const fileStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, storagePath)
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname)
-    },
-    onFileUploadStart: file => {
-        console.log(file.originalname + ' is starting ...');
-    },
-    onFileUploadComplete: file => {
-        console.log(file.fieldname + ' uploaded to  ' + file.path);
-    }
-})
-
 const availableMimetypes = ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'];
 const fileFilter = (req, file, cb) => {
     if (availableMimetypes.indexOf(file.mimetype) !== -1) {
@@ -29,14 +11,38 @@ const fileFilter = (req, file, cb) => {
         return cb(new Error("INVALID_TYPE"))
     }
 }
+
 // our handler tied to our storage
-const upload = multer({
-    storage: fileStorage,
-    fileFilter: fileFilter,
-    limits: {
-        fileSize: 5 * 1024 * 1024,
-    }
-}).array('files');
+const getHandlerMiddleware = (storagePath) => {
+    console.log("chosen storagePath", storagePath);
+
+    // multer configuration
+    const fileStorage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, storagePath)
+        },
+        filename: (req, file, cb) => {
+            cb(null, file.originalname)
+        },
+        onFileUploadStart: file => {
+            console.log(file.originalname + ' is starting ...');
+        },
+        onFileUploadComplete: file => {
+            console.log(file.fieldname + ' uploaded to  ' + file.path);
+        }
+    })
+
+    // handler
+    const upload = multer({
+        storage: fileStorage,
+        fileFilter: fileFilter,
+        limits: {
+            fileSize: 5 * 1024 * 1024,
+        }
+    }).array('files');
+
+    return upload
+}
 
 //Express Error Handling
 const availableErrors = [
@@ -64,7 +70,6 @@ const errorMiddleware = (err, req, res, next) => {
 };
 
 module.exports = {
-    storagePath,
-    upload,
+    getHandlerMiddleware,
     errorMiddleware,
 }

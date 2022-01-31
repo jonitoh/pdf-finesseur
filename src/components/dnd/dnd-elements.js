@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
-import { TwoClickCard, SimpleCard } from '@components/card/dummy-card/dummy-card';
+import ThumbnailCard from '@components/card/thumbnail-card/thumbnail-card';
+import CloseableThumbnailCard from '@components/card/closeable-thumbnail-card/closeable-thumbnail-card';
+import BasicCard from '@components/card/basic-card/basic-card';
 import Modal from '@common/modal/modal';
 import { withDragAndDropOptions } from "@components/dnd/core/withDragAndDropOptions";
 import { withItemsDragPreview } from '@components/dnd/core/withItemsDragPreview';
@@ -7,12 +9,24 @@ import { withItemDragLayer } from '@components/dnd/core/withItemDragLayer';
 import { useStore } from "@store";
 import PropTypes from 'prop-types';
 import "@components/dnd/core/styles.scoped.css";
+import Icon from "@common/icon";
 
+/*
 
+      <ThumbnailCard
+        imgSrc={element.url}
+        label={element.name}
+        onClickRight={() => removeItemSelection(element.id)}
+        RightIcon={Icon.Close}
+        onClickLeft={() => modal.current.open()}
+        LeftIcon={Icon.DotsVertical}
+      />
+
+*/
 const HomeCardWithModal = ({ item, ...gridProps }) => {
   const modal = useRef(null);
   const { removeItemSelection } = gridProps
-  
+
   // mapping orderedItem and item
   const { getElementFromItem } = useStore(); // placement à optimiser
   const element = getElementFromItem(item.id);
@@ -27,14 +41,13 @@ const HomeCardWithModal = ({ item, ...gridProps }) => {
       >
         {`modal msg for item ${element.name}`}
       </Modal>
-      <TwoClickCard {...{
-        text: element.name,
-        firstOnClick: () => removeItemSelection(element.id),
-        firstLabel: "remove",
-        secondOnClick: () => modal.current.open(),
-        secondLabel: 'modal',
-      }} />
-      );
+      <CloseableThumbnailCard
+        imgSrc={element.url}
+        label={element.name}
+        onClose={() => removeItemSelection(element.id)}
+        onClick={() => modal.current.open()}
+        buttonLabel={Icon.Information}
+      />
     </React.Fragment>
   )
 }
@@ -74,9 +87,10 @@ const PreviewCard = ({ item, ...gridProps }) => {
   const { getElementFromItem } = useStore();
   const element = getElementFromItem(item.id);
   return (
-    <SimpleCard {...{
-      text: element.name,
-    }} />
+    <BasicCard
+      label={element.name}
+      imgSrc={element.url}
+    />
   )
 }
 

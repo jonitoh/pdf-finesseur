@@ -2,11 +2,18 @@
 // cf. https://github.com/expressjs/multer#memorystorage
 const multer = require('multer');
 
-// multer configuration
-const storage = multer.memoryStorage();
 
 // our handler tied to our storage
-const upload = multer({ storage: storage });
+const getHandlerMiddleware = () => {
+
+    // multer configuration
+    const storage = multer.memoryStorage();
+
+    // handler
+    const upload = multer({ storage: storage });
+
+    return upload
+}
 
 //Express Error Handling
 const availableErrors = [
@@ -34,6 +41,6 @@ const errorMiddleware = (err, req, res, next) => {
 };
 
 module.exports = {
-    upload,
+    getHandlerMiddleware,
     errorMiddleware,
 }

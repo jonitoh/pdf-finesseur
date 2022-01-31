@@ -1,11 +1,17 @@
 .card {
     width: 200px;
     height: 300px;
-    padding: .5rem;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
+    padding: 1px;
+    background-color: var(--color-white);
+    box-shadow: 0 4px 8px 0 var(--color-shadow);
     transition: 0.4s ease-out;
+    border-radius: 3px;
+    margin:0;
+    position: relative;
+}
+
+.card > * {
+    padding: 3px;
 }
 
 .card:hover:before {
@@ -18,26 +24,26 @@
     top: 0;
     left: 0;
     display: block;
-    width: 100%;
-    height: 100%;
     background: rgba(0, 0, 0, 0.6);
     z-index: 2;
     transition: 0.5s;
     opacity: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
 }
 
 .card > img {
-    padding: .5rem;
-    width: 100%;
-    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .card .info-content {
     z-index: 3;
-    color: white;
+    color: var(--color-white);
     opacity: 0;
     transform: translateY(30px);
     transition: 0.5s;
@@ -70,16 +76,17 @@
 .right-area,
 .left-area {
     display: inline-flex;
+    width: 1rem;
 }
 
-.left-area img,
-.right-area img {
+.left-area svg,
+.right-area svg {
     display: block;
 }
 
-.left-area img:hover,
-.right-area img:hover {
-    fill: rgb(237, 239, 241);
+.left-area svg:hover,
+.right-area svg:hover {
+    fill: var(--color-white);
 }
 
 .bottom-section {

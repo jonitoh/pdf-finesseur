@@ -14,6 +14,7 @@
   --color-primary: #6a748127;
   --color-secondary: #6a7481;
   --color-hover: #6a7481b4;
+  --color-shadow: rgba(0,0,0,0.2);;
   --radius: 0.5rem;
   --border-width: 1px;
   --border-style: solid;

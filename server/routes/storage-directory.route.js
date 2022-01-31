@@ -7,13 +7,15 @@ const getRouter = () => {
     const router = express.Router();
 
     // TO serve any file back to the client
-    router.use(express.static(middleware.storagePath));
+    const storagePath = process.env.STORAGEPATH || './public/uploads/';
+    router.use(express.static(storagePath));
 
     // Add middlewares
     router.use(middleware.errorMiddleware);
 
     // POST ROUTE
-    router.post('/', middleware.upload, controller.uploadFiles);
+    const upload = middleware.getHandlerMiddleware(storagePath)
+    router.post('/', upload, controller.uploadFiles);
 
     // DELETE ROUTE -- any files
     router.delete('/:path', controller.deleteFile);

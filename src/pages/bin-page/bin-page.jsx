@@ -4,7 +4,7 @@ import './bin-page.scoped.css';
 import { withInnerNavigation } from '@pages/page-wrapper/page-wrapper';
 import Placeholder from '@common/placeholder/placeholder';
 import GridCore from '@components/grid/grid-core/grid-core';
-import { OneClickCard } from '@components/card/dummy-card/dummy-card';
+import OneClickCard from '@components/card/one-click-card/one-click-card';
 import { useStore } from '@store';
 
 

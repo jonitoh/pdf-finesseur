@@ -226,3 +226,32 @@ https://hackernoon.com/functional-javascript-resolving-promises-sequentially-7aa
 
 range
 https://dev.to/ycmjason/how-to-create-range-in-javascript-539i
+
+
+functionalities cf. https://www.docfly.com/pdf-viewer
+-| CREATE A PDF
+-| EDIT A PDF FILE
+-| FILL A PDF FORM
+-| COMPRESS A PDF FILE
+-| CREATE A PDF FORM
+- EXTRACT PAGES FROM PDF
+- MERGE PDF FILES
+-| PASSWORD PROTECT A PDF FILE
+- REORDER PAGES OF A PDF
+-| ROTATE A PDF
+-| SIGN A PDF
+-| SPLIT A PDF FILE
+-| WRITE ON A PDF FILE
+-| CONVERT PDF TO WORD
+-| CONVERT JPG TO PDF
+-| CONVERT PNG TO PDF
+-| CONVERT WORD TO PDF
+-| CONVERT POWERPOINT TO PDF
+-| CONVERT EXCEL TO PDF
+-| CONVERT TIFF TO PDF
+-| CONVERT PDF TO JPG
+-| CONVERT PDF TO PNG
+
+
+
+div card at thumbnail ... mysterious right margin

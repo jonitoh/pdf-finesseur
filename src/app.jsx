@@ -18,6 +18,7 @@ const App = () => {
   // LANG THEME -- Force an initial state based on the local storage value
   useEffect(() => initiateLang(), []);
   // CRON JOB TO ERASE ALL
+  console.log("test env variable", process.env);
 
   return (
     <div className="app">
