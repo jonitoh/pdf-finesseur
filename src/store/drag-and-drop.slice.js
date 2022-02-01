@@ -2,7 +2,7 @@
 State management for Drag And Drop interaction in the application.
 */
 import { generateDNDItemFromElement } from '../services/item-and-element';
-import { removePageById, removePagesByDocumentId, createFakeMergedDocument, safelyCreateDocument } from "../services/page-and-document";
+import { removePageById, removePagesByDocumentId, createMergedDocument, safelyCreateDocument } from "../services/page-and-document";
 import { _availablePages } from "./main.slice" // à enlever lorsque ce sera de vrais elements
 
 /* A ENLEVER */
@@ -102,9 +102,11 @@ const dragAndDropSlice = (set, get) => ({
         get().removePagesByDocumentFromAvailablePages(id);
         return set(state => ({ documents: state.documents.filter(doc => doc.id !== id) }))
     },
-    createMergedDocument: (setMetadata = true) => {
+    createMergedDocument: async (setMetadata = true) => {
         get().arrangeElementsFromOrder();
-        return set(state => ({ mergedDocument: createFakeMergedDocument(state.documents, state.availablePages, setMetadata) }))
+        return set(state => ({
+            mergedDocument: createMergedDocument(state.documents, state.availablePages, setMetadata)
+        }))
     },
     resetAll: () => set({
         ...{

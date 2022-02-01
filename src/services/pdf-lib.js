@@ -4,21 +4,25 @@ Service for creating new PDFs in the application.
 import { PDFDocument } from 'pdf-lib';
 
 const loadPDF = async url => {
-    const PdfBytes = await fetch(url).then(res => res.arrayBuffer())
-    const PdfDoc = await PDFDocument.load(PdfBytes)
-    return PdfDoc;
+    const pdfBytes = await fetch(url).then(res => res.arrayBuffer())
+    return await PDFDocument.load(pdfBytes)
 }
 
-const loadDocuments = async documents => (
-    Object.fromEntries(
-        documents
-            .map(doc => ([doc.id, loadPDF(doc.url)]))
-    )
-)
+const loadDocuments = async documents => {
+    let loadedDocuments = [];
+    for (const document of documents ) {
+        const loadedDocument = await loadPDF(document.path)
+        loadedDocuments.push([ document.id, loadedDocument ])    
+    }
+    loadedDocuments = Object.fromEntries(loadedDocuments)
+    return loadedDocuments
+}
 
 const extractWantedPage = async (pdfDoc, pdfDocuments, pageArgs) => {
-    const wantedPdfDocument = pdfDocuments[pageArgs.parentId];
-    const [wantedPage] = await pdfDoc.copyPages(wantedPdfDocument, [pageArgs.index]);//, [pageArgs.index - 1])
+    const { docId, numPage } = pageArgs;
+    const wantedPdfDocument = pdfDocuments[docId];
+    // Page numbering starts at 0 in pdf-lib
+    const [wantedPage] = await pdfDoc.copyPages(wantedPdfDocument, [numPage - 1]);
     return wantedPage
 }
 
@@ -40,7 +44,7 @@ const setDocumentMetadata = (pdfDoc) => {
 // Serialize the PDFDocument to bytes (a Uint8Array)
 const createMergedDocumentAsPdfBytes = async (documents, pages, setMetadata = true) => {
     // create the merged document
-    const mergedPdfDoc = await PDFDocument.create();
+    let mergedPdfDoc = await PDFDocument.create();
 
     // load our documents
     const pdfDocuments = await loadDocuments(documents)

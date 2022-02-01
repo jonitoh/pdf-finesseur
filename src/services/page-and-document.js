@@ -110,7 +110,9 @@ const createMergedDocument = async (documents, pages, setMetadata = true) => {
         url: "",
         extension: ".pdf"
     });
+    // add our pdfBytes
     mergedDocument.setData(pdfBytes);
+    
     return mergedDocument;
 }
 
@@ -152,7 +154,6 @@ const generateFakeDocumentsAndFakePages = (number) => {
     const pages = generatePagesFromDocuments(documents);
     return [documents, pages]
 }
-
 
 export {
     Page,
