@@ -1,72 +1,25 @@
 {
   "name": "pdf-finesseur",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@craco/craco": "^7.0.0-alpha.0",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.25.0",
-    "body-parser": "^1.19.1",
-    "concurrently": "^7.0.0",
-    "cors": "^2.8.5",
-    "craco-plugin-scoped-css": "^1.1.1",
-    "dotenv": "^14.2.0",
-    "express": "^4.17.2",
-    "multer": "^1.4.4",
-    "nodemon": "^2.0.15",
-    "pdf-lib": "^1.17.1",
-    "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dnd": "^14.0.5",
-    "react-dnd-html5-backend": "^14.1.0",
-    "react-dnd-touch-backend": "^14.1.1",
-    "react-dom": "^17.0.2",
-    "react-pdf": "^5.6.0",
-    "react-router-dom": "^6.2.1",
-    "uuid": "^8.3.2",
-    "web-vitals": "^2.1.3",
-    "zustand": "^3.6.9"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/preset-env": "^7.16.8",
-    "@babel/preset-react": "^7.16.7",
-    "babel-loader": "^8.2.3",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "html-webpack-plugin": "^5.5.0",
-    "react-scripts": "^5.0.0",
-    "webpack": "^5.66.0",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.7.3"
-  },
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "copy-assets": "cp ./node_modules/pdfjs-dist/build/pdf.worker.min.js ./public/",
-    "start": "npm run copy-assets && craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "craco eject",
-    "start-app": "yarn build && (cd server && yarn start)"
+    "help": "Available names: clean, lint, lint:fix, format:prettier, test, dev, start:prod, build",
+    "main": "concurrently --kill-others \"cd server && npm run $npm_config_name\" \"cd client && npm run $npm_config_name\""
   },
-  "proxy": "http://localhost:5000",
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonitoh/pdf-finesseur.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonitoh/pdf-finesseur/issues"
+  },
+  "homepage": "https://github.com/jonitoh/pdf-finesseur#readme",
+  "dependencies": {
+    "concurrently": "^7.0.0"
   }
 }

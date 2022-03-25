@@ -1,257 +1,249 @@
-# pdf-finesseur
-It is time to outsmart PDF !!!
+<!-- anchor -->
+<div id="top"></div>
 
-## Steps
+<!-- logo -->
+<br/>
+<p align="center">
+    <a href="https://github.com/jonitoh/pdf-finesseur.git" target="_blank">
+        <img width="50%" src="docs/assets/finesseur-logo.png" alt="logo">
+    </a>
+</p>
 
-create a dnd gallery
+<!-- title -->
+<p>
+ <h3 align="center">PDF Finesseur</h3>
+</p>
+<br/>
 
-https://react-beautiful-dnd.netlify.app/?path=/story/onbeforecapture--adding-things
+<!-- available languages -->
+<p align="center">
+README available in:
+   <a href="#">
+    <img height="20px" src="https://img.shields.io/badge/EN-flag.svg?color=555555&style=flat&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNjAgMzAiIGhlaWdodD0iNjAwIj4NCjxkZWZzPg0KPGNsaXBQYXRoIGlkPSJ0Ij4NCjxwYXRoIGQ9Im0zMCwxNWgzMHYxNXp2MTVoLTMwemgtMzB2LTE1enYtMTVoMzB6Ii8+DQo8L2NsaXBQYXRoPg0KPC9kZWZzPg0KPHBhdGggZmlsbD0iIzAwMjQ3ZCIgZD0ibTAsMHYzMGg2MHYtMzB6Ii8+DQo8cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIgZD0ibTAsMGw2MCwzMG0wLTMwbC02MCwzMCIvPg0KPHBhdGggc3Ryb2tlPSIjY2YxNDJiIiBzdHJva2Utd2lkdGg9IjQiIGQ9Im0wLDBsNjAsMzBtMC0zMGwtNjAsMzAiIGNsaXAtcGF0aD0idXJsKCN0KSIvPg0KPHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEwIiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjxwYXRoIHN0cm9rZT0iI2NmMTQyYiIgc3Ryb2tlLXdpZHRoPSI2IiBkPSJtMzAsMHYzMG0tMzAtMTVoNjAiLz4NCjwvc3ZnPg0K">
+  </a>  
+  <a href="docs/README.fr.md">
+    <img height="20px" src="https://img.shields.io/badge/FR-flag.svg?color=555555&style=flat&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj4NCjxwYXRoIGZpbGw9IiNlZDI5MzkiIGQ9Im0wLDBoOTAwdjYwMGgtOTAweiIvPg0KPHBhdGggZmlsbD0iI2ZmZiIgZD0ibTAsMGg2MDB2NjAwaC02MDB6Ii8+DQo8cGF0aCBmaWxsPSIjMDAyMzk1IiBkPSJtMCwwaDMwMHY2MDBoLTMwMHoiLz4NCjwvc3ZnPg0K">
+  </a>
+</p>
+<br/>
 
-https://react-beautiful-dnd.netlify.app/?path=/story/multi-drag--pattern
+<!-- github badges -->
 
-cf. modal windows https://dev.to/codebucks/how-to-create-an-efficient-modal-component-in-react-using-hooks-and-portals-360p
+![GitHub contributors](https://img.shields.io/github/contributors/jonitoh/pdf-finesseur)
+![GitHub repo size](https://img.shields.io/github/repo-size/jonitoh/pdf-finesseur)
+![GitHub all releases](https://img.shields.io/github/downloads/jonitoh/pdf-finesseur/total)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/jonitoh/pdf-finesseur)
+[![GitHub license](https://img.shields.io/github/license/jonitoh/pdf-finesseur)](LICENSE)
+[![LinkedIn link](https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ninsemou-jordan-toh-a14434108/?locale=en_US)
 
-https://dev.to/viclafouch/build-a-complete-modal-component-with-react-hooks-2fk8
+<!-- tagline or short introduction -->
+<br/>
+<div>
+<p align="center">
+  An attempt at creating an appplication that can perform some tasks on a PDF such as merging them or reorder the pages.
+ </p>
+</div>
+<br/>
 
+---
 
-cf. dnd few chile ... https://thisisvini.com/responsive-mosaic-with-dnd-reactjs
-https://betterprogramming.pub/how-to-build-a-drag-and-drop-grid-in-react-3008c5384b29
+---
 
-cf. let me die with this https://codesandbox.io/s/github/znwang25/react-dnd-multiple-selection?file=/src/Container.js
+<!-- news / quick announcements -->
 
-# Getting Started with Create React App
+### In construction
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+<!-- summary -->
+<br />
+<div align="center">
 
-### `npm start`
+**TABLE OF CONTENT**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[**🌱&nbsp; About the project**](#philosophy) | [**👨‍💻&nbsp; Tech stack**](#tech) |
+[**📖&nbsp; Usage**](#usage) |
+[**🎯&nbsp; Features**](#features) |
+[**⚠️&nbsp; Limitations**](#limits) |
+[**🤝&nbsp; Contributions**](#contribs) |
+[**📘&nbsp; License**](#license) |
+[**❤️&nbsp; Acknowledgments**](#acknowledgments) |
+[**👀&nbsp; What else ?**](#encore)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+</div>
 
-### `npm test`
+# <a id="philosophy">🌱&nbsp;</a> About the project
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+For a more complex project, I need to implement authentification/authorisation. Therefore, I decided to do it in its own project and from scratch ( as much as possible ) so that I can understand all the concepts.
+
+<!-- back to top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>
+
+# <a id="tech">👨‍💻&nbsp;</a> Tech stack
+
+- MongoDB / Mongoose
+- Express
+- React
+- Typescript
+
+<!-- back to top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>
+
+# <a id="usage">📖&nbsp;</a> Usage
+
+<br/>
+
+## 🚀&nbsp; Getting started
+
+There is a folder named `server` which concerns the backend using Express.
+The folder named `client` is the frontend implemented in React.
+
+Each folder has a `package.json` file however a global `package.json` can be found at the root to start the application.
+
+Here are some available scripts:
+
+- `npm start`: run the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- `npm test`: lauch whatever test runner that has been used.
+- `npm run build`: builds the app for production.
+
+## ⚙️&nbsp; Requirements
+
+- [Zustand](https://github.com/pmndrs/zustand) is used for the global state managment ( so easier than redux ).
+- [Chakra UI](https://chakra-ui.com/) is an amazing component library to build beautiful React apps.
+- [Mongoose](https://mongoosejs.com/), the documentation is so good.
+
+## 👀&nbsp; Examples
+
+In preparation.
+
+<!-- back to top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>
+
+# <a id="features">🎯&nbsp;</a> Features
+
+- [ ]
+- [ ]
+- [ ]
+- [ ]
+  - [x]
+  - [x]
+
+<!-- back to top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>
+
+# <a id="limits">⚠️&nbsp;</a> Limitations
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+I need to check if the build can be minified and the filenames include the hashes.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<!-- back to top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# <a id="contribs">🤝&nbsp;</a> Contributions
 
-### `npm run eject`
+**Thanks in advance for anyone who will contribute to expanding this template!**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+😱 Found a bug? Missing a specific feature?
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you have any suggestion, please proceed by forking this repo and creating a pull request or opening an issue with the tag `enhancement`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+🤩 Don't forget to give the project a star! Thanks again!
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<!-- back to the top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>
 
-## Learn More
+# <a id="license">📘&nbsp;</a> License
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project is released under the terms of the [MIT License](LICENSE).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- back to the top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>
 
-### Code Splitting
+# <a id="acknowledgments">❤️&nbsp;</a> Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+🏆 Here are the nominees, with no particular order, in the category for **_best resources used for this project_**:
 
-### Analyzing the Bundle Size
+### front end
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- [How to create forms with Chakra UI in React apps](https://blog.logrocket.com/how-to-create-forms-with-chakra-ui-in-react-apps/): very detailed article
 
-### Making a Progressive Web App
+- [Add a Color Mode to a Chakra-based app](https://dev.to/carwack/the-one-with-chakra-ui-vue-and-color-palette-switching-68e)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- [Use of HTTP cookie in React](https://blog.logrocket.com/how-to-secure-react-app-login-authentication/)
 
-### Advanced Configuration
+- [usehooks](https://usehooks.com/), a useful website of handful react hooks
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+### back end
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- [Express with example](https://www.freecodecamp.org/news/express-explained-with-examples-installation-routing-middleware-and-more/)
 
-### `npm run build` fails to minify
+- [Example of authentification with Mongo and Express](https://www.bezkoder.com/node-js-mongodb-auth-jwt/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [Mongoose's style Guide](https://github.com/Zwimber/mongoose-style-guide)
 
+- [Use of HTTP cookie in Express](https://medium.com/@zahedialfurquan20/using-cookies-to-store-jwt-for-authentication-and-authorization-in-a-mern-stack-app-a58d7a5d6b6e)
 
+- [Clean code for Express app](https://www.codepedia.org/ama/cleaner-code-in-expressjs-rest-api-with-custom-error-handling)
 
-back arrow: cf.https://www.svgrepo.com/svg/324225/navigation-back-arrow 
+- [Usage of Mongooose and Typescript 1](https://www.dailydeveloping.com/posts/Use-mongoose-with-typescript)
+- [Usage of Mongooose and Typescript 2](https://medium.com/swlh/using-typescript-with-mongodb-393caf7adfef)
+- [Usage of Mongooose and Typescript 3](https://medium.com/weekly-webtips/make-typescript-and-mongoose-play-nicely-together-3d3c94a91e34)
 
-cloud upload: cf. https://www.svgrepo.com/svg/332286/cloud-upload
+---
 
+### other
 
-structures
-cf. https://larswaechter.dev/blog/react-project-structure/
+- [Usage of jsconfig.json](https://saurabhshah23.medium.com/react-app-with-absolute-paths-using-jsconfig-json-2b07b1cb24d4)
 
-cf. https://www.sitepoint.com/organize-large-react-application/
+- [Nested value in object](https://dev.to/rajnishkatharotiya/select-a-nested-value-from-the-object-in-javascript-2fjd)
 
-cf. https://www.taniarascia.com/react-architecture-directory-structure/
+<!-- back to the top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>
 
-cf. https://blog.jscrambler.com/easy-custom-webpack-setup-for-react-js-applications/
+# <a id="encore">👀&nbsp;</a> What else ?
 
-cf. https://blog.logrocket.com/versatile-webpack-configurations-react-application/
+Thanks again for reading this README !!!
 
-i18n
-cf. https://rainbowapps.io/en/posts/how-to-manage-internationalization/#implementations
-cf. https://idkblogs.com/react/5/How-to-implement-Internalization-i18n-in-react-app-
-
-
-express in the same folder than the react app
-https://medium.com/swlh/building-a-react-app-with-a-express-back-end-in-the-same-project-with-external-access-to-a-mysql-e06ef83c257d
-
-https://www.tutorialspoint.com/expressjs/index.htm
-
-which npm package to upload file ?
-https://stackoverflow.com/questions/64803772/nodejs-fileupload-multer-vs-express-fileupload-which-to-use
-https://npmcompare.com/compare/express-fileupload,formidable,multer
-https://github.com/expressjs/multer#readme
-https://dev.to/austinbrownopspark/how-to-upload-and-serve-photos-using-react-node-express-36ii
-https://medium.com/quick-code/uploading-files-and-serve-directory-listing-using-nodejs-6f353f65be5
-
-for file guyz upload and show;
-https://dev.to/austinbrownopspark/how-to-upload-and-serve-photos-using-react-node-express-36ii
-
-cron delete file every ????
-cf. https://stackoverflow.com/questions/38312926/how-to-cleanup-temp-files-using-multer
-
-upload + dropzone
-cf. https://malcoded.com/posts/react-file-upload/
-
-multer for stream
-cf. https://blog.yogeshchavan.dev/build-an-app-with-file-upload-and-download-functionality-and-image-preview-using-mern-stack
-
-
-
-theme-toggle
-https://blog.logrocket.com/dark-mode-in-react-an-in-depth-guide/
-https://dev.to/alexeagleson/how-to-create-a-dark-mode-component-in-react-3ibg
-
-
-icons
-https://wendeehsu.medium.com/styling-svg-icon-in-react-js-bfd3d826901d
-
-ref proptype: https://stackoverflow.com/questions/48007326/what-is-the-correct-proptype-for-a-ref-in-react
-
-
-upload multiple files at the same time
-https://www.geeksforgeeks.org/how-to-send-one-or-more-files-to-an-api-using-axios-in-reactjs/
-
-download file
-https://www.akashmittal.com/react-download-files-button-click/
-
-disappear
-https://stackoverflow.com/questions/65214950/how-to-disappear-alert-after-5-seconds-in-react-js
-
-
-
-express server structuration
-https://kentcdodds.com/blog/how-i-structure-express-apps
-
-
-datauri to file
-https://stackoverflow.com/questions/6850276/how-to-convert-dataurl-to-file-object-in-javascript
-
-
-// PUTAIN DE PHOTO QUI SE CHARGE QUAND ELLE VEUT -- promises, promises kelly
-
-https://www.pdftron.com/blog/typescript/how-to-build-pdf-viewer-typescript-pdf-js/
-
-https://medium.com/developer-rants/running-promises-in-a-loop-sequentially-one-by-one-bd803181b283
-
-https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
-
-https://dev.to/ramonak/javascript-how-to-access-the-return-value-of-a-promise-object-1bck
-
-
-pdf-lib
-https://github.com/Hopding/pdf-lib/issues/506 -- reorder pages from same pdf
-https://pdf-lib.js.org/#examples examples
-
-
-
-fake data
-https://picsum.photos/
-
-
-
-
-https://stackoverflow.com/questions/46876570/create-react-app-exclude-folder-from-triggering-reload
-
-scope css
-https://css-tricks.com/easy-dark-mode-and-multiple-color-themes-in-react/
-
-craco
-
-
-responsive in js
-https://stackoverflow.com/questions/31162606/how-to-detect-screen-size-for-responsive-web-design
-
-https://www.willmaster.com/library/tutorials/divs-with-background-images.php
-
-////////
-est-ce que je peux sauvegarder les fichiers dans un dossier temporaire?
-combien de pdf je peux prendre en meme temps ?
-combien de page je peux prendre en meme temps ?
-errormulter à bien gérer 
-cards to do
-i18n complex to build
-fuckin' tests
-
-auth page to add
-
-convert img into pdf
-
-react seo ?? https://github.com/americanexpress/react-seo
-///////
-
-promises 
-https://hackernoon.com/functional-javascript-resolving-promises-sequentially-7aac18c4431e
-
-range
-https://dev.to/ycmjason/how-to-create-range-in-javascript-539i
-
-
-functionalities cf. https://www.docfly.com/pdf-viewer
--| CREATE A PDF
--| EDIT A PDF FILE
--| FILL A PDF FORM
--| COMPRESS A PDF FILE
--| CREATE A PDF FORM
-- EXTRACT PAGES FROM PDF
-- MERGE PDF FILES
--| PASSWORD PROTECT A PDF FILE
-- REORDER PAGES OF A PDF
--| ROTATE A PDF
--| SIGN A PDF
--| SPLIT A PDF FILE
--| WRITE ON A PDF FILE
--| CONVERT PDF TO WORD
--| CONVERT JPG TO PDF
--| CONVERT PNG TO PDF
--| CONVERT WORD TO PDF
--| CONVERT POWERPOINT TO PDF
--| CONVERT EXCEL TO PDF
--| CONVERT TIFF TO PDF
--| CONVERT PDF TO JPG
--| CONVERT PDF TO PNG
-
-
-
-div card at thumbnail ... mysterious right margin
+<!-- back to the top -->
+<p align="right">
+ <a href="#top">
+   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+ </a>
+</p>

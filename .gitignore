@@ -1,4 +1,22 @@
-node_modules
+# root
 .DS_Store
-.env
+node_modules
+.vscode
+temp
+logs
+
+# client side
+client/node_modules
+client/dist
+client/temp
+client/logs
+client/data
 */uploads
+
+# server side
+server/dist
+server/node_modules
+server/temp
+server/logs
+server/data/raw
+.super-admin.json
