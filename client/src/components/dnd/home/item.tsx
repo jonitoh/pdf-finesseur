@@ -22,6 +22,7 @@ interface CardWithModalProps extends MinimalFunctionalities {
 
 function CardWithModal(props: CardWithModalProps) {
   const { item, remove } = props;
+  console.info(props);
   const modalRef = useRef<ModalRef>(null);
   const { getElementFromItem } = select(selector);
   const element = getElementFromItem(item.id);

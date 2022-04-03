@@ -37,7 +37,7 @@ export default function Button({
       {...props}
     >
       {!!icon && <span>{icon}</span>}
-      {typeof label === 'string' ? <span>{label}</span> : { label }}
+      {typeof label === 'string' ? <span>{label}</span> : label}
     </button>
   );
 }

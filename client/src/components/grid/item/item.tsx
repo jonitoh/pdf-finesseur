@@ -24,6 +24,7 @@ export function withGridItemOptions<T extends Object>(
   gridItemClassName?: string
 ) {
   function Wrapper(props: T) {
+    console.log('--withGridItemOptions--', props);
     if (<Component {...props} /> === null) {
       return null;
     }

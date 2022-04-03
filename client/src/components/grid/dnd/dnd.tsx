@@ -123,6 +123,7 @@ export default function GridDND({
       state.dnd.hoverIndex === index && state.dnd.insertIndex === index;
     const shouldInsertLineOnRight =
       state.dnd.hoverIndex === index && state.dnd.insertIndex === index + 1;
+    console.log('--griddnd--', item);
 
     return (
       <Fragment key={`item-${item.id}`}>

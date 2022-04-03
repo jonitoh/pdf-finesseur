@@ -40,6 +40,7 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.17.8",
+    "@svgr/webpack": "^6.2.1",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^17.0.14",
     "@types/react-pdf": "^5.0.9",

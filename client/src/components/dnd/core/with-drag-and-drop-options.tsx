@@ -37,8 +37,11 @@ export type OnlyDragAndDropOptionsProps = {
 
 const defaultOnlyDragAndDropOptionsProps = {};
 
-export default function withDragAndDropOptions<T extends object>(Component: ComponentType<T>) {
+export default function withDragAndDropOptions<T extends { item: DNDItem }>(
+  Component: ComponentType<T>
+) {
   function Wrapper(props: OnlyDragAndDropOptionsProps & T) {
+    console.log('--withDragAndDropOptions--', props);
     const {
       index,
       isSelected,
@@ -170,7 +173,7 @@ export default function withDragAndDropOptions<T extends object>(Component: Comp
             role="gridcell"
             tabIndex={-1}
           >
-            <Component {...(rest as T)} />
+            <Component {...({ ...rest, item: propItem } as unknown as T)} />
           </div>
         </div>
         {shouldInsertLineOnRight && isHovered && <div className={styles.insertLineRight} />}
