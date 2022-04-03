@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border: 2px dashed var(--color-hover);
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+.mainContent {
+    display: flex;
+    flex-direction:row;
+    flex-basis: 80%;
+    padding: .5rem;
+}
+
+.dropZone {
+    flex-basis: 70%;
+    justify-content: center;
+    align-items: center;
+}
+  
+.progressZone {
+    flex-basis: 30%;
+}
+
+.errorZone {
+    flex-basis: 20%;
+}
+
+/* Small phones to small tablets: from 481px to 767px */
+@media only screen and (max-width: 767px) {
+    .mainContent {
+        flex-direction:column;
+    }
+}

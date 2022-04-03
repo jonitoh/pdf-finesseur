@@ -1,0 +1,16 @@
+{
+    "hello": "Bonjour",
+    "click": "Cliquez",
+    "choose-lang": "Choisissez un langage",
+    "choose-theme": "Choisissez un thème couleur",
+    "en-label": "Anglais",
+    "fr-label": "Français",
+    "undefined": "???",
+    "empty-bin": "Poubelle vide!",
+    "add-button-label": "Ajouter",
+    "bin-button-label": "Corbeille",
+    "settings-button-label": "Paramètres",
+    "download-button-label": "Télécharger",
+    "dark-theme": "Sombre",
+    "light-theme": "Clair"
+}

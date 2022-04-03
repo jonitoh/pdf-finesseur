@@ -1,0 +1,12 @@
+/* LIGHT COLOR THEME */
+[data-theme='light'] {
+  --color-white: #ffffff;
+  --color-black: #004058;
+  --color-primary: #ecfcff;
+  --color-secondary: #74bbe4;
+  --color-hover: #3edbf0;
+  --bg-color: var(--color-primary);
+  --wrong-color: #c55858;
+  --alright-color: #ff7f50;
+  --good-color: #a1e2bf;
+}

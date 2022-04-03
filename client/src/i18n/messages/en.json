@@ -1,0 +1,15 @@
+{
+    "hello": "Hello",
+    "click": "Click",
+    "choose-lang": "Select language",
+    "choose-theme": "Select color theme",
+    "en-label": "English",
+    "fr-label": "French",
+    "undefined": "???",
+    "add-button-label": "Add",
+    "bin-button-label": "Bin",
+    "settings-button-label": "Settings",
+    "download-button-label": "Download",
+    "dark-theme": "Dark",
+    "light-theme": "Light"
+}

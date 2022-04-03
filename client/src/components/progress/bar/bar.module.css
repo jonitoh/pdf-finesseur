@@ -1,0 +1,65 @@
+.progress {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.wrapper {
+  flex-basis: 80%;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+
+.innerText {
+  color: var(--color-black);
+}
+
+.number {
+
+}
+
+.optionalText {
+  font-style: italic; 
+}
+
+.label {
+  flex-basis: 20%;
+  text-align: center;
+}
+
+.noBackground {
+  fill: none;
+}
+
+.fillBackground {
+  fill: var(--color-white);
+}
+
+.strokeTrail {
+  stroke: var(--color-primary);
+  fill: none;
+}
+
+.strokePercentage {
+  stroke: var(--color-secondary);
+  fill: none;
+}
+
+.stroke-good-level {
+  stroke: var(--good-color);
+  color: var(--good-color);
+}
+
+.stroke-alright-level {
+  stroke: var(--alright-color);
+  color: var(--alright-color);
+}
+
+.stroke-wrong-level {
+  stroke: var(--wrong-color);
+  color: var(--wrong-color);
+}

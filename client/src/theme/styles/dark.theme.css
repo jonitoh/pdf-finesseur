@@ -1,0 +1,15 @@
+/* DARK COLOR THEME */
+[data-theme='dark'] {
+  --color-white: #ecfcff;
+  --color-black: #004058;
+  --color-primary: #c4d7ed;
+  --color-secondary: #66acae;
+  --color-hover: #3edbf0;
+  --font-color: var(--color-white);
+  --image-grayscale: 50%;
+  --image-opacity: 90%;
+  --bg-color: var(--color-black);
+  --wrong-color: #f7c2c2;
+  --alright-color: #faebd7;
+  --good-color: #ddf5d2;
+}
