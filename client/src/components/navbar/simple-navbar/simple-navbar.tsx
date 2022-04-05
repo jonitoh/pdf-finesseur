@@ -78,6 +78,7 @@ export default function SimpleNavbar() {
             Icon={Icon.Download}
             onClick={onClick}
           />
+          <NavbarItem link="/test" text="TEST ICI" Icon={Icon.Warning} />
         </NavbarList>
       </div>
       <Modal

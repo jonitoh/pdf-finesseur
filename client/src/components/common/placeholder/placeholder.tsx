@@ -6,5 +6,5 @@ export type Props = {
 };
 
 export default function Placeholder({ children }: Props) {
-  return <div style={styles.placeholder}>{children}</div>;
+  return <div className={styles.placeholder}>{children}</div>;
 }

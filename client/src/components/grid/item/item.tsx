@@ -28,7 +28,7 @@ export function withGridItemOptions<T extends Object>(
     if (<Component {...props} /> === null) {
       return null;
     }
-
+    // style={props.style}
     return (
       <div className={classNames([styles.wrapper, wrapperClassName])}>
         <div className={classNames([styles.item, gridItemClassName])}>

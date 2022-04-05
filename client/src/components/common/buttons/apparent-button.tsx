@@ -39,7 +39,7 @@ export default function ApparentButton({
       {...props}
     >
       {!!icon && <div>{icon}</div>}
-      {typeof label === 'string' ? <div>{label}</div> : { label }}
+      {typeof label === 'string' ? <div>{label}</div> : label}
     </div>
   );
 }

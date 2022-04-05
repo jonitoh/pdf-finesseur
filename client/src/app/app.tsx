@@ -6,6 +6,7 @@ import Bin from '#pages/bin/bin';
 import Upload from '#pages/upload/upload';
 import Settings from '#pages/settings/settings';
 import Home from '#pages/home/home';
+import Test from '#pages/test/test';
 import styles from './app.module.css';
 
 const selector = (state: State) => ({
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/bin" element={<Bin />} />
+            <Route path="/test" element={<Test />} />
           </Routes>
         </main>
         <div className={styles.navbar}>

@@ -21,6 +21,7 @@ export default function NavbarItem({ link, Icon, count, text, onClick, ...rest }
         label={<p className={styles.label}>{text}</p>}
         onClick={onClick}
         type="button"
+        // variant="transparent"
         {...rest}
       />
     </li>
