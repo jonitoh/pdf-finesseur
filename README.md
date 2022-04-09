@@ -224,18 +224,26 @@ This project is released under the terms of the [MIT License](LICENSE).
 
 ---
 
+- [webpack for ts project](https://www.carlrippon.com/creating-react-app-with-typescript-eslint-with-webpack5/)
+
+-[HOC and typescript](https://isamatov.com/react-hoc-typescript/) -[progress already done](https://www.kevinqi.com/react-circular-progressbar/) -[refs in react component](https://dev.to/carlosrafael22/using-refs-in-react-functional-components-part-2-forwardref-useimperativehandle-3naa) -[webpack and css module](https://blog.jakoblind.no/css-modules-webpack/)
+
 ### other
 
 - [Usage of jsconfig.json](https://saurabhshah23.medium.com/react-app-with-absolute-paths-using-jsconfig-json-2b07b1cb24d4)
 
 - [Nested value in object](https://dev.to/rajnishkatharotiya/select-a-nested-value-from-the-object-in-javascript-2fjd)
 
-<!-- back to the top -->
-<p align="right">
- <a href="#top">
-   <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
- </a>
-</p>
+- [object Object and {}](https://stackoverflow.com/questions/49464634/difference-between-object-and-object-in-typescript)
+
+- [styling buttons](https://ishadeed.com/article/styling-the-good-old-button/)
+
+  <!-- back to the top -->
+  <p align="right">
+   <a href="#top">
+     <img height="20px" src="docs/assets/up-arrow-svgrepo-com.svg" />
+   </a>
+  </p>
 
 # <a id="encore">👀&nbsp;</a> What else ?
 

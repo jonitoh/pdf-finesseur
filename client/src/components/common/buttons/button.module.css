@@ -1,65 +1,253 @@
-/* basic button */
+/* generic button from cssbuttons.io by @e-coders */
 .button {
-  background-color: var(--color-secondary);
-  color: var(--color-white);
-  font-size: bolder;
-  padding: 3px 9px;
-  border-radius: 5px;
-  border-color: var(--color-white);
-  cursor: pointer;
-  display: flex;
+  appearance: none;
+  outline: none;
+  font-family: inherit;
+  font-weight: bolder;
+  line-height: normal;
+  border-radius: 0.9375em;
+  padding: 0.625em 1em;
+  margin: 0em;
+  display: inline-flex;
   align-items: center;
-  margin: 3px 0px;
+  justify-content: center;
+  min-width: 6.25em;
+  cursor: pointer;
+  user-select: none;
 }
 
-div.button {
-  width: fit-content;
+.button:focus,
+.button:active {
+  box-shadow: 0 0 0 2px var(--color-hover);
 }
 
-.button > span,
-.button > div {
+.button:disabled {
+  opacity: 0.33;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.button .icon,
+.button .label {
   margin: 2px;
+  display: inline-flex;
+  justify-content: center;
 }
 
-.button:hover {
-  background-color: var(--color-black);
+.button .icon {
+  min-width: 1.25em;
+  min-height: 1.25em;
+}
+
+/* apparent button from cssbuttons.io by @e-coders */
+.button.apparent {
+  border: none;
+  color: var(--color-secondary);
+  background-color: transparent;
+}
+
+.button.apparent:hover {
   color: var(--color-hover);
-  border-color: var(--color-hover);
+}
+
+.button.apparent:hover .label {
+  text-decoration: underline;
+}
+
+.button.apparent:focus,
+.button.apparent:active {
+  box-shadow: none;
+}
+
+/* basic button from cssbuttons.io by @adamgiebl */
+.button.basic {
+  background-color: var(--color-hover);
+  border: 0.125em solid var(--color-hover);
+  color: var(--color-white);
+  box-shadow: 0 0.7em 1.5em -0.5em var(--color-hover);
+}
+
+.button.basic:hover {
+  box-shadow: 0 0.5em 1.5em -0.5em var(--color-hover);
+}
+
+.button.basic:focus,
+.button.basic:active {
+  box-shadow: 0 0.3em 1em -0.5em var(--color-hover);
+}
+
+/* plain button from cssbuttons.io */
+.button.plain {
+  background-color: var(--color-white);
+  border: 0.125em solid var(--color-hover);
+  border-radius: 0.6em;
+  color: var(--color-hover);
+}
+
+.button.plain .icon {
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.button.plain:hover .icon {
+  transform: scale(1.6);
+}
+
+/* transparent button from cssbuttons.io by @e-coders */
+.button.transparent {
+  background-color: transparent;
+  border: 0.125em solid var(--color-secondary);
+  border-radius: 0.9375em;
+  color: var(--color-secondary);
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.button.transparent:hover {
+  color: var(--color-hover);
+  background-color: var(--color-white);
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button.transparent:focus,
+.button.transparent:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+/* expand button from cssbuttons.io by @alexmaracinaru */
+.button.expand {
+  appearance: none;
+  background: none;
+  border: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  color: var(--color-secondary);
+  will-change: transform;
+  overflow: hidden;
+}
+
+.button.expand:hover {
+  color: var(--color-white);
+}
+
+.button.expand:before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transition: all 0.5s ease;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.button.expand:hover:before {
+  top: 0;
+  background: var(--color-hover);
+}
+
+.button.expand .icon,
+.button.expand .label {
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button.expand:hover .icon {
+  transform: scale(1.6);
+}
+
+.button.expand:hover .label {
+  transform: translateX(3px);
+}
+
+.button.expand:focus .icon,
+.button.expand:active .icon {
+  transform: scale(0.95);
+}
+
+.button.expand:focus .label,
+.button.expand:active .label {
+  transform: translateX(2px);
+}
+
+/* minimize button from cssbuttons.io */
+.button.minimize {
+  appearance: none;
+  background-color: var(--color-white);
+  border: 0.125em solid var(--color-hover);
+  color: var(--color-hover);
+  overflow: hidden;
+}
+
+.button.minimize .icon {
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+}
+
+.button.minimize:hover .icon {
+  transform: scale(2);
+}
+
+.button.minimize .label {
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/*-- left --*/
+.button.minimize.main-item-position-left .icon {
+  left: 0%;
+}
+
+.button.minimize.main-item-position-left:hover .icon {
+  left: 45%;
+}
+
+.button.minimize.main-item-position-left:hover .label {
+  transform: translateX(200px);
+}
+
+/*-- right --*/
+.button.minimize.main-item-position-right .icon {
+  right: 0%;
+}
+
+.button.minimize.main-item-position-right:hover .label {
+  transform: translateX(-200px);
+}
+
+.button.minimize.main-item-position-right:hover .icon {
+  right: 45%;
+}
+
+/*-- up --*/
+.button.minimize.main-item-position-up:hover .label {
+  transform: translateY(30px);
+}
+
+.button.minimize.main-item-position-up:hover .icon {
+  transform: translateY(0.8em);
+}
+
+/*-- bottom --*/
+.button.minimize.main-item-position-bottom:hover .label {
+  transform: translateY(-30px);
+}
+
+.button.minimize.main-item-position-bottom:hover .icon {
+  transform: translateY(-0.8em);
 }
 
 /* icon position */
-.icon-position-left {
+.main-item-position-left {
   flex-direction: row;
 }
 
-.icon-position-right {
+.main-item-position-right {
   flex-direction: row-reverse;
 }
-.icon-position-up {
+.main-item-position-up {
   flex-direction: column;
 }
 
-.icon-position-bottom {
+.main-item-position-bottom {
   flex-direction: column-reverse;
-}
-
-/* Add animated effect */
-.button.animated {
-  transition: all 0.25s ease;
-}
-
-.button.animated:hover {
-  transform: translateY(5px);
-}
-
-/* Variant plain */
-.button.plain {
-  border: none;
-}
-
-/* Variant transparent */
-.button.transparent,
-.button.transparent:hover {
-  background-color: transparent;
-  border: none;
 }

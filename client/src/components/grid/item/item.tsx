@@ -18,7 +18,7 @@ export default function GridItem({ style, children }: Props) {
   return null;
 }
 
-export function withGridItemOptions<T extends Object>(
+export function withGridItemOptions<T extends object>(
   Component: ComponentType<T>,
   wrapperClassName?: string,
   gridItemClassName?: string

@@ -42,6 +42,7 @@
   },
   "plugins": ["import", "react", "@typescript-eslint", "react-hooks"],
   "rules": {
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/jsx-fragments": ["off", "syntax"],
     "import/no-dynamic-require": "warn",
     "no-undef": "warn",

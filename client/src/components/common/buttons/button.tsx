@@ -6,17 +6,15 @@ export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'submit' | 'reset' | 'button';
   icon?: ReactNode;
   iconPosition?: 'right' | 'left' | 'up' | 'bottom';
-  hasAnimation?: boolean;
   label?: string | ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement> | (() => void);
-  variant?: 'plain' | 'transparent' | 'basic';
+  variant?: 'transparent' | 'apparent' | 'basic' | 'plain' | 'expand' | 'minimize';
 }
 
 export default function Button({
   type,
   icon,
   iconPosition,
-  hasAnimation,
   label,
   onClick,
   variant,
@@ -28,16 +26,19 @@ export default function Button({
       className={classNames([
         className,
         styles.button,
-        hasAnimation && styles.animation,
-        iconPosition ? styles[`icon-position-${iconPosition}`] : false,
+        iconPosition ? styles[`main-item-position-${iconPosition}`] : false,
         variant ? styles[variant] : false,
       ])}
       onClick={onClick}
       type={type}
       {...props}
     >
-      {!!icon && <span>{icon}</span>}
-      {typeof label === 'string' ? <span>{label}</span> : label}
+      {!!icon && (
+        <span className={styles.icon} aria-hidden>
+          {icon}
+        </span>
+      )}
+      {!!label && <span className={styles.label}>{label}</span>}
     </button>
   );
 }
@@ -45,7 +46,6 @@ export default function Button({
 Button.defaultProps = {
   icon: null,
   iconPosition: 'left',
-  hasAnimation: false,
   label: undefined,
   onClick: undefined,
   variant: 'basic',

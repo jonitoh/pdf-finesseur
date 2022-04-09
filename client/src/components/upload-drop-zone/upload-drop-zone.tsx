@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import DropZone from '#common/drop-zone/drop-zone';
 import select, { Store as State } from '#store';
 import { UrlMapObject } from '#services/page-and-document/document';
@@ -318,24 +318,22 @@ export default function UploadDropZone() {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.mainContent}>
-        <div className={styles.dropZone}>
-          <DropZone
-            onFilesAdded={onFilesAdded}
-            isDisabled={uploading || successfullUploaded}
-            title={uploading ? 'Loading...' : 'Drop your file here!'}
-          />
-        </div>
-        <div className={styles.progressZone}>
-          <ProgressCircle
-            percentage={uploadProgress.percentage}
-            label={uploadProgress.filename}
-            stroke={6}
-          />
-        </div>
+    <Fragment>
+      <div className={styles.dropZone}>
+        <DropZone
+          onFilesAdded={onFilesAdded}
+          isDisabled={uploading || successfullUploaded}
+          title={uploading ? 'Loading...' : 'Drop your file here!'}
+        />
+      </div>
+      <div className={styles.progressZone}>
+        <ProgressCircle
+          percentage={uploadProgress.percentage}
+          label={uploadProgress.filename}
+          stroke={6}
+        />
       </div>
       {errorMsg && <div className={styles.errorZone}>{errorMsg}</div>}
-    </div>
+    </Fragment>
   );
 }

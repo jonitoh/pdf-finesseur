@@ -7,7 +7,7 @@ export type InjectedProps = {
   items: DNDItem[];
 };
 
-export default function withItemsDragPreview<T extends Object>(Component: ComponentType<T>) {
+export default function withItemsDragPreview<T extends object>(Component: ComponentType<T>) {
   function Wrapper({ items, ...rest }: InjectedProps & Omit<T, 'items'>) {
     return (
       <div>

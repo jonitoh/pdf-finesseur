@@ -4,7 +4,7 @@ import NavigationButton from '#components/common/buttons/navigation-button';
 import styles from './wrapper.module.css';
 
 const genericLeftButton = (
-  <NavigationButton link="/" icon={<Icon.NavBackArrow />} iconPosition="left" type="button" />
+  <NavigationButton link="/" icon={<Icon.NavBackArrow />} type="button" variant="apparent" />
 );
 
 const genericRightButton = undefined;
