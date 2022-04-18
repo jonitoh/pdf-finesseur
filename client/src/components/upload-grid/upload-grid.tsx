@@ -17,23 +17,25 @@ const secondSelector = (state: State) => ({
   addAvailablePageByIdFromDeletedPages: state.addAvailablePageByIdFromDeletedPages,
 });
 
+const translatorSelector = (state: State) => ({
+  softTranslator: state.softTranslator,
+});
+
 export type Props = CSSProperties;
 
 export default function UploadGrid(props: Props) {
   const { documents, deletedPages } = select(firstSelector);
-
   const {
     removePagesByDocumentFromDeletedPages,
     removeDocument,
     addAvailablePageByIdFromDeletedPages,
   } = select(secondSelector);
-
-  // console.info('upload grid items', documents);
+  const { softTranslator } = select(translatorSelector);
 
   // propsForList
   const propsForList = {
-    emptyChildren: <Placeholder>Upload some file !</Placeholder>,
-    style: { flexGrow: 1 },
+    emptyChildren: <Placeholder>{softTranslator('upload-item')}</Placeholder>,
+    style: { flexGrow: 1, overflowY: 'auto' } as CSSProperties,
   };
 
   // propsForItem
@@ -59,9 +61,9 @@ export default function UploadGrid(props: Props) {
       <TwoClickCard
         src={item.url}
         imgText={item.name}
-        leftButtonText="restore all"
+        leftButtonText={softTranslator('restore-all')}
         leftOnClick={() => restoreAll(item.id)}
-        rightButtonText="close"
+        rightButtonText={softTranslator('close')}
         rightOnClick={() => removeFromGrid(item.id)}
       />
     );

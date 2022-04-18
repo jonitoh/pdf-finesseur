@@ -19,6 +19,7 @@ export interface LanguageSlice {
   setLang(lang: string): void;
   initiateLang(): void;
   t(key: string, error: string): string | undefined;
+  softTranslator(key: string): string;
   getAllLanguagesAsOptions(): OptionForSelector[];
 }
 
@@ -31,14 +32,14 @@ export default function createLanguageSlice<IStore extends LanguageSlice = Langu
     langs: getValues(),
     langTagName: 'data-lang',
     // actions
-    removeLang: (lang: string) =>
+    removeLang: (lang) =>
       set((state: IStore) => ({ langs: state.langs.filter((language) => language !== lang) })),
     getLangs: () => get().langs,
     getLang: () => get().lang,
-    updateLang: (lang: unknown) => (typeof lang === 'string' ? set({ lang }) : null),
+    updateLang: (lang) => (typeof lang === 'string' ? set({ lang }) : null), // avoir un update laxiste ?
     setDocumentLang: () => document.documentElement.setAttribute('lang', get().lang),
     setLocalStorageLang: () => localStorage.setItem(get().langTagName, JSON.stringify(get().lang)),
-    setLang: (lang: string) => {
+    setLang: (lang) => {
       get().updateLang(lang);
       get().setDocumentLang();
       get().setLocalStorageLang();
@@ -52,7 +53,8 @@ export default function createLanguageSlice<IStore extends LanguageSlice = Langu
       }
       get().setDocumentLang();
     },
-    t: (key: string, error: string = 'default') => translate(get().lang, key, 'undefined', error),
+    t: (key, error = 'default') => translate(get().lang, key, 'undefined', error),
+    softTranslator: (key) => translate(get().lang, key, 'undefined', 'soft') as string,
     getAllLanguagesAsOptions: () => getOptionsFromLanguages(filterLanguages(get().langs)),
   };
 }

@@ -9,6 +9,10 @@
 /*** Variables for color theme ***/
 /* DEFAULT COLOR THEME */
 :root {
+  --color-red: #d62d20;
+  --color-blue: #0057e7;
+  --color-green: #008744;
+  --color-yellow: #ffa700;
   --color-white: #ffffff;
   --color-black: #000000;
   --color-primary: #6a748127;
@@ -93,4 +97,55 @@ video {
   body {
     font-size: calc(var(--font-size) * 0.7);
   }
+}
+
+#toast {
+  position: absolute;
+  z-index: 5;
+}
+
+#toast.ascending {
+  display: flex;
+  flex-direction: column;
+}
+
+#toast.descending {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+/* position =  'top-left' */
+#toast.position-top-left {
+}
+
+/* position =  'top-center' */
+#toast.position-top-center {
+}
+
+/* position =  'top-right' */
+#toast.position-top-right {
+}
+
+/* position =  'center-left' */
+#toast.position-center-left {
+}
+
+/* position =  'center' */
+#toast.position-center {
+}
+
+/* position =  'center-right' */
+#toast.position-center-right {
+}
+
+/* position =  'bottom-left' */
+#toast.position-bottom-left {
+}
+
+/* position =  'bottom-center' */
+#toast.position-bottom-center {
+}
+
+/* position =  'bottom-right' */
+#toast.position-bottom-right {
 }

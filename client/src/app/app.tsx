@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SimpleNavbar from '#components/navbar/simple-navbar/simple-navbar';
+import { initiate as initiateModal } from '#common/alert/options';
 import select, { Store as State } from '#store';
 import Bin from '#pages/bin/bin';
 import Upload from '#pages/upload/upload';
@@ -16,6 +17,8 @@ const selector = (state: State) => ({
 
 export default function App() {
   const { initiateTheme, initiateLang } = select(selector);
+  // INDEX HTML -- Add correct class to wanted HTMLElement
+  useEffect(() => initiateModal(), []);
   // COLOR THEME -- Force an initial state based on the local storage value
   useEffect(() => initiateTheme(), []);
   // LANG THEME -- Force an initial state based on the local storage value

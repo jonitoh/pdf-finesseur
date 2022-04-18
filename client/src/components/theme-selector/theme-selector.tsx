@@ -6,16 +6,12 @@ const selector = (state: State) => ({
   theme: state.theme,
   getAllThemesAsOptions: state.getAllThemesAsOptions,
   setTheme: state.setTheme,
-  t: state.t,
+  softTranslator: state.softTranslator,
 });
 
 export default function ThemeSelector() {
-  const { theme, getAllThemesAsOptions, setTheme, t } = select(selector);
+  const { theme, getAllThemesAsOptions, setTheme, softTranslator } = select(selector);
 
-  // options
-  function softTranslator(key: string) {
-    return t(key, 'soft');
-  }
   const options = getAllThemesAsOptions(softTranslator);
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
@@ -24,11 +20,11 @@ export default function ThemeSelector() {
 
   return (
     <Selector
-      defaultOption={{ label: softTranslator('choose-theme'), value: theme }}
+      defaultOption={{ label: softTranslator('settings__choose-theme'), value: theme }}
       options={options}
       onChange={handleChange}
-      disabled={!!process.env.DISABLE_THEME}
-      unknownLabel={softTranslator('unknown-label')}
+      disabled={process.env.DISABLE_THEME === 'true'}
+      unknownLabel={softTranslator('undefined')}
     />
   );
 }

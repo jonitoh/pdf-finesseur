@@ -17,7 +17,7 @@ export default function NavbarItem({ link, Icon, count, text, onClick, ...rest }
       <NavigationButton
         link={link}
         icon={<Icon notificationCount={count} />}
-        iconPosition="up"
+        iconPosition="top"
         label={<p className={styles.label}>{text}</p>}
         onClick={onClick}
         type="button"

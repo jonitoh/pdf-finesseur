@@ -13,4 +13,6 @@ function UploadPage() {
   );
 }
 
-export default withInnerNavigation(UploadPage, { style: { flexDirection: 'column' } }); // , overflow: "scroll"
+export default withInnerNavigation(UploadPage, {
+  style: { flexDirection: 'column', alignItems: 'center' },
+});

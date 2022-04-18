@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import Icon from '#common/icon';
-import Modal, { Ref as ModalRef } from '#common/modal/modal';
+import Modal, { Ref as ModalRef } from '#common/alert/alert';
 import select, { Store as State } from '#store';
 import { Doc } from '#services/page-and-document';
 import styles from './simple-navbar.module.css';
@@ -12,7 +12,7 @@ const selector = (state: State) => ({
   getMergedDocument: state.getMergedDocument,
   documents: state.documents,
   deletedPages: state.deletedPages,
-  t: state.t,
+  softTranslator: state.softTranslator,
   resetAll: state.resetAll,
 });
 
@@ -31,8 +31,14 @@ export default function SimpleNavbar() {
   const [hasBug, setHasBug] = useState(false);
   const modal = useRef<ModalRef>(null);
 
-  const { createMergedDocument, getMergedDocument, documents, deletedPages, t, resetAll } =
-    select(selector);
+  const {
+    createMergedDocument,
+    getMergedDocument,
+    documents,
+    deletedPages,
+    softTranslator,
+    resetAll,
+  } = select(selector);
 
   function onClick() {
     console.info('documents', documents);
@@ -57,24 +63,24 @@ export default function SimpleNavbar() {
         <NavbarList>
           <NavbarItem
             link="/upload"
-            text={t('add-button-label', 'soft') as string}
+            text={softTranslator('main-navigation__add')}
             Icon={Icon.Add}
             count={documents.length}
           />
           <NavbarItem
             link="/bin"
-            text={t('bin-button-label', 'soft') as string}
+            text={softTranslator('main-navigation__bin')}
             Icon={Icon.Bin}
             count={deletedPages.length}
           />
           <NavbarItem
             link="/settings"
-            text={t('settings-button-label', 'soft') as string}
+            text={softTranslator('main-navigation__settings')}
             Icon={Icon.Settings}
           />
           <NavbarItem
             link="/"
-            text={t('download-button-label', 'soft') as string}
+            text={softTranslator('main-navigation__download')}
             Icon={Icon.Download}
             onClick={onClick}
           />
@@ -89,8 +95,8 @@ export default function SimpleNavbar() {
         ref={modal}
       >
         {hasBug
-          ? 'Something unexpected happened during the mering process'
-          : 'You need to upload document first'}
+          ? softTranslator('merging-process__with-bug')
+          : softTranslator('merging-process__empty-items')}
       </Modal>
     </>
   );

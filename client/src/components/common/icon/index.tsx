@@ -1,5 +1,6 @@
 import React, { ComponentType } from 'react';
 import Add from '#assets/icons/add-file.svg';
+import Star from '#assets/icons/star.svg';
 import Close from '#assets/icons/close-button.svg';
 import CloudUpload from '#assets/icons/cloud-upload.svg';
 import DotsVertical from '#assets/icons/dots-vertical.svg';
@@ -50,6 +51,7 @@ function withNotification<T extends object>(Component: ComponentType<T>) {
 
 export default {
   Add: withNotification(Add),
+  Star: withNotification(Star),
   Close: withNotification(Close),
   CloudUpload: withNotification(CloudUpload),
   DotsVertical: withNotification(DotsVertical),

@@ -1,0 +1,86 @@
+.card {
+  width: 200px;
+  height: 300px;
+  padding: 5px;
+  background-color: var(--color-white);
+  border-radius: 3px;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.card * {
+  transition: all 0.2s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card.deepShadow {
+  box-shadow: 0 4px 8px 0 var(--color-shadow);
+}
+
+.card.deepShadow:hover {
+  box-shadow: 0 8px 16px 0 var(--color-shadow);
+}
+
+/* On mouse-over, change the direction of the shadow -- From uiverse.io by @SharpTH */
+.card.rightToLeftShadow {
+  box-shadow: 12px 12px 2px 1px var(--color-shadow);
+}
+.card.rightToLeftShadow:hover {
+  box-shadow: -12px 12px 2px -1px var(--color-shadow);
+}
+
+/* On mouse-over, focus the card -- From uiverse.io by @Sujitkavaiya */
+.card.focusShadow {
+  box-shadow: 0.3em 0.3em 0.7em var(--color-shadow);
+  transition: border 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: var(--color-white) 0.2em solid;
+}
+
+.card.focusShadow:hover {
+  box-shadow: -12px 12px 2px -1px rgba(var(--color-shadow), 0.2);
+  border: var(--color-hover) 0.2em solid;
+}
+
+/* imgBox */
+.imgBox {
+  width: 100%;
+  height: 80%;
+  padding: 2px;
+}
+
+.imgBox img {
+  width: 100%;
+  height: 100%;
+}
+
+/* infoContent */
+.infoContent {
+  width: 100%;
+  height: 20%;
+  margin: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/*
+.infoContent > * {
+  margin: 0.5px;
+}
+*/
+
+/* for any extra button-related functionalities */
+.wrapper {
+  position: relative;
+}
+
+.outerContent.asAppear,
+.infoContent.asAppear {
+  opacity: 0;
+}
+
+.wrapper:hover .outerContent.asAppear,
+.wrapper:hover .infoContent.asAppear {
+  opacity: 0.8;
+}

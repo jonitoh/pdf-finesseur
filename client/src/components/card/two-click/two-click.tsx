@@ -1,8 +1,16 @@
 import React, { MouseEventHandler, ReactNode } from 'react';
 import Button from '#common/buttons/button';
+import classNames from 'classnames';
+import cardStyles from '../card.module.css';
 import styles from './two-click.module.css';
+import {
+  Props as StyleProps,
+  defaultProps as StyleDefaultProps,
+  getContentStyle,
+  getShadowStyle,
+} from '../options';
 
-export type Props = {
+export interface Props extends StyleProps {
   src: string;
   imgText: string;
   leftButtonText: string;
@@ -11,9 +19,11 @@ export type Props = {
   rightOnClick?: MouseEventHandler<HTMLButtonElement> | (() => void);
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-};
+}
 
 export default function TwoClickCard({
+  shadowStyle,
+  contentStyle,
   src,
   imgText,
   leftButtonText,
@@ -24,25 +34,36 @@ export default function TwoClickCard({
   rightIcon,
 }: Props) {
   return (
-    <div className={styles.card}>
-      <img src={src} alt={imgText} />
-      <div className={styles.infoContent}>
-        <h3>{imgText}</h3>
-        <div className={styles.buttonArea}>
-          <Button
-            type="button"
-            label={leftButtonText}
-            onClick={leftOnClick}
-            className={styles.leftBtn}
-            icon={leftIcon}
-          />
-          <Button
-            type="button"
-            label={rightButtonText}
-            onClick={rightOnClick}
-            className={styles.rightBtn}
-            icon={rightIcon}
-          />
+    <div className={cardStyles.wrapper}>
+      <div className={classNames([cardStyles.card, ...[getShadowStyle(cardStyles, shadowStyle)]])}>
+        <div className={cardStyles.imgBox}>
+          <img src={src} alt={imgText} />
+        </div>
+        <div
+          className={classNames([
+            cardStyles.infoContent,
+            ...[getContentStyle(cardStyles, contentStyle)],
+            styles.infoContent,
+            ...[getContentStyle(styles, contentStyle)],
+          ])}
+        >
+          <div className={styles.text}>{imgText}</div>
+          <div className={styles.actionArea}>
+            <Button
+              type="button"
+              label={leftButtonText}
+              onClick={leftOnClick}
+              className={styles.leftBtn}
+              icon={leftIcon}
+            />
+            <Button
+              type="button"
+              label={rightButtonText}
+              onClick={rightOnClick}
+              className={styles.rightBtn}
+              icon={rightIcon}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -50,6 +71,9 @@ export default function TwoClickCard({
 }
 
 TwoClickCard.defaultProps = {
+  ...StyleDefaultProps,
+  // shadowStyle: undefined,
+  contentStyle: undefined,
   leftOnClick: undefined,
   rightOnClick: undefined,
   leftIcon: undefined,

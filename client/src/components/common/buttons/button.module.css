@@ -218,12 +218,12 @@
   right: 45%;
 }
 
-/*-- up --*/
-.button.minimize.main-item-position-up:hover .label {
+/*-- top --*/
+.button.minimize.main-item-position-top:hover .label {
   transform: translateY(30px);
 }
 
-.button.minimize.main-item-position-up:hover .icon {
+.button.minimize.main-item-position-top:hover .icon {
   transform: translateY(0.8em);
 }
 
@@ -244,7 +244,7 @@
 .main-item-position-right {
   flex-direction: row-reverse;
 }
-.main-item-position-up {
+.main-item-position-top {
   flex-direction: column;
 }
 

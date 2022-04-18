@@ -11,7 +11,7 @@ import { createPortal } from 'react-dom';
 import Button from '#common/buttons/button';
 import Icon from '#common/icon';
 import classNames from 'classnames';
-import styles from './modal.module.css';
+import styles from './alert.module.css';
 
 export type Props = {
   children?: ReactNode;
@@ -20,7 +20,17 @@ export type Props = {
   title?: string;
   isFading?: boolean;
   isDisappearing?: boolean;
-  isAToast?: boolean;
+  type?: 'modal' | 'toast';
+  position?:
+    | 'top-left'
+    | 'top-center'
+    | 'top-right'
+    | 'center-left'
+    | 'center'
+    | 'center-right'
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'bottom-right';
   timing?: number;
 };
 
@@ -30,8 +40,9 @@ export type Ref = {
 };
 
 const modalElement = document.getElementById('modal') as HTMLElement;
+const toastElement = document.getElementById('toast') as HTMLElement;
 
-const Modal = forwardRef<Ref, Props>(function Modal(
+const Alert = forwardRef<Ref, Props>(function Alert(
   {
     children,
     isOpenedAtDefault,
@@ -39,23 +50,31 @@ const Modal = forwardRef<Ref, Props>(function Modal(
     title,
     isFading,
     isDisappearing,
-    isAToast,
+    type,
+    position,
     timing,
   },
   ref
 ) {
+  const isToast = type === 'toast';
   const divRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(isOpenedAtDefault);
+  const [mustDisappear, setMustDisappear] = useState(false);
 
   const onClose = useCallback(() => setIsOpen(false), []);
   const onOpen = useCallback(() => setIsOpen(true), []);
+  const onDisappear = useCallback(() => {
+    setMustDisappear(true);
+    setTimeout(() => setIsOpen(false), 900);
+  }, []);
 
   // close modal with keyboard
   const handleEscape = useCallback((event: KeyboardEvent) => {
     if (event.code === 'Escape') setIsOpen(false);
   }, []);
+
   useEffect(() => {
-    if (shouldHandleEscape) {
+    if (shouldHandleEscape && !isToast) {
       if (isOpen) document.addEventListener('keydown', handleEscape, false);
       return () => {
         document.removeEventListener('keydown', handleEscape, false);
@@ -66,13 +85,10 @@ const Modal = forwardRef<Ref, Props>(function Modal(
   // disappearing modal
   useEffect(() => {
     if (isDisappearing) {
-      const timeId = setTimeout(() => {
-        // After 3 seconds set the show value to false
-        onClose();
-      }, timing);
+      const timerId = setTimeout(() => onDisappear(), timing);
 
       return () => {
-        clearTimeout(timeId);
+        clearTimeout(timerId);
       };
     }
   }, []);
@@ -84,35 +100,44 @@ const Modal = forwardRef<Ref, Props>(function Modal(
 
   return createPortal(
     isOpen ? (
-      <div className={classNames([styles.container, isFading ? styles.fade : false])} ref={divRef}>
-        <div className={styles.modal}>
-          <header className={styles.header}>
+      <div className={classNames([styles.wrapper, isToast ? styles.toast : styles.modal])}>
+        <div
+          className={classNames([
+            styles.container,
+            isFading && !mustDisappear ? styles.fade : false,
+            mustDisappear ? styles.disappear : false,
+            styles[`position-${position}`],
+          ])}
+          ref={divRef}
+        >
+          <header className={classNames([styles.header, title ? styles.withTitle : false])}>
             <h2 className={styles.title}> {title} </h2>
             <Button
               type="button"
               className={styles.close}
               icon={<Icon.Close />}
               onClick={onClose}
-              variant="basic"
+              variant="transparent"
             />
           </header>
           <div className={styles.content}> {children} </div>
         </div>
       </div>
     ) : null,
-    modalElement
+    isToast ? toastElement : modalElement
   );
 });
 
-Modal.defaultProps = {
+Alert.defaultProps = {
   children: undefined,
   isOpenedAtDefault: false,
   shouldHandleEscape: false,
   title: undefined,
   isFading: false,
   isDisappearing: false,
-  isAToast: false,
+  type: 'modal',
+  position: 'center',
   timing: 5000,
 };
 
-export default Modal;
+export default Alert;

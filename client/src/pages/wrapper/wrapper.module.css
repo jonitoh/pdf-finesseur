@@ -11,7 +11,7 @@
   flex-basis: 0;
   display: flex;
   justify-content: flex-start;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .main {

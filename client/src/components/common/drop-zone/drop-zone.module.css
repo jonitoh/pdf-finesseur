@@ -1,6 +1,4 @@
 .dropzone {
-  height: 30vh;
-  width: 60vw;
   display: flex;
   align-items: center;
   justify-content: space-around;

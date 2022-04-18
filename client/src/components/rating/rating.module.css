@@ -1,0 +1,28 @@
+.wrapper {
+  display: inline-flex;
+  position: relative;
+  cursor: pointer;
+  text-align: left;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.container {
+  position: relative;
+  cursor: pointer;
+}
+
+.background {
+  overflow: hidden;
+  position: absolute;
+}
+
+.active {
+}
+
+.icon {
+  padding: 1px;
+}

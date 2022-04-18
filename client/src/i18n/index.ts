@@ -40,7 +40,10 @@ export function translate(
 }
 
 export function getOptionsFromLanguages(languages: EnumLike) {
-  return Object.values(languages).map((v) => ({ value: v, label: translate(v, `${v}-label`) }));
+  return Object.values(languages).map((v) => ({
+    value: v,
+    label: translate(v, `language-label__${v}`),
+  }));
 }
 
 export function filterLanguages(langs: string[]) {

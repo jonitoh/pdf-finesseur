@@ -6,15 +6,11 @@ const selector = (state: State) => ({
   lang: state.lang,
   getAllLanguagesAsOptions: state.getAllLanguagesAsOptions,
   setLang: state.setLang,
-  t: state.t,
+  softTranslator: state.softTranslator,
 });
 
 export default function LanguageSelector() {
-  const { lang, setLang, getAllLanguagesAsOptions, t } = select(selector);
-
-  function softTranslator(key: string) {
-    return t(key, 'soft');
-  }
+  const { lang, setLang, getAllLanguagesAsOptions, softTranslator } = select(selector);
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
     setLang(event.target.value);
@@ -22,10 +18,10 @@ export default function LanguageSelector() {
 
   return (
     <Selector
-      defaultOption={{ label: softTranslator('choose-lang'), value: lang }}
+      defaultOption={{ label: softTranslator('settings__choose-lang'), value: lang }}
       options={getAllLanguagesAsOptions()}
       onChange={handleChange}
-      unknownLabel={softTranslator('unknown-label')}
+      unknownLabel={softTranslator('undefined')}
     />
   );
 }

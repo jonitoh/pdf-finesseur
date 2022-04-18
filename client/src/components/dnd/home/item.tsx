@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Modal, { Ref as ModalRef } from '#common/modal/modal';
+import Modal, { Ref as ModalRef } from '#common/alert/alert';
 import withDragAndDropOptions, {
   OnlyDragAndDropOptionsProps,
   DragObject,

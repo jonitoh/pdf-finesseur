@@ -1,0 +1,149 @@
+.container {
+  overflow: auto;
+  width: fit-content;
+  height: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin: 10px;
+}
+
+/* isFading = true */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.container.fade {
+  animation: fadeIn 1.5s;
+}
+
+/* isDisappear = true */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.container.disappear {
+  animation: fadeOut 1s;
+}
+
+/* position =  'top-left' */
+.wrapper.modal .container.position-top-left {
+  top: 0;
+  left: 0;
+}
+
+/* position =  'top-center' */
+.wrapper.modal .container.position-top-center {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* position =  'top-right' */
+.wrapper.modal .container.position-top-right {
+  top: 0;
+  right: 0;
+}
+
+/* position =  'center-left' */
+.wrapper.modal .container.position-center-left {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+}
+
+/* position =  'center' */
+.wrapper.modal .container.position-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* position =  'center-right' */
+.wrapper.modal .container.position-center-right {
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+}
+
+/* position =  'bottom-left' */
+.wrapper.modal .container.position-bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+/* position =  'bottom-center' */
+.wrapper.modal .container.position-bottom-center {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* position =  'bottom-right' */
+.wrapper.modal .container.position-bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+/* isToast = true */
+.wrapper.toast {
+  margin: 4px 6px;
+}
+
+.wrapper.toast .container {
+  background-color: var(--color-white);
+  box-shadow: 3px 3px var(--color-shadow);
+  padding: 4px 8px;
+  position: relative;
+}
+
+/* isToast = false */
+.wrapper.modal {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(10px);
+}
+
+.wrapper.modal .container {
+  background-color: var(--bg-color);
+  box-shadow: 0 10px 20px var(--color-shadow);
+  border-radius: 5px;
+}
+
+.header,
+.content {
+  padding: 0.5em 1em;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  height: 3em;
+  justify-content: space-between;
+}
+
+.header.withTitle {
+  border-bottom: 1px solid var(--color-black);
+}
+
+.wrapper.modal .container .content {
+  margin: 1em;
+}
+
+.title {
+  font-weight: 600;
+  line-height: normal;
+}

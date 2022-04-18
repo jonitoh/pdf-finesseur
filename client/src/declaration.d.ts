@@ -1,4 +1,9 @@
-declare module '*.css';
+declare module '*.css' {
+  const styles: {
+    [className: string]: string;
+  };
+  export default styles;
+}
 declare module '*.jpg';
 declare module '*.png';
 declare module '*.jpeg';

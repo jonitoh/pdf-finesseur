@@ -15,15 +15,20 @@ const secondSelector = (state: State) => ({
   addAvailablePageByIdFromDeletedPages: state.addAvailablePageByIdFromDeletedPages,
 });
 
+const translatorSelector = (state: State) => ({
+  softTranslator: state.softTranslator,
+});
+
 export type Props = CSSProperties;
 
 function BinPage(props: Props) {
   const { deletedPages } = select(firstSelector);
   const { addAvailablePageByIdFromDeletedPages } = select(secondSelector);
+  const { softTranslator } = select(translatorSelector);
 
   // propsForList
   const propsForList = {
-    emptyChildren: <Placeholder>Nothing here!</Placeholder>,
+    emptyChildren: <Placeholder>{softTranslator('empty-item')}</Placeholder>,
     style: { flexGrow: 1 },
   };
 
@@ -42,7 +47,7 @@ function BinPage(props: Props) {
         src={item.url}
         imgText={item.name}
         onClick={() => removeFromGrid(item.id)}
-        actionText="restore"
+        actionText={softTranslator('restore')}
       />
     );
   }

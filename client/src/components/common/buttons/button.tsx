@@ -5,7 +5,7 @@ import styles from './button.module.css';
 export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'submit' | 'reset' | 'button';
   icon?: ReactNode;
-  iconPosition?: 'right' | 'left' | 'up' | 'bottom';
+  iconPosition?: 'right' | 'left' | 'top' | 'bottom';
   label?: string | ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement> | (() => void);
   variant?: 'transparent' | 'apparent' | 'basic' | 'plain' | 'expand' | 'minimize';
