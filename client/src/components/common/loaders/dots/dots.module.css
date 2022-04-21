@@ -1,15 +1,38 @@
-/* From uiverse.io by @satyamchaudharydev */
-:root {
-  --color-red: #d62d20;
-  --color-blue: #0057e7;
-  --color-green: #008744;
-  --color-yellow: #ffa700;
-  --color-white: #ffffff;
-  --color-black: #000000;
-}
+/* From uiverse.io by @satyamchaudharydev & https://blog.hubspot.com/website/css-loading-animation */
 
 .spinner {
-  /* gap between each circle */
+  display: flex;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+.dot {
+  margin: 0.2rem;
+  background-color: var(--color-hover);
+}
+
+/* ANIMATION: wave */
+.animation-wave .dot {
+  min-width: 5px;
+  width: 100%;
+  animation: wave 1s linear infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+/*
+.spinner {
+  /* gap between each circle *
   width: 100px;
   height: 100px;
   display: flex;
@@ -21,9 +44,9 @@
 .spinner span {
   width: 20px;
   height: 20px;
-  /*border-radius: 100%;*/
+  /*border-radius: 100%;*
   background-color: var(--color-hover);
-  /*opacity: 0;*/
+  /*opacity: 0;*
   transform: scaleY(0.2);
 }
 
@@ -70,3 +93,4 @@
     opacity: 0;
   }
 }
+*/

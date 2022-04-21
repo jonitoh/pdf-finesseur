@@ -1,0 +1,46 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "server side",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "lint": "eslint . --config .eslintrc.json --ignore-path .eslintignore --ext .js,.ts",
+    "lint:fix": "eslint . --config .eslintrc.json --ignore-path .eslintignore --ext .js,.ts --fix",
+    "format:prettier": "prettier --config '../.prettierrc.json' '../**/*.ts' --write",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development ts-node -r dotenv/config index.ts dotenv_config_path=../.env dotenv_config_debug=true",
+    "start:prod": "npm run build && node -r dotenv/config dist/index.js dotenv_config_path=../.env dotenv_config_debug=true",
+    "build": "npm run clean && tsc"
+  },
+  "author": "TOH Ninsemou Jordan",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "multer": "^1.4.4",
+    "rimraf": "^3.0.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^17.0.21",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.6.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.2"
+  }
+}

@@ -45,6 +45,9 @@ export default function Rating({
   const isActiveRating = activeValue !== 1;
   const isRatingWithPrecision = activeValue % 1 !== 0;
 
+  // rendering variables
+  const uniqueId = generateWeakId();
+
   function setValue(val: number) {
     if (onValueChange) {
       onValueChange(val);
@@ -77,10 +80,8 @@ export default function Rating({
     setHoverValue(-1); // reset to default state
   }
 
-  function renderPattern(index: number) {
+  function renderPattern(index: number, key: string) {
     if (!Pattern || !size || !borderColor || !backgroundColor) return;
-
-    const uniqueId = generateWeakId();
     const shouldColor = Math.ceil(activeValue) >= index + 1;
     const isRatingEqualToIndex = Math.ceil(activeValue) === index + 1;
     const showRatingWithPrecision = isActiveRating && isRatingWithPrecision && isRatingEqualToIndex;
@@ -89,7 +90,7 @@ export default function Rating({
     return (
       <div
         className={styles.container}
-        key={`rating-${uniqueId}-${index}`}
+        key={key}
         role="menuitem"
         tabIndex={index === 0 ? 0 : -1}
         style={{ width: `${Math.round(100 / size)}%` }}
@@ -123,7 +124,7 @@ export default function Rating({
       role="menu"
       tabIndex={0}
     >
-      {[...new Array(size)].map((arr, idx) => renderPattern(idx))}
+      {Array.from({ length: size }, (_, idx) => renderPattern(idx, `rating-${uniqueId}-${idx}`))}
     </div>
   );
 }
