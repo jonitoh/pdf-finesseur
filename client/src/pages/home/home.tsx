@@ -1,24 +1,20 @@
 import React, { CSSProperties } from 'react';
 import withInnerNavigation from '#pages/wrapper/options';
 import Placeholder from '#common/placeholder/placeholder';
-import select, { Store as State } from '#store';
+import { useTranslation } from 'react-i18next';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import GridDND from '#components/grid/dnd/dnd';
 import styles from './home.module.css';
 
-const translatorSelector = (state: State) => ({
-  softTranslator: state.softTranslator,
-});
-
 export type Props = CSSProperties;
 
 function HomePage(props: Props) {
-  const { softTranslator } = select(translatorSelector);
+  const { t } = useTranslation();
 
   // propsForList
   const propsForList = {
-    emptyChildren: <Placeholder>{softTranslator('upload-item')}</Placeholder>,
+    emptyChildren: <Placeholder>{t('home.emptyItem', { ns: 'page' })}</Placeholder>,
   };
 
   // propsForItem

@@ -1,11 +1,9 @@
 import React from 'react';
 import styles from './dots.module.css';
 
-export type Props = {
-  size?: number;
-};
+export type Props = {};
 
-export default function Loader({ size }: Props) {
+export default function Loader() {
   return (
     <div className={styles.spinner}>
       <span />
@@ -14,10 +12,6 @@ export default function Loader({ size }: Props) {
     </div>
   );
 }
-
-Loader.defaultProps = {
-  size: 3,
-};
 
 /*
 .spinner span:nth-child(1) {

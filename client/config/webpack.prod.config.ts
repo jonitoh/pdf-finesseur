@@ -16,7 +16,10 @@ function createConfiguration(env: EnvArgs): Configuration {
       open: true,
       hot: true,
       historyApiFallback: true,
-      static: paths.build,
+      static: {
+        directory: paths.public,
+      },
+      compress: true,
     },
 
     // Customize the webpack build process

@@ -3,7 +3,7 @@ import DropZone from '#common/drop-zone/drop-zone';
 import select, { Store as State } from '#store';
 import { UrlMapObject } from '#services/page-and-document/document';
 import axios from 'axios';
-import pdfjsLib, { PDFDocumentProxy, PDFPageProxy } from '#services/pdfjs'; // workaround for PDF-based image extraction
+import pdfjs, { PDFDocumentProxy, PDFPageProxy } from '#services/pdfjs'; // workaround for PDF-based image extraction
 import { manageErrorMessageFromCode, uploadFile } from '#services/api';
 import {
   dataURLtoFile,
@@ -107,7 +107,7 @@ async function extractImagesFromPDF(
     return extractImageFromPDF(num);
   };
 
-  const loadingTask = pdfjsLib.getDocument(docPath);
+  const loadingTask = pdfjs.getDocument(docPath);
 
   // list of { numPage: numPage or -1 for the pdf , url: url }
   const urlMap = await loadingTask.promise.then((pdf: PDFDocumentProxy) => {

@@ -28,7 +28,7 @@ export default function createThemeSlice<IStore extends ThemeSlice = ThemeSlice>
     // actions
     getAllThemesAsList: () => Object.values(THEME),
     getAllThemesAsOptions: (translator) =>
-      Object.values(THEME).map((v) => ({ value: v, label: translator(`${v}-theme`) })),
+      Object.values(THEME).map((v) => ({ value: v, label: translator(`theme:${v}`) })),
     updateTheme: (theme) => (typeof theme === 'string' ? set({ theme }) : null),
     setDocumentTheme: () => document.documentElement.setAttribute(get().themeTagName, get().theme),
     setLocalStorageTheme: () =>

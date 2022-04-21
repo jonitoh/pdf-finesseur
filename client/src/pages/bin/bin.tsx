@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import Placeholder from '#common/placeholder/placeholder';
 import select, { Store as State } from '#store';
+import { useTranslation } from 'react-i18next';
 import { Page } from '#/services/page-and-document';
 import OneClickCard from '#components/card/one-click/one-click';
 import GridCore from '#/components/grid/core/core';
@@ -15,20 +16,17 @@ const secondSelector = (state: State) => ({
   addAvailablePageByIdFromDeletedPages: state.addAvailablePageByIdFromDeletedPages,
 });
 
-const translatorSelector = (state: State) => ({
-  softTranslator: state.softTranslator,
-});
-
 export type Props = CSSProperties;
 
 function BinPage(props: Props) {
   const { deletedPages } = select(firstSelector);
   const { addAvailablePageByIdFromDeletedPages } = select(secondSelector);
-  const { softTranslator } = select(translatorSelector);
+
+  const { t } = useTranslation();
 
   // propsForList
   const propsForList = {
-    emptyChildren: <Placeholder>{softTranslator('empty-item')}</Placeholder>,
+    emptyChildren: <Placeholder>{t('bin.emptyItem', { ns: 'page' })}</Placeholder>,
     style: { flexGrow: 1 },
   };
 
@@ -47,7 +45,7 @@ function BinPage(props: Props) {
         src={item.url}
         imgText={item.name}
         onClick={() => removeFromGrid(item.id)}
-        actionText={softTranslator('restore')}
+        actionText={t('restore')}
       />
     );
   }

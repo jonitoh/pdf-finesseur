@@ -1,0 +1,20 @@
+{
+  "upload": {
+    "emptyItem": "Chargez des fichiers!"
+  },
+  "bin": {
+    "emptyItem": "Corbeille vide !"
+  },
+  "settings": {
+    "emptyItem": "Pas de configuration !",
+    "chooseLang": "Choix du langage",
+    "chooseTheme": "Choix du thème couleur"
+  },
+  "home": {
+    "emptyItem": "Chargez au moins un fichier !",
+    "process": {
+      "withBug": "Oups! Un problème est apparu pendant la phase de fusion de documents",
+      "emptyItems": "Il faut d'abord charger un fichier."
+    }
+  }
+}

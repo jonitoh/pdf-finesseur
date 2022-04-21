@@ -1,0 +1,18 @@
+{
+  "hello": "Bonjour",
+  "click": "Cliquez",
+  "restore": "Restaurez",
+  "restoreAll": "Tout Restaurer",
+  "close": "Fermer",
+  "emptyItem": "Oups! C'est vide!",
+  "language": { "en": "Anglais", "fr": "Français" },
+  "undefined": "???",
+  "navigation": {
+    "main": {
+      "add": "Ajouter",
+      "bin": "Corbeille",
+      "settings": "Paramètres",
+      "download": "Télécharger"
+    }
+  }
+}

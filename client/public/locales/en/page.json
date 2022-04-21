@@ -1,0 +1,20 @@
+{
+  "upload": {
+    "emptyItem": "Upload some file !"
+  },
+  "bin": {
+    "emptyItem": "No trash here !"
+  },
+  "settings": {
+    "emptyItem": "Nothing to configurate !",
+    "chooseLang": "Select language",
+    "chooseTheme": "Select color theme"
+  },
+  "home": {
+    "emptyItem": "Upload some file !",
+    "process": {
+      "withBug": "Something unexpected happened during the merging process",
+      "emptyItems": "You need to upload document first"
+    }
+  }
+}

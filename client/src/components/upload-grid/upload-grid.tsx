@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import Placeholder from '#common/placeholder/placeholder';
 import select, { Store as State } from '#store';
+import { useTranslation } from 'react-i18next';
 import { Doc } from '#/services/page-and-document';
 import TwoClickCard from '#components/card/two-click/two-click';
 import GridCore from '#/components/grid/core/core';
@@ -17,10 +18,6 @@ const secondSelector = (state: State) => ({
   addAvailablePageByIdFromDeletedPages: state.addAvailablePageByIdFromDeletedPages,
 });
 
-const translatorSelector = (state: State) => ({
-  softTranslator: state.softTranslator,
-});
-
 export type Props = CSSProperties;
 
 export default function UploadGrid(props: Props) {
@@ -30,11 +27,11 @@ export default function UploadGrid(props: Props) {
     removeDocument,
     addAvailablePageByIdFromDeletedPages,
   } = select(secondSelector);
-  const { softTranslator } = select(translatorSelector);
+  const { t } = useTranslation();
 
   // propsForList
   const propsForList = {
-    emptyChildren: <Placeholder>{softTranslator('upload-item')}</Placeholder>,
+    emptyChildren: <Placeholder>{t('upload.emptyItem', { ns: 'page' })}</Placeholder>,
     style: { flexGrow: 1, overflowY: 'auto' } as CSSProperties,
   };
 
@@ -61,9 +58,9 @@ export default function UploadGrid(props: Props) {
       <TwoClickCard
         src={item.url}
         imgText={item.name}
-        leftButtonText={softTranslator('restore-all')}
+        leftButtonText={t('restoreAll')}
         leftOnClick={() => restoreAll(item.id)}
-        rightButtonText={softTranslator('close')}
+        rightButtonText={t('close')}
         rightOnClick={() => removeFromGrid(item.id)}
       />
     );

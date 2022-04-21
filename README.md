@@ -204,6 +204,8 @@ This project is released under the terms of the [MIT License](LICENSE).
 
 - [usehooks](https://usehooks.com/), a useful website of handful react hooks
 
+- [i18n with i18next](https://dev.to/adrai/how-to-properly-internationalize-a-react-application-using-i18next-3hdb)
+
 ---
 
 ### back end

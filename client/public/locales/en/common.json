@@ -1,0 +1,18 @@
+{
+  "hello": "Hello",
+  "click": "Click",
+  "restore": "Restore",
+  "restoreAll": "Restore All",
+  "close": "Close",
+  "emptyItem": "Nothing here!",
+  "language": { "en": "English", "fr": "French" },
+  "undefined": "???",
+  "navigation": {
+    "main": {
+      "add": "Add",
+      "bin": "Bin",
+      "settings": "Settings",
+      "download": "Download"
+    }
+  }
+}
