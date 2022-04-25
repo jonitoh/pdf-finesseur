@@ -9,7 +9,7 @@
     "lint:fix": "eslint . --config .eslintrc.json --ignore-path .eslintignore --ext .js,.ts --fix",
     "format:prettier": "prettier --config '../.prettierrc.json' 'src' --write",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --config ./config/webpack.dev.config.ts --env config_path=../.env",
+    "dev": "webpack serve --config ./config/webpack.dev.config.ts --port 5000 --env config_path=../.env ",
     "start:prod": "npm run build",
     "build": "webpack --config ./config/webpack.prod.config.ts --env config_path=../.env",
     "build:analyze": "webpack --config ./config/webpack.prod.config.ts --env config_path=../.env addon=bundleanalyze"

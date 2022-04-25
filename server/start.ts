@@ -1,7 +1,7 @@
 import express, { Response, Request, Application } from 'express'; // Import express framework
 import { Server } from 'http';
 import cors from 'cors';
-import corsOptions from './config/cors-options.config';
+// import corsOptions from './config/cors-options.config';
 import middlewares from './middlewares';
 import { getRoutes } from './routes';
 
@@ -41,7 +41,8 @@ function setupCloseOnExit(server: Server): void {
 }
 
 export async function startServer(
-  port: number = parseFloat(process.env.PORT || '4000')
+  port: number = parseFloat(process.env.SERVER_PORT || '4000'),
+  host: string = process.env.SERVER_HOST || '127.0.0.1'
 ): Promise<Server> {
   // Initiate express app
   const app: Application = express();
@@ -49,16 +50,23 @@ export async function startServer(
   // Implement middleware;
   // custom logs
   app.use(handleLog.logHandler);
-
+  // credentials
+  // app.use(middlewares.verifyCredentials.checkHeader);
   // CORS
-  app.use(cors(corsOptions));
+  app.use(cors()); // corsOptions));
+  // CORS -- enable pre-flight across-the-board
+  // app.options('*', cors(corsOptions));
   // parse requests of content-type - application/json
   app.use(express.json());
   // parse requests of content-type - application/x-www-form-urlencoded
   app.use(express.urlencoded({ extended: true }));
 
   // being able to serve static files
-  app.use('/public', express.static('public'));
+  if (process.env.SERVER_ALLOWSTATIC && process.env.SERVER_ALLOWSTATIC === 'true') {
+    const storagePath = process.env.SERVER_STORAGEPATH || '../uploads/';
+    middlewares.handleDirectoryStorage.serveStorageAsStatic(storagePath)(app);
+  }
+  //
 
   // Implement routes
   app.use('/api', getRoutes());
@@ -73,11 +81,10 @@ export async function startServer(
   }
 
   // for development and avoid CORS stuff
+  /*
   if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
-    app.get('*', (req, res) => {
-      res.sendFile('build/index.html', { root: __dirname });
-    });
   }
+  */
 
   // error Handlers
   // -- log into a file the errors
@@ -86,18 +93,15 @@ export async function startServer(
   app.use(handleError.safelyHandleError());
 
   return new Promise((resolve) => {
-    const server: Server = app.listen(port, () => {
+    const server: Server = app.listen(port, host, () => {
       const usedServer = server?.address();
-      console.info(
-        `Listening on port ${
-          usedServer && typeof usedServer !== 'string' ? usedServer.port : 'unknown'
-        }`
-      );
-      console.info(
-        `Listening on address ${
-          usedServer && typeof usedServer !== 'string' ? usedServer.address : 'unknown'
-        }`
-      );
+      if (usedServer && typeof usedServer !== 'string') {
+        console.info(`Listening on port ${usedServer.port || 'unknown'}`);
+        console.info(`Listening on host ${usedServer.address || 'unknown'}`);
+        if (usedServer.port && usedServer.address) {
+          console.info(`Listening on http://${usedServer.address}:${usedServer.port}`);
+        }
+      }
       const originalClose = server.close.bind(server);
 
       function closeServer(callback?: ((err?: Error | undefined) => void) | undefined) {

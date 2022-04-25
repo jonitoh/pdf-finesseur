@@ -39,7 +39,9 @@ function handleGenericError(error: unknown, req: Request, res: Response, next: N
   next(error);
 }
 
-function handleUnknownError(error: unknown, req: Request, res: Response): void {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line no-unused-vars
+function handleUnknownError(error: unknown, req: Request, res: Response, next: NextFunction): void {
   res.status(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR).send({
     type: 'error',
     message: 'Unknown error',

@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import { Router } from 'express';
 import middleware from '../middlewares/directory.storage.middleware';
 import controller from '../controllers/directory.storage.controller';
 
@@ -6,12 +6,10 @@ function getRouter() {
   // Initiate router
   const router = Router();
 
-  // TO serve any file back to the client
-  const path = process.env.STORAGEPATH || './public/uploads/';
-  router.use(express.static(path));
+  const storagePath = process.env.SERVER_STORAGEPATH || '../uploads/';
 
   // POST ROUTE
-  const upload = middleware.handleStorage(path);
+  const upload = middleware.handleStorage(storagePath);
   router.post('/', upload, controller.uploadFiles);
 
   // DELETE ROUTE -- any files

@@ -11,7 +11,6 @@ client/dist
 client/temp
 client/logs
 client/data
-*/uploads
 
 # server side
 server/dist
@@ -20,3 +19,7 @@ server/temp
 server/logs
 server/data/raw
 .super-admin.json
+
+# storage side
+uploads/*
+!uploads/test.png

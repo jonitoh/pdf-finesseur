@@ -1,3 +1,3 @@
-const allowedOrigins: string[] = ['http://localhost:3000'];
+const allowedOrigins: string[] = process.env.CLIENT_URL ? [process.env.CLIENT_URL] : ['*'];
 
 export default allowedOrigins;

@@ -2,13 +2,15 @@
 Service for the server in the application.
 */
 import axios, { AxiosResponse } from 'axios';
+import { getApiUrl } from '#utils/service';
 
 // ----- INSTANCES ----- //
 const storageInstance = axios.create({
-  baseURL: `${process.env.API_URL}/storage`,
+  baseURL: `${getApiUrl()}/storage`,
   timeout: 1000,
   headers: {
     'Content-Type': 'multipart/form-data',
+    // 'Access-Control-Allow-Credentials': true,
     // authorization: process.env.SERVER_TOKEN || "token"
   },
 });
@@ -18,6 +20,7 @@ function genericFilename(file: File, filename: string | undefined) {
   return filename || file.name;
 }
 
+// essayer de transformer en i18n
 export function manageErrorMessageFromCode(code: string | undefined) {
   if (code) {
     switch (code) {

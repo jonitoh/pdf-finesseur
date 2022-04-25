@@ -12,9 +12,9 @@ function createConfiguration(env: EnvArgs): Configuration {
 
     // Where webpack looks to set the development server
     devServer: {
-      port: 3000,
+      // port: 3000,
       open: true,
-      hot: true,
+      // hot: true,
       historyApiFallback: true,
       static: {
         directory: paths.public,
