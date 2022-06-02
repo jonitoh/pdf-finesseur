@@ -5,8 +5,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "help": "Available names: clean, lint, lint:fix, format:prettier, test, dev, start:prod, build",
-    "main": "concurrently --kill-others \"cd server && npm run $npm_config_name\" \"cd client && npm run $npm_config_name\""
+    "help": "Available names: clean, lint, lint:fix, format:prettier, test, dev, start:prod, build, start",
+    "main": "concurrently --kill-others \"cd server && npm run $npm_config_name\" \"cd client && npm run $npm_config_name\"",
+    "pre-start": "npm install",
+    "start": "cd server && npm run serve",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run pre-start && npm run main --name=start"
   },
   "repository": {
     "type": "git",
@@ -21,5 +24,8 @@
   "homepage": "https://github.com/jonitoh/pdf-finesseur#readme",
   "dependencies": {
     "concurrently": "^7.0.0"
+  },
+  "engines": {
+    "node": "17.0.1"
   }
 }

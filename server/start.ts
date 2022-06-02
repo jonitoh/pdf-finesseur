@@ -1,5 +1,6 @@
 import express, { Response, Request, Application } from 'express'; // Import express framework
 import { Server } from 'http';
+import path from 'path';
 import cors from 'cors';
 // import corsOptions from './config/cors-options.config';
 import middlewares from './middlewares';
@@ -80,11 +81,14 @@ export async function startServer(
     });
   }
 
-  // for development and avoid CORS stuff
-  /*
+  // for development and avoid CORS stuff, Express will serve the built frontend
   if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
+    app.use(express.static(path.join(__dirname, '../../client/dist')));
+    app.use(express.static(path.join(__dirname, '../../client/dist/assets')));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+    });
   }
-  */
 
   // error Handlers
   // -- log into a file the errors

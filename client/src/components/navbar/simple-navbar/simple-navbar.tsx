@@ -36,20 +36,19 @@ export default function SimpleNavbar() {
 
   const { t } = useTranslation();
 
-  function onClick() {
-    console.info('documents', documents);
+  async function onClick() {
     if (documents.length === 0) {
       modal.current?.open();
       return;
     }
-    createMergedDocument(true);
+    await createMergedDocument(true);
     const mergedDocument = getMergedDocument();
     if (!mergedDocument) {
       setHasBug(true);
       modal.current?.open();
-      return;
+    } else {
+      downloadFromDocument(mergedDocument);
     }
-    downloadFromDocument(mergedDocument);
     // resetAll();
   }
 

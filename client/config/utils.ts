@@ -7,6 +7,7 @@ type Paths = {
   build: string;
   public: string;
   nodeModules: string;
+  assets: string;
 };
 
 export const paths: Paths = {
@@ -21,6 +22,9 @@ export const paths: Paths = {
 
   // files pointing ti the node modules
   nodeModules: path.resolve(__dirname, '../node_modules'),
+
+  // Static files that get copied to build folder
+  assets: path.resolve(__dirname, '../public/assets'),
 };
 
 export type EnvArgs = {

@@ -27,12 +27,6 @@ function createCommonConfiguration(env: EnvArgs): Configuration {
       // Copies files from target to destination folder
       new CopyWebpackPlugin({
         patterns: [
-          // manage the worker for pdfjs
-          {
-            from: `${paths.nodeModules}/pdfjs-dist/build/pdf.worker.js`,
-            to: `${paths.public}/vendors/pdf.worker.js`,
-            noErrorOnMissing: false,
-          },
           // support for non-latin characters with pdfjs
           {
             from: 'node_modules/pdfjs-dist/cmaps/',
@@ -41,12 +35,15 @@ function createCommonConfiguration(env: EnvArgs): Configuration {
           },
           // the public folder should become the asset one
           {
-            from: paths.public,
+            from: paths.assets,
             to: 'assets',
-            globOptions: {
-              ignore: ['*.DS_Store'],
-            },
             noErrorOnMissing: true,
+          },
+          // manage the worker for pdfjs
+          {
+            from: `${paths.nodeModules}/pdfjs-dist/build/pdf.worker.js`,
+            to: `assets/vendors/pdf.worker.js`,
+            noErrorOnMissing: false,
           },
         ],
       }),

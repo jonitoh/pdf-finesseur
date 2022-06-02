@@ -11,6 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --config ./config/webpack.dev.config.ts --port 5000 --env config_path=../.env ",
     "start:prod": "npm run build",
+    "pre-start:prod": "rm -rf node_modules && npm install && npm run clean",
+    "start": "npm run pre-start:prod && npm run start:prod",
     "build": "webpack --config ./config/webpack.prod.config.ts --env config_path=../.env",
     "build:analyze": "webpack --config ./config/webpack.prod.config.ts --env config_path=../.env addon=bundleanalyze"
   },
@@ -52,7 +54,7 @@
     "@types/mini-css-extract-plugin": "^2.5.1",
     "@types/pdfjs-dist": "^2.10.378",
     "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.14",
+    "@types/react-dom": "^17.0.17",
     "@types/react-pdf": "^5.0.9",
     "@types/react-router-dom": "^5.3.3",
     "@types/rimraf": "^3.0.2",

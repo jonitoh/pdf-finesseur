@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "server side",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "clean": "rimraf dist",
     "lint": "eslint . --config .eslintrc.json --ignore-path .eslintignore --ext .js,.ts",
@@ -11,8 +11,12 @@
     "format:prettier": "prettier --config '../.prettierrc.json' '../**/*.ts' --write",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development ts-node -r dotenv/config index.ts dotenv_config_path=../.env dotenv_config_debug=true",
-    "start:prod": "npm run build && node -r dotenv/config dist/index.js dotenv_config_path=../.env dotenv_config_debug=true",
-    "build": "npm run clean && tsc"
+    "serve": "NODE_ENV=production node -r dotenv/config dist/index.js dotenv_config_path=../.env",
+    "pre-start:prod": "rm -rf node_modules && npm install && npm run clean",
+    "start:prod": "npm run build",
+    "build": "tsc",
+    "start": "npm run pre-start:prod && npm run start:prod",
+    "serve:prod": "npm run start && npm run serve"
   },
   "author": "TOH Ninsemou Jordan",
   "license": "MIT",
