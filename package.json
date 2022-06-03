@@ -9,7 +9,7 @@
     "main": "concurrently --kill-others \"cd server && npm run $npm_config_name\" \"cd client && npm run $npm_config_name\"",
     "pre-start": "npm install",
     "start": "cd server && npm run serve",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run pre-start && npm run main --name=start"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run pre-start && npm run main --name=heroku-start"
   },
   "repository": {
     "type": "git",
