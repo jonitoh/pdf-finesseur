@@ -16,9 +16,8 @@
     "start:prod": "npm run build",
     "build": "tsc",
     "start": "npm run pre-start:prod && npm run start:prod",
-    "heroku-start:prod": "npm run heroku-build",
     "heroku-build": "./node_modules/typescript/bin/tsc",
-    "heroku-start": "npm run pre-start:prod && npm run heroku-start:prod",
+    "postinstall": "npm run heroku-build",
     "serve:prod": "npm run start && npm run serve"
   },
   "author": "TOH Ninsemou Jordan",
