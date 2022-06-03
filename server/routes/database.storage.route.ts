@@ -12,7 +12,7 @@ function getRouter() {
   router.delete('/:path', controller.deleteFile);
 
   // DELETE ROUTE -- all files
-  router.delete('/', controller.deleteAll);
+  router.delete('/', controller.deleteAllFiles);
 
   return router;
 }

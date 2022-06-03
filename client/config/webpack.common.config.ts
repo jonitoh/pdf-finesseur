@@ -35,9 +35,12 @@ function createCommonConfiguration(env: EnvArgs): Configuration {
           },
           // the public folder should become the asset one
           {
-            from: paths.assets,
+            from: paths.public,
             to: 'assets',
             noErrorOnMissing: true,
+            globOptions: {
+              ignore: ['data'],
+            },
           },
           // manage the worker for pdfjs
           {

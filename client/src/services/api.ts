@@ -1,7 +1,7 @@
 /*
 Service for the server in the application.
 */
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { getApiUrl } from '#utils/service';
 
 // ----- INSTANCES ----- //
@@ -128,6 +128,67 @@ export async function uploadFile<TResponse = unknown, TResult = void>({
         )
         // catch errors
         .catch((error) => catcher(processedFile, processedFilename, error))
+    );
+  }
+
+  return sendRequest();
+}
+
+export type DeleteResult = {
+  success: boolean;
+  status?: number;
+  message?: string;
+  name?: string;
+};
+
+export async function deleteFile(path: string): Promise<DeleteResult | undefined> {
+  // send request
+  async function sendRequest() {
+    return (
+      storageInstance
+        .request({
+          url: `/${path}`,
+          method: 'DELETE',
+        })
+        // handle response
+        .then((response: AxiosResponse) => ({
+          success: response.status === 200,
+          status: response.status,
+        }))
+        // catch errors
+        .catch((error: AxiosError) => ({
+          success: false,
+          status: error.response?.status,
+          message: error.message,
+          name: error.name,
+        }))
+    );
+  }
+
+  return sendRequest();
+}
+
+export async function purgeStorage(): Promise<DeleteResult | undefined> {
+  // send request
+  async function sendRequest() {
+    return (
+      storageInstance
+        .request({
+          url: '/',
+          method: 'DELETE',
+        })
+        // handle response
+        .then((response: AxiosResponse) => ({
+          success: response.status === 200,
+          status: response.status,
+        }))
+        // catch errors
+        .catch((error: AxiosError) => ({
+          success: false,
+          status: error.response?.status,
+          message: error.message,
+          name: error.name,
+        }))
     );
   }
 

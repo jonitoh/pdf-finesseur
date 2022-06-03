@@ -1,12 +1,11 @@
 import { Router } from 'express';
+import storagePath from '../config/storage.config';
 import middleware from '../middlewares/directory.storage.middleware';
 import controller from '../controllers/directory.storage.controller';
 
 function getRouter() {
   // Initiate router
   const router = Router();
-
-  const storagePath = process.env.SERVER_STORAGEPATH || '../uploads/';
 
   // POST ROUTE
   const upload = middleware.handleStorage(storagePath);
@@ -16,7 +15,7 @@ function getRouter() {
   router.delete('/:path', controller.deleteFile);
 
   // DELETE ROUTE -- all files
-  router.delete('/', controller.deleteAll);
+  router.delete('/', controller.deleteAllFiles);
 
   return router;
 }

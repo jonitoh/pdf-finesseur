@@ -3,6 +3,7 @@
   "click": "Cliquez",
   "restore": "Restaurez",
   "restoreAll": "Tout Restaurer",
+  "purge": "Purger le storage interne",
   "close": "Fermer",
   "emptyItem": "Oups! C'est vide!",
   "language": { "en": "Anglais", "fr": "Français" },

@@ -11,7 +11,6 @@ client/dist
 client/temp
 client/logs
 client/data
-client/public/data
 
 # server side
 server/dist

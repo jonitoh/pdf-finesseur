@@ -11,7 +11,7 @@ function deleteFile(req: Request, res: Response) {
   res.sendStatus(HTTP_STATUS_CODE.OK);
 }
 
-function deleteAll(req: Request, res: Response) {
+function deleteAllFiles(req: Request, res: Response) {
   console.info('MULTER DATABASE STORAGE -- Entry point for deleting all the files');
   res.sendStatus(HTTP_STATUS_CODE.OK);
 }
@@ -19,5 +19,5 @@ function deleteAll(req: Request, res: Response) {
 export default {
   uploadFiles,
   deleteFile,
-  deleteAll,
+  deleteAllFiles,
 };
